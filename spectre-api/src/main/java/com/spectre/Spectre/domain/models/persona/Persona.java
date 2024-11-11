@@ -21,8 +21,4 @@ public class Persona extends BaseEntity {
     @Column(name = "phone")
     private String phone;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "user_id", referencedColumnName = "id", updatable = false)
-    private User user;
-
 }

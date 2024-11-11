@@ -1,5 +1,6 @@
 package com.spectre.Spectre.domain.models.user;
 
+import com.spectre.Spectre.domain.models.persona.Persona;
 import com.spectre.Spectre.infrastructure.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -20,4 +21,8 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private String role;
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "persona_id", referencedColumnName = "id", updatable = false)
+    private Persona persona;
 }
