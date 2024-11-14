@@ -46,25 +46,6 @@ CREATE TABLE IF NOT EXISTS spectre_dashboard (
 );
 
 /*=========================================================*/
-/* TABLE: SPECTRE_INFORMATION                              */
-/*=========================================================*/
-CREATE TABLE IF NOT EXISTS spectre_information (
-    id                  SERIAL,
-    sensor_id           INTEGER                 NOT NULL,
-    dashboard_id        INTEGER                 NOT NULL,
-    title               VARCHAR(100)            NOT NULL,
-    type                VARCHAR(15)             NOT NULL,
-    priority            VARCHAR(15)             NOT NULL,
-
-    created_at          TIMESTAMP               NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at          TIMESTAMP               NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-    CONSTRAINT spectre_information_pk PRIMARY KEY (id),
-    CONSTRAINT spectre_information_sensor_fk FOREIGN KEY (sensor_id) REFERENCES spectre_sensor(id),
-    CONSTRAINT spectre_information_dashboard_fk FOREIGN KEY (dashboard_id) REFERENCES spectre_dashboard(id)
-);
-
-/*=========================================================*/
 /* TABLE: SPECTRE_REPORT                                   */
 /*=========================================================*/
 CREATE TABLE IF NOT EXISTS spectre_report (
@@ -108,4 +89,23 @@ CREATE TABLE IF NOT EXISTS spectre_sensor (
 
     CONSTRAINT spectre_sensor_pk PRIMARY KEY (id),
     CONSTRAINT spectre_sensor_report_fk FOREIGN KEY (report_id) REFERENCES spectre_report(id)
+);
+
+/*=========================================================*/
+/* TABLE: SPECTRE_INFORMATION                              */
+/*=========================================================*/
+CREATE TABLE IF NOT EXISTS spectre_information (
+    id                  SERIAL,
+    sensor_id           INTEGER                 NOT NULL,
+    dashboard_id        INTEGER                 NOT NULL,
+    title               VARCHAR(100)            NOT NULL,
+    type                VARCHAR(15)             NOT NULL,
+    priority            VARCHAR(15)             NOT NULL,
+
+    created_at          TIMESTAMP               NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at          TIMESTAMP               NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT spectre_information_pk PRIMARY KEY (id),
+    CONSTRAINT spectre_information_sensor_fk FOREIGN KEY (sensor_id) REFERENCES spectre_sensor(id),
+    CONSTRAINT spectre_information_dashboard_fk FOREIGN KEY (dashboard_id) REFERENCES spectre_dashboard(id)
 );
