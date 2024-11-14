@@ -1,10 +1,10 @@
-package org.api.spectreapi;
+package com.spectre.Spectre;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SpectreApiApplicationTests {
+class SpectreApplicationTests {
 
     @Test
     void contextLoads() {
