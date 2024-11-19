@@ -33,22 +33,4 @@ public class Information extends BaseEntity implements Serializable {
     @Column(name = "priority")
     private NotificationPriority priority;
 
-    @Override
-    public InformationDto mapEntityToDto() {
-        InformationDto informationDto = new InformationDto();
-
-        informationDto.setId(this.getId());
-        informationDto.setTitle(this.getTitle());
-        informationDto.setSensor(
-                Optional.ofNullable(this.getSensor())
-                        .map(Sensor::mapEntityToDto)
-                        .orElse(null)
-        );
-        informationDto.setType(this.getType());
-        informationDto.setPriority(this.getPriority());
-        informationDto.setCreatedAt(this.getCreatedAt());
-        informationDto.setUpdatedAt(this.getUpdatedAt());
-
-        return informationDto;
-    }
 }

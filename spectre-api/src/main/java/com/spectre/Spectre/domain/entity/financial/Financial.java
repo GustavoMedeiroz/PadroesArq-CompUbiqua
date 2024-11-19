@@ -22,16 +22,4 @@ public class Financial extends BaseEntity implements Serializable {
     @Column(name = "cash_outflow")
     private Double cashOutflow;
 
-    @Override
-    public FinancialDto mapEntityToDto() {
-        FinancialDto financialDto = new FinancialDto();
-
-        financialDto.setId(this.getId());
-        financialDto.setCashInflow(this.getCashInflow());
-        financialDto.setCashOutflow(this.getCashOutflow());
-        financialDto.setCreatedAt(this.getCreatedAt());
-        financialDto.setUpdatedAt(this.getUpdatedAt());
-
-        return financialDto;
-    }
 }

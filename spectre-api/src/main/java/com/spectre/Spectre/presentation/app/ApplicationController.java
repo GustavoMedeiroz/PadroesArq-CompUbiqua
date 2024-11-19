@@ -14,6 +14,7 @@ import java.util.List;
 public class ApplicationController {
 
     private static final String spectreRunning = "SPECTRE API Running!";
+
     private final EnumContext enumContext;
 
     @GetMapping(path = "/health")

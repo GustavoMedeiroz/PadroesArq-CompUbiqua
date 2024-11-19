@@ -25,5 +25,4 @@ public abstract class BaseEntity {
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
-    public abstract BaseEntityDto<? extends BaseEntity> mapEntityToDto();
 }

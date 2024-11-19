@@ -30,18 +30,4 @@ public class Sensor extends BaseEntity implements Serializable {
     @Column(name = "status")
     private SensorStatus status;
 
-    @Override
-    public SensorDto mapEntityToDto() {
-        SensorDto sensorDto = new SensorDto();
-
-        sensorDto.setId(this.getId());
-        sensorDto.setName(this.getName());
-        sensorDto.setCurrentValue(this.getCurrentValue());
-        sensorDto.setType(this.getType());
-        sensorDto.setStatus(this.getStatus());
-        sensorDto.setCreatedAt(this.getCreatedAt());
-        sensorDto.setUpdatedAt(this.getUpdatedAt());
-
-        return sensorDto;
-    }
 }

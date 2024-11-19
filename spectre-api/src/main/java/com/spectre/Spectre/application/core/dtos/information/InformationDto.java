@@ -15,7 +15,7 @@ import java.util.Optional;
 public class InformationDto extends BaseEntityDto<Information> {
 
     private String title;
-    private SensorDto sensor;
+    private Long sensorId;
     private InformationType type;
     private NotificationPriority priority;
 
@@ -25,11 +25,6 @@ public class InformationDto extends BaseEntityDto<Information> {
 
         information.setId(this.getId());
         information.setTitle(this.getTitle());
-        information.setSensor(
-                Optional.ofNullable(this.getSensor())
-                        .map(SensorDto::mapDtoToEntity)
-                        .orElse(null)
-        );
         information.setType(this.getType());
         information.setPriority(this.getPriority());
         information.setCreatedAt(this.getCreatedAt());

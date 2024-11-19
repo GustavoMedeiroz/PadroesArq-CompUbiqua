@@ -31,22 +31,4 @@ public class User extends BaseEntity implements Serializable {
     @JoinColumn(name = "persona_id", referencedColumnName = "id", updatable = false)
     private Persona persona;
 
-    @Override
-    public UserDto mapEntityToDto() {
-        UserDto userDto = new UserDto();
-
-        userDto.setId(this.getId());
-        userDto.setEmail(this.getEmail());
-        userDto.setPassword(this.getPassword());
-        userDto.setRole(this.getRole());
-        userDto.setPersona(
-                Optional.ofNullable(this.getPersona())
-                        .map(Persona::mapEntityToDto)
-                        .orElse(null)
-        );
-        userDto.setCreatedAt(this.getCreatedAt());
-        userDto.setUpdatedAt(this.getUpdatedAt());
-
-        return userDto;
-    }
 }
