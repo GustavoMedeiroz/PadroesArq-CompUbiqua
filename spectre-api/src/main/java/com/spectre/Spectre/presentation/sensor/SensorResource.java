@@ -3,9 +3,11 @@ package com.spectre.Spectre.presentation.sensor;
 import com.spectre.Spectre.application.core.dtos.sensor.SensorDto;
 import com.spectre.Spectre.domain.entity.sensor.Sensor;
 import com.spectre.Spectre.domain.service.sensor.SensorContext;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/sensor")
@@ -21,9 +23,13 @@ public class SensorResource {
     }
 
     @PostMapping
-    public ResponseEntity<Sensor> create(@RequestBody SensorDto sensorDto) {
+    public ResponseEntity<Sensor> create(
+            @RequestBody @Valid SensorDto sensorDto,
+            UriComponentsBuilder uriBuilder
+    ) {
         Sensor createdSensor = this.sensorService.create(sensorDto);
-        return ResponseEntity.ok(createdSensor);
+        var uri = uriBuilder.path("/sensor/{id}").buildAndExpand(createdSensor.getId()).toUri();
+        return ResponseEntity.created(uri).body(createdSensor);
     }
 
     @PutMapping
