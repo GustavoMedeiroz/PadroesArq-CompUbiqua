@@ -57,7 +57,8 @@ public class PersonaService implements PersonaContext {
         this.personaRepository.deleteById(id);
     }
 
-    private Boolean existsById(Long id) {
+    @Override
+    public Boolean existsById(Long id) {
         return this.personaRepository.existsById(id);
     }
 

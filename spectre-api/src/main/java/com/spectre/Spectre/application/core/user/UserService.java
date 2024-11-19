@@ -8,7 +8,6 @@ import com.spectre.Spectre.domain.vo.enums.UserRole;
 import com.spectre.Spectre.domain.vo.exception.exceptions.BadRequestException;
 import com.spectre.Spectre.domain.vo.exception.exceptions.NotFoundException;
 import com.spectre.Spectre.domain.vo.utils.Functions;
-import com.spectre.Spectre.infrastructure.repository.persona.PersonaRepository;
 import com.spectre.Spectre.infrastructure.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -41,7 +40,11 @@ public class UserService implements UserContext {
 
         User user = userDto.mapDtoToEntity();
         user.setRole(UserRole.OWNER);
-        this.personaService.create(userDto.getPersona());
+        Functions.acceptTrueOrElse(
+                this.personaService.existsById(userDto.getPersona().getId()),
+                () -> user.setPersona(this.personaService.findById(userDto.getPersona().getId())),
+                () -> user.setPersona(this.personaService.create(userDto.getPersona()))
+        );
         return this.userRepository.save(user);
     }
 

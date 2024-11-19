@@ -12,4 +12,6 @@ public interface PersonaContext {
     void update(PersonaDto personaDto);
 
     void delete(Long id);
+
+    Boolean existsById(Long id);
 }
