@@ -41,17 +41,17 @@ public class SensorService implements SensorContext {
 
     @Override
     @Transactional
-    public void update(SensorDto sensorToUpdate) {
+    public void update(SensorDto sensor) {
         Functions.acceptFalseThrows(
-                notNullAndNotEmptyValue(sensorToUpdate.getId()) && this.existsById(sensorToUpdate.getId()),
+                notNullAndNotEmptyValue(sensor.getId()) && this.existsById(sensor.getId()),
                 () -> new NotFoundException(SENSOR_NOT_FOUND)
         );
 
-        Sensor savedSensor = this.findById(sensorToUpdate.getId());
+        Sensor sensorToUpdate = this.findById(sensor.getId());
 
-        this.mapSensorToUpdate(sensorToUpdate, savedSensor);
+        this.mapSensorToUpdate(sensor, sensorToUpdate);
 
-        this.sensorRepository.save(savedSensor);
+        this.sensorRepository.save(sensorToUpdate);
     }
 
     @Override
@@ -68,10 +68,10 @@ public class SensorService implements SensorContext {
         return this.sensorRepository.existsById(id);
     }
 
-    private void mapSensorToUpdate(SensorDto sensorToUpdate, Sensor savedSensor) {
-        savedSensor.setName(sensorToUpdate.getName());
-        savedSensor.setCurrentValue(sensorToUpdate.getCurrentValue());
-        savedSensor.setType(sensorToUpdate.getType());
-        savedSensor.setStatus(sensorToUpdate.getStatus());
+    private void mapSensorToUpdate(SensorDto sensor, Sensor sensorToUpdate) {
+        sensorToUpdate.setName(sensor.getName());
+        sensorToUpdate.setCurrentValue(sensor.getCurrentValue());
+        sensorToUpdate.setType(sensor.getType());
+        sensorToUpdate.setStatus(sensor.getStatus());
     }
 }

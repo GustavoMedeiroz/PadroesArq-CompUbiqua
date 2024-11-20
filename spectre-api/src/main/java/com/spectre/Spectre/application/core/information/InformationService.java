@@ -22,7 +22,7 @@ import static com.spectre.Spectre.domain.vo.utils.Functions.notNullAndNotEmptyVa
 public class InformationService implements InformationContext {
 
     private static final String INFORMATION_NOT_FOUND = "Informação não encontrada";
-    private static final String SENSOR_NOT_INFORMATION = "Sensor não informado";
+    private static final String SENSOR_NOT_INFORMED = "Sensor não informado";
 
     private final InformationRepository informationRepository;
     private final SensorContext sensorService;
@@ -42,7 +42,7 @@ public class InformationService implements InformationContext {
     public Information create(InformationDto informationDto) {
         Functions.acceptFalseThrows(
                 notNullAndNotEmptyValue(informationDto.getSensorId()),
-                () -> new BadRequestException(SENSOR_NOT_INFORMATION)
+                () -> new BadRequestException(SENSOR_NOT_INFORMED)
         );
 
         Information information = informationDto.mapDtoToEntity();
@@ -53,17 +53,17 @@ public class InformationService implements InformationContext {
 
     @Override
     @Transactional
-    public void update(InformationDto informationToUpdate) {
+    public void update(InformationDto information) {
         Functions.acceptFalseThrows(
-                notNullAndNotEmptyValue(informationToUpdate.getId()) && this.existsById(informationToUpdate.getId()),
+                notNullAndNotEmptyValue(information.getId()) && this.existsById(information.getId()),
                 () -> new NotFoundException(INFORMATION_NOT_FOUND)
         );
 
-        Information savedInformation = this.findById(informationToUpdate.getId());
+        Information informationToUpdate = this.findById(information.getId());
 
-        this.mapInformationToUpdate(informationToUpdate, savedInformation);
+        this.mapInformationToUpdate(information, informationToUpdate);
 
-        this.informationRepository.save(savedInformation);
+        this.informationRepository.save(informationToUpdate);
     }
 
     @Override
@@ -80,14 +80,14 @@ public class InformationService implements InformationContext {
         return this.informationRepository.existsById(id);
     }
 
-    private void mapInformationToUpdate(InformationDto informationToUpdate, Information savedInformation) {
-        savedInformation.setTitle(informationToUpdate.getTitle());
-        savedInformation.setType(informationToUpdate.getType());
-        savedInformation.setPriority(informationToUpdate.getPriority());
+    private void mapInformationToUpdate(InformationDto information, Information informationToUpdate) {
+        informationToUpdate.setTitle(information.getTitle());
+        informationToUpdate.setType(information.getType());
+        informationToUpdate.setPriority(information.getPriority());
 
         Functions.ifPresent(
-                informationToUpdate.getSensorId(),
-                sensorId -> savedInformation.setSensor(this.sensorService.findById(sensorId))
+                information.getSensorId(),
+                sensorId -> informationToUpdate.setSensor(this.sensorService.findById(sensorId))
         );
     }
 }

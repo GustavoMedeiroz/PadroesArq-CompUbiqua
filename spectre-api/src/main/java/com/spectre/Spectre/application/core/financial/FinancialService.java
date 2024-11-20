@@ -41,16 +41,16 @@ public class FinancialService implements FinancialContext {
 
     @Override
     @Transactional
-    public void update(FinancialDto financialToUpdate) {
+    public void update(FinancialDto financial) {
         Functions.acceptFalseThrows(
-                notNullAndNotEmptyValue(financialToUpdate.getId()) && this.existsById(financialToUpdate.getId()),
+                notNullAndNotEmptyValue(financial.getId()) && this.existsById(financial.getId()),
                 () -> new NotFoundException(FINANCIAL_NOT_FOUND)
         );
-        Financial savedFinancial = this.findById(financialToUpdate.getId());
+        Financial financialToUpdate = this.findById(financial.getId());
 
-        this.mapFinancialToUpdate(financialToUpdate, savedFinancial);
+        this.mapFinancialToUpdate(financial, financialToUpdate);
 
-        this.financialRepository.save(savedFinancial);
+        this.financialRepository.save(financialToUpdate);
     }
 
     @Override
@@ -67,8 +67,8 @@ public class FinancialService implements FinancialContext {
         return this.financialRepository.existsById(id);
     }
 
-    private void mapFinancialToUpdate(FinancialDto financialToUpdate, Financial savedFinancial) {
-        savedFinancial.setCashInflow(financialToUpdate.getCashInflow());
-        savedFinancial.setCashOutflow(financialToUpdate.getCashOutflow());
+    private void mapFinancialToUpdate(FinancialDto financial, Financial financialToUpdate) {
+        financialToUpdate.setCashInflow(financial.getCashInflow());
+        financialToUpdate.setCashOutflow(financial.getCashOutflow());
     }
 }

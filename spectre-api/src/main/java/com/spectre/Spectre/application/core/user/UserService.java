@@ -57,17 +57,17 @@ public class UserService implements UserContext {
 
     @Override
     @Transactional
-    public void update(UserDto userToUpdate) {
+    public void update(UserDto user) {
         Functions.acceptFalseThrows(
-                notNullAndNotEmptyValue(userToUpdate.getId()) && this.existsById(userToUpdate.getId()),
+                notNullAndNotEmptyValue(user.getId()) && this.existsById(user.getId()),
                 () -> new NotFoundException(USER_NOT_FOUND)
         );
 
-        User savedUser = this.findUserById(userToUpdate.getId());
+        User userToUpdate = this.findUserById(user.getId());
 
-        this.mapUserToUpdate(userToUpdate, savedUser);
+        this.mapUserToUpdate(user, userToUpdate);
 
-        this.userRepository.save(savedUser);
+        this.userRepository.save(userToUpdate);
     }
 
     @Override
@@ -84,13 +84,9 @@ public class UserService implements UserContext {
         return this.userRepository.existsById(id);
     }
 
-    private void mapUserToUpdate(UserDto userToUpdate, User savedUser) {
-        savedUser.setEmail(userToUpdate.getEmail());
-        savedUser.setPassword(userToUpdate.getPassword());
-
-        Functions.ifPresent(
-                userToUpdate.getPersona(),
-                persona -> savedUser.setPersona(this.personaService.findById(persona.getId()))
-        );
+    private void mapUserToUpdate(UserDto user, User userToUpdate) {
+        userToUpdate.setEmail(user.getEmail());
+        userToUpdate.setPassword(user.getPassword());
+        userToUpdate.setPersona(user.getPersona().mapDtoToEntity());
     }
 }
