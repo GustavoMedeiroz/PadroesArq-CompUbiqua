@@ -5,16 +5,25 @@ import com.spectre.Spectre.domain.entity.sensor.Sensor;
 import com.spectre.Spectre.domain.service.sensor.SensorContext;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@RequestMapping("/sensor")
+@RequestMapping("sensor")
 @RequiredArgsConstructor
 public class SensorResource {
 
     private final SensorContext sensorService;
+
+    @GetMapping(value = "/all")
+    public ResponseEntity<Page<Sensor>> findAll(@PageableDefault(sort = { "id" }) Pageable pageable) {
+        Page<Sensor> sensors = this.sensorService.findAll(pageable);
+        return ResponseEntity.ok(sensors);
+    }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<Sensor> findById(@PathVariable Long id) {

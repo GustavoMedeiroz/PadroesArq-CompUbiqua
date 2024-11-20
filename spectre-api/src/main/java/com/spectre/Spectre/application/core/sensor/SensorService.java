@@ -7,6 +7,8 @@ import com.spectre.Spectre.domain.vo.exception.exceptions.NotFoundException;
 import com.spectre.Spectre.domain.vo.utils.Functions;
 import com.spectre.Spectre.infrastructure.repository.sensor.SensorRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +21,11 @@ public class SensorService implements SensorContext {
     private static final String SENSOR_NOT_FOUND = "Sensor não encontrado";
 
     private final SensorRepository sensorRepository;
+
+    @Override
+    public Page<Sensor> findAll(Pageable pageable) {
+        return this.sensorRepository.findAll(pageable);
+    }
 
     @Override
     public Sensor findById(Long id) {

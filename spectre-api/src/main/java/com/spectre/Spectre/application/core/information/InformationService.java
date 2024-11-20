@@ -10,6 +10,8 @@ import com.spectre.Spectre.domain.vo.exception.exceptions.NotFoundException;
 import com.spectre.Spectre.domain.vo.utils.Functions;
 import com.spectre.Spectre.infrastructure.repository.information.InformationRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +26,11 @@ public class InformationService implements InformationContext {
 
     private final InformationRepository informationRepository;
     private final SensorContext sensorService;
+
+    @Override
+    public Page<Information> findAll(Pageable pageable) {
+        return this.informationRepository.findAll(pageable);
+    }
 
     @Override
     public Information findById(Long id) {

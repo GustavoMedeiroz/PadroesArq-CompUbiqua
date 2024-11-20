@@ -7,6 +7,8 @@ import com.spectre.Spectre.domain.vo.exception.exceptions.NotFoundException;
 import com.spectre.Spectre.domain.vo.utils.Functions;
 import com.spectre.Spectre.infrastructure.repository.financial.FinancialRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +21,11 @@ public class FinancialService implements FinancialContext {
     private static final String FINANCIAL_NOT_FOUND = "Registro financeiro não encontrado";
 
     private final FinancialRepository financialRepository;
+
+    @Override
+    public Page<Financial> findAll(Pageable pageable) {
+        return this.financialRepository.findAll(pageable);
+    }
 
     @Override
     public Financial findById(Long id) {

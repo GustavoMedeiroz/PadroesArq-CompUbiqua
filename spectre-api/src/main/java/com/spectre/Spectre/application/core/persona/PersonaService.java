@@ -7,6 +7,8 @@ import com.spectre.Spectre.domain.vo.exception.exceptions.NotFoundException;
 import com.spectre.Spectre.domain.vo.utils.Functions;
 import com.spectre.Spectre.infrastructure.repository.persona.PersonaRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +21,11 @@ public class PersonaService implements PersonaContext {
     private static final String PERSONA_NOT_FOUND = "Pessoa não encontrada";
 
     private final PersonaRepository personaRepository;
+
+    @Override
+    public Page<Persona> findAll(Pageable pageable) {
+        return this.personaRepository.findAll(pageable);
+    }
 
     @Override
     public Persona findById(Long id) {
