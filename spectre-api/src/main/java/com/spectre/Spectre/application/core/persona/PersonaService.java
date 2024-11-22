@@ -3,7 +3,7 @@ package com.spectre.Spectre.application.core.persona;
 import com.spectre.Spectre.application.core.dtos.persona.PersonaDto;
 import com.spectre.Spectre.domain.entity.persona.Persona;
 import com.spectre.Spectre.domain.service.persona.PersonaContext;
-import com.spectre.Spectre.domain.vo.exception.exceptions.NotFoundException;
+import com.spectre.Spectre.domain.vo.exception.NotFoundException;
 import com.spectre.Spectre.domain.vo.utils.Functions;
 import com.spectre.Spectre.infrastructure.repository.persona.PersonaRepository;
 import lombok.RequiredArgsConstructor;

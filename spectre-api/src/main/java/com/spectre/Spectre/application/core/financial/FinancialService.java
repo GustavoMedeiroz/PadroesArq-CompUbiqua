@@ -3,7 +3,7 @@ package com.spectre.Spectre.application.core.financial;
 import com.spectre.Spectre.application.core.dtos.financial.FinancialDto;
 import com.spectre.Spectre.domain.entity.financial.Financial;
 import com.spectre.Spectre.domain.service.financial.FinancialContext;
-import com.spectre.Spectre.domain.vo.exception.exceptions.NotFoundException;
+import com.spectre.Spectre.domain.vo.exception.NotFoundException;
 import com.spectre.Spectre.domain.vo.utils.Functions;
 import com.spectre.Spectre.infrastructure.repository.financial.FinancialRepository;
 import lombok.RequiredArgsConstructor;

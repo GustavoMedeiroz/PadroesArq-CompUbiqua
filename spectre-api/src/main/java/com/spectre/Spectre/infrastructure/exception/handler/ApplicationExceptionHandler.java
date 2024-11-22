@@ -1,7 +1,7 @@
-package com.spectre.Spectre.domain.vo.exception;
+package com.spectre.Spectre.infrastructure.exception.handler;
 
-import com.spectre.Spectre.domain.vo.exception.exceptions.BadRequestException;
-import com.spectre.Spectre.domain.vo.exception.exceptions.NotFoundException;
+import com.spectre.Spectre.domain.vo.exception.NotFoundException;
+import com.spectre.Spectre.domain.vo.exception.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

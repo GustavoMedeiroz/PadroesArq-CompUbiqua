@@ -3,7 +3,7 @@ package com.spectre.Spectre.application.core.sensor;
 import com.spectre.Spectre.application.core.dtos.sensor.SensorDto;
 import com.spectre.Spectre.domain.entity.sensor.Sensor;
 import com.spectre.Spectre.domain.service.sensor.SensorContext;
-import com.spectre.Spectre.domain.vo.exception.exceptions.NotFoundException;
+import com.spectre.Spectre.domain.vo.exception.NotFoundException;
 import com.spectre.Spectre.domain.vo.utils.Functions;
 import com.spectre.Spectre.infrastructure.repository.sensor.SensorRepository;
 import lombok.RequiredArgsConstructor;
