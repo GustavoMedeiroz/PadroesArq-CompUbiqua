@@ -1,4 +1,4 @@
-package com.spectre.Spectre.domain.vo.exception;
+package com.spectre.Spectre.infrastructure.exception.handler;
 
 import lombok.Builder;
 
