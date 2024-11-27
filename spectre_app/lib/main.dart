@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:optional/optional.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:spectre_app/shared/utils/spectre_colors.dart';
+import 'package:spectre_app/views/financial_report_page.dart';
+import 'package:spectre_app/views/home_page.dart';
+import 'package:spectre_app/views/notifications_page.dart';
+import 'package:spectre_app/views/sensors_pager.dart';
+import 'package:spectre_app/views/settings_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,11 +37,19 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  int _selectedIndex = 0;
 
-  void _incrementCounter() {
+  static const List<Widget> _widgetOptions = <Widget>[
+    HomePage(),
+    SensorsPager(),
+    FinancialReportPage(),
+    NotificationsPage(),
+    SettingsPage(),
+  ];
+
+  void _onItemTapped(int index) {
     setState(() {
-      _counter++;
+      _selectedIndex = index;
     });
   }
 
@@ -46,24 +60,37 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+      body: Center(child: _widgetOptions.elementAt(_selectedIndex)),
+      bottomNavigationBar: BottomNavigationBar(
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset('assets/icons/nav_bar_home.svg'),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset('assets/icons/nav_bar_shield.svg'),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset('assets/icons/nav_bar_document.svg'),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset('assets/icons/nav_bar_notification.svg'),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset('assets/icons/nav_bar_setting.svg'),
+            label: '',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: SpectreColors.spectrePurple,
+        unselectedItemColor: SpectreColors.spectreWhite,
+        onTap: _onItemTapped,
+        selectedFontSize: 0,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
       ),
     );
   }
