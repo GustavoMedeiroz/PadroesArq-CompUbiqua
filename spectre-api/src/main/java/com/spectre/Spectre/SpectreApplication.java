@@ -9,5 +9,4 @@ public class SpectreApplication {
     public static void main(String[] args) {
         SpringApplication.run(SpectreApplication.class, args);
     }
-
 }
