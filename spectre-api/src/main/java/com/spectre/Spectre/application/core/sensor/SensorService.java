@@ -3,10 +3,12 @@ package com.spectre.Spectre.application.core.sensor;
 import com.spectre.Spectre.application.core.dtos.sensor.SensorDto;
 import com.spectre.Spectre.domain.entity.sensor.Sensor;
 import com.spectre.Spectre.domain.service.sensor.SensorContext;
-import com.spectre.Spectre.domain.vo.exception.exceptions.NotFoundException;
+import com.spectre.Spectre.domain.vo.exception.NotFoundException;
 import com.spectre.Spectre.domain.vo.utils.Functions;
 import com.spectre.Spectre.infrastructure.repository.sensor.SensorRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +21,11 @@ public class SensorService implements SensorContext {
     private static final String SENSOR_NOT_FOUND = "Sensor não encontrado";
 
     private final SensorRepository sensorRepository;
+
+    @Override
+    public Page<Sensor> findAll(Pageable pageable) {
+        return this.sensorRepository.findAll(pageable);
+    }
 
     @Override
     public Sensor findById(Long id) {
@@ -34,17 +41,17 @@ public class SensorService implements SensorContext {
 
     @Override
     @Transactional
-    public void update(SensorDto sensorToUpdate) {
+    public void update(SensorDto sensor) {
         Functions.acceptFalseThrows(
-                notNullAndNotEmptyValue(sensorToUpdate.getId()) && this.existsById(sensorToUpdate.getId()),
+                notNullAndNotEmptyValue(sensor.getId()) && this.existsById(sensor.getId()),
                 () -> new NotFoundException(SENSOR_NOT_FOUND)
         );
 
-        Sensor savedSensor = this.findById(sensorToUpdate.getId());
+        Sensor sensorToUpdate = this.findById(sensor.getId());
 
-        this.mapSensorToUpdate(sensorToUpdate, savedSensor);
+        this.mapSensorToUpdate(sensor, sensorToUpdate);
 
-        this.sensorRepository.save(savedSensor);
+        this.sensorRepository.save(sensorToUpdate);
     }
 
     @Override
@@ -61,10 +68,10 @@ public class SensorService implements SensorContext {
         return this.sensorRepository.existsById(id);
     }
 
-    private void mapSensorToUpdate(SensorDto sensorToUpdate, Sensor savedSensor) {
-        savedSensor.setName(sensorToUpdate.getName());
-        savedSensor.setCurrentValue(sensorToUpdate.getCurrentValue());
-        savedSensor.setType(sensorToUpdate.getType());
-        savedSensor.setStatus(sensorToUpdate.getStatus());
+    private void mapSensorToUpdate(SensorDto sensor, Sensor sensorToUpdate) {
+        sensorToUpdate.setName(sensor.getName());
+        sensorToUpdate.setCurrentValue(sensor.getCurrentValue());
+        sensorToUpdate.setType(sensor.getType());
+        sensorToUpdate.setStatus(sensor.getStatus());
     }
 }

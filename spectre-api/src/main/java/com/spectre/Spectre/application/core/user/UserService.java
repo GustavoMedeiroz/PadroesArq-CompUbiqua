@@ -5,11 +5,13 @@ import com.spectre.Spectre.domain.entity.user.User;
 import com.spectre.Spectre.domain.service.persona.PersonaContext;
 import com.spectre.Spectre.domain.service.user.UserContext;
 import com.spectre.Spectre.domain.vo.enums.UserRole;
-import com.spectre.Spectre.domain.vo.exception.exceptions.BadRequestException;
-import com.spectre.Spectre.domain.vo.exception.exceptions.NotFoundException;
+import com.spectre.Spectre.domain.vo.exception.BadRequestException;
+import com.spectre.Spectre.domain.vo.exception.NotFoundException;
 import com.spectre.Spectre.domain.vo.utils.Functions;
 import com.spectre.Spectre.infrastructure.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +26,11 @@ public class UserService implements UserContext {
 
     private final UserRepository userRepository;
     private final PersonaContext personaService;
+
+    @Override
+    public Page<User> findAll(Pageable pageable) {
+        return this.userRepository.findAll(pageable);
+    }
 
     @Override
     public User findUserById(Long id) {
@@ -50,17 +57,17 @@ public class UserService implements UserContext {
 
     @Override
     @Transactional
-    public void update(UserDto userToUpdate) {
+    public void update(UserDto user) {
         Functions.acceptFalseThrows(
-                notNullAndNotEmptyValue(userToUpdate.getId()) && this.existsById(userToUpdate.getId()),
+                notNullAndNotEmptyValue(user.getId()) && this.existsById(user.getId()),
                 () -> new NotFoundException(USER_NOT_FOUND)
         );
 
-        User savedUser = this.findUserById(userToUpdate.getId());
+        User userToUpdate = this.findUserById(user.getId());
 
-        this.mapUserToUpdate(userToUpdate, savedUser);
+        this.mapUserToUpdate(user, userToUpdate);
 
-        this.userRepository.save(savedUser);
+        this.userRepository.save(userToUpdate);
     }
 
     @Override
@@ -77,13 +84,9 @@ public class UserService implements UserContext {
         return this.userRepository.existsById(id);
     }
 
-    private void mapUserToUpdate(UserDto userToUpdate, User savedUser) {
-        savedUser.setEmail(userToUpdate.getEmail());
-        savedUser.setPassword(userToUpdate.getPassword());
-
-        Functions.ifPresent(
-                userToUpdate.getPersona(),
-                persona -> savedUser.setPersona(this.personaService.findById(persona.getId()))
-        );
+    private void mapUserToUpdate(UserDto user, User userToUpdate) {
+        userToUpdate.setEmail(user.getEmail());
+        userToUpdate.setPassword(user.getPassword());
+        userToUpdate.setPersona(user.getPersona().mapDtoToEntity());
     }
 }

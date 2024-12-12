@@ -3,10 +3,12 @@ package com.spectre.Spectre.application.core.financial;
 import com.spectre.Spectre.application.core.dtos.financial.FinancialDto;
 import com.spectre.Spectre.domain.entity.financial.Financial;
 import com.spectre.Spectre.domain.service.financial.FinancialContext;
-import com.spectre.Spectre.domain.vo.exception.exceptions.NotFoundException;
+import com.spectre.Spectre.domain.vo.exception.NotFoundException;
 import com.spectre.Spectre.domain.vo.utils.Functions;
 import com.spectre.Spectre.infrastructure.repository.financial.FinancialRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +21,11 @@ public class FinancialService implements FinancialContext {
     private static final String FINANCIAL_NOT_FOUND = "Registro financeiro não encontrado";
 
     private final FinancialRepository financialRepository;
+
+    @Override
+    public Page<Financial> findAll(Pageable pageable) {
+        return this.financialRepository.findAll(pageable);
+    }
 
     @Override
     public Financial findById(Long id) {
@@ -34,16 +41,16 @@ public class FinancialService implements FinancialContext {
 
     @Override
     @Transactional
-    public void update(FinancialDto financialToUpdate) {
+    public void update(FinancialDto financial) {
         Functions.acceptFalseThrows(
-                notNullAndNotEmptyValue(financialToUpdate.getId()) && this.existsById(financialToUpdate.getId()),
+                notNullAndNotEmptyValue(financial.getId()) && this.existsById(financial.getId()),
                 () -> new NotFoundException(FINANCIAL_NOT_FOUND)
         );
-        Financial savedFinancial = this.findById(financialToUpdate.getId());
+        Financial financialToUpdate = this.findById(financial.getId());
 
-        this.mapFinancialToUpdate(financialToUpdate, savedFinancial);
+        this.mapFinancialToUpdate(financial, financialToUpdate);
 
-        this.financialRepository.save(savedFinancial);
+        this.financialRepository.save(financialToUpdate);
     }
 
     @Override
@@ -60,8 +67,8 @@ public class FinancialService implements FinancialContext {
         return this.financialRepository.existsById(id);
     }
 
-    private void mapFinancialToUpdate(FinancialDto financialToUpdate, Financial savedFinancial) {
-        savedFinancial.setCashInflow(financialToUpdate.getCashInflow());
-        savedFinancial.setCashOutflow(financialToUpdate.getCashOutflow());
+    private void mapFinancialToUpdate(FinancialDto financial, Financial financialToUpdate) {
+        financialToUpdate.setCashInflow(financial.getCashInflow());
+        financialToUpdate.setCashOutflow(financial.getCashOutflow());
     }
 }

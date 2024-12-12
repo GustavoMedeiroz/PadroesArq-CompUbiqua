@@ -3,10 +3,12 @@ package com.spectre.Spectre.application.core.persona;
 import com.spectre.Spectre.application.core.dtos.persona.PersonaDto;
 import com.spectre.Spectre.domain.entity.persona.Persona;
 import com.spectre.Spectre.domain.service.persona.PersonaContext;
-import com.spectre.Spectre.domain.vo.exception.exceptions.NotFoundException;
+import com.spectre.Spectre.domain.vo.exception.NotFoundException;
 import com.spectre.Spectre.domain.vo.utils.Functions;
 import com.spectre.Spectre.infrastructure.repository.persona.PersonaRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +21,11 @@ public class PersonaService implements PersonaContext {
     private static final String PERSONA_NOT_FOUND = "Pessoa não encontrada";
 
     private final PersonaRepository personaRepository;
+
+    @Override
+    public Page<Persona> findAll(Pageable pageable) {
+        return this.personaRepository.findAll(pageable);
+    }
 
     @Override
     public Persona findById(Long id) {
@@ -34,17 +41,17 @@ public class PersonaService implements PersonaContext {
 
     @Override
     @Transactional
-    public void update(PersonaDto personaToUpdate) {
+    public void update(PersonaDto persona) {
         Functions.acceptFalseThrows(
-                notNullAndNotEmptyValue(personaToUpdate.getId()) && this.existsById(personaToUpdate.getId()),
+                notNullAndNotEmptyValue(persona.getId()) && this.existsById(persona.getId()),
                 () -> new NotFoundException(PERSONA_NOT_FOUND)
         );
 
-        Persona savedPersona = this.findById(personaToUpdate.getId());
+        Persona personaToUpdate = this.findById(persona.getId());
 
-        this.mapPersonaToUpdate(personaToUpdate, savedPersona);
+        this.mapPersonaToUpdate(persona, personaToUpdate);
 
-        this.personaRepository.save(savedPersona);
+        this.personaRepository.save(personaToUpdate);
     }
 
     @Override
@@ -62,9 +69,9 @@ public class PersonaService implements PersonaContext {
         return this.personaRepository.existsById(id);
     }
 
-    private void mapPersonaToUpdate(PersonaDto personaToUpdate, Persona savedPersona) {
-        savedPersona.setName(personaToUpdate.getName());
-        savedPersona.setTaxId(personaToUpdate.getTaxId());
-        savedPersona.setPhone(personaToUpdate.getPhone());
+    private void mapPersonaToUpdate(PersonaDto persona, Persona personaToUpdate) {
+        personaToUpdate.setName(persona.getName());
+        personaToUpdate.setTaxId(persona.getTaxId());
+        personaToUpdate.setPhone(persona.getPhone());
     }
 }

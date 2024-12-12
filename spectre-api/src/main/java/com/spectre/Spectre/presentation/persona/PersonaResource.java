@@ -5,16 +5,25 @@ import com.spectre.Spectre.domain.entity.persona.Persona;
 import com.spectre.Spectre.domain.service.persona.PersonaContext;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@RequestMapping("/persona")
+@RequestMapping("persona")
 @RequiredArgsConstructor
 public class PersonaResource {
 
     private final PersonaContext personaService;
+
+    @GetMapping(value = "/all")
+    public ResponseEntity<Page<Persona>> findAll(@PageableDefault(sort = { "id" }) Pageable pageable) {
+        Page<Persona> personas = this.personaService.findAll(pageable);
+        return ResponseEntity.ok(personas);
+    }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<Persona> findPersonaById(@PathVariable Long id) {

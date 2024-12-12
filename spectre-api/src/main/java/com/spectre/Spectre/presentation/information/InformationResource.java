@@ -5,6 +5,9 @@ import com.spectre.Spectre.domain.entity.information.Information;
 import com.spectre.Spectre.domain.service.information.InformationContext;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -15,6 +18,12 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class InformationResource {
 
     private final InformationContext informationService;
+
+    @GetMapping(value = "/all")
+    public ResponseEntity<Page<Information>> findAll(@PageableDefault(sort = { "id" }) Pageable pageable) {
+        Page<Information> information = this.informationService.findAll(pageable);
+        return ResponseEntity.ok(information);
+    }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<Information> findById(@PathVariable Long id) {

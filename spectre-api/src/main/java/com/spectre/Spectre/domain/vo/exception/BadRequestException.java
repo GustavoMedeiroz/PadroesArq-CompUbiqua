@@ -1,4 +1,4 @@
-package com.spectre.Spectre.domain.vo.exception.exceptions;
+package com.spectre.Spectre.domain.vo.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
