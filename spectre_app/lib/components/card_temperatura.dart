@@ -4,8 +4,9 @@ class CardTemperatura extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 350,
-      height: 265,
+      margin: EdgeInsets.only(right: 10),
+      //width: 350,
+      //height: 265,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),

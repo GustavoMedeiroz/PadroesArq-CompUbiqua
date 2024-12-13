@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         AppRoutes.STOCK: (ctx) => SensorsPage(),
         AppRoutes.NOTIFICATIONS: (ctx) => NotificationsPage(),
         AppRoutes.SETTINGS: (ctx) => SettingsPage(),
-        //ADICIONAR A TELA DE TEMPERATURA E UMIDADE AppRoutes.TEMPERATURE AQUI E NO TABS_SCREEN
+        //ADICIONAR A TELA DE TEMPERATURA E UMIDADE (AppRoutes.TEMPERATURE) AQUI E NO tabs_screen
       },
     );
   }

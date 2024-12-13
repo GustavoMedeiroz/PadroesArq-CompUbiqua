@@ -5,6 +5,7 @@ class CardFluxo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(right: 10),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           //gradiente de cores
