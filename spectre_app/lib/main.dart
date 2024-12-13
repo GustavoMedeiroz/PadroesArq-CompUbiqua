@@ -21,8 +21,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
+        fontFamily: 'Inter', //Definindo as fontes
+        textTheme: ThemeData.light().textTheme.copyWith(
+          titleLarge: const TextStyle(
+            fontSize: 21,
+            fontFamily: 'OpenSans',
+          )
+        )
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Spectre'),
     );
   }
 }
