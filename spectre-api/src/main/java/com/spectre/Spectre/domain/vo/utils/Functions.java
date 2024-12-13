@@ -1,8 +1,9 @@
 package com.spectre.Spectre.domain.vo.utils;
 
-import java.util.Collection;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
+
+import static java.util.Optional.ofNullable;
 
 public final class Functions {
 
@@ -84,12 +85,6 @@ public final class Functions {
     }
 
     private static <T> Boolean notNullAndNotEmpty(T value) {
-        if (value instanceof Collection<?> collection)
-            return !collection.isEmpty();
-
-        if (value instanceof String string)
-            return !string.isEmpty();
-
-        return value != null;
+        return ofNullable(value).isPresent();
     }
 }
