@@ -17,7 +17,7 @@ class DashboardPage extends StatelessWidget {
             Container(
               alignment: Alignment.topLeft,
               margin: EdgeInsets.only(
-                top: 15,
+                top: 10,
                 bottom: 10,
                 left: 30,
               ),
@@ -42,19 +42,16 @@ class DashboardPage extends StatelessWidget {
                   ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 7),
-              child: CarouselSlider( //Carrossel de fluxo de clientes
-                options: CarouselOptions(
-                  enableInfiniteScroll: false,
-                  disableCenter: true,
-                  height: 265,
-                ),
-                items: [ //conteúdo do carrossel
-                  CardFluxo(), //importando card do card_fluxo.dart
-                  CardFluxo(),
-                ],
+            CarouselSlider( //Carrossel de fluxo de clientes
+              options: CarouselOptions(
+                enableInfiniteScroll: false,
+                disableCenter: true,
+                height: 265,
               ),
+              items: [ //conteúdo do carrossel
+                CardFluxo(), //importando card do card_fluxo.dart
+                CardFluxo(),
+              ],
             ),
             SizedBox(height: 20),
             Container(
@@ -69,8 +66,23 @@ class DashboardPage extends StatelessWidget {
                     ),
               ),
             ),
-
-            CardEstoque(), //Separar o carousel de dentro desse component
+            Container(
+              margin: EdgeInsets.only(left: 40), //margem do carrossel para a borda (ajustar se necessário)
+              child: CarouselSlider( //Carrossel de fluxo de clientes
+                  options: CarouselOptions(
+                    enableInfiniteScroll: false,
+                    height: 173, //tamanho de cada itiem
+                    viewportFraction: 0.47, //porção da tela que cada item ocupa
+                    padEnds: false, //começa o carrossel na borda esquerda do container
+                  ),
+                  items: [ //conteúdo do carrossel (lista de Widgets)
+                    CardEstoque(),
+                    CardEstoque(),
+                    CardEstoque(),
+                    CardEstoque(),
+                  ],
+                ),
+            ),
             SizedBox(height: 20),
             Container(
               alignment: Alignment.topLeft,
@@ -85,7 +97,7 @@ class DashboardPage extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 5, bottom: 20),
+              padding: const EdgeInsets.only(bottom: 20),
               child: CarouselSlider( //Carrossel de fluxo de clientes
                 options: CarouselOptions(
                   enableInfiniteScroll: false,

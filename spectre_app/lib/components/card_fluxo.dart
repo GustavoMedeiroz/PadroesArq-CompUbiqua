@@ -5,7 +5,7 @@ class CardFluxo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(right: 10),
+      margin: EdgeInsets.only(right: 10, top: 10),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           //gradiente de cores
@@ -45,7 +45,7 @@ class CardFluxo extends StatelessWidget {
                 color: Color.fromRGBO(255, 255, 255, 60),
               ),
             ),
-            SizedBox(height: 71),
+            SizedBox(height: 70),
             Column(
               //Coluna da qntd de clientes e horários de pico
               children: [

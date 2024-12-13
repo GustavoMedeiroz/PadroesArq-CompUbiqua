@@ -4,9 +4,7 @@ class CardTemperatura extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(right: 10),
-      //width: 350,
-      //height: 265,
+      margin: EdgeInsets.only(right: 10, top: 10),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
@@ -23,7 +21,7 @@ class CardTemperatura extends StatelessWidget {
             Row( //Row da temperatura, descrição e estado (CRÍTICO, NORMAL...)
               children: [
                 Expanded(
-                  flex: 2,
+                  flex: 3,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
