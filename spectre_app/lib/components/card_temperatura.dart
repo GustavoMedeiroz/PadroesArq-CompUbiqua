@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
 class CardTemperatura extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: 350,
+      height: 265,
       decoration: BoxDecoration(
-        color:Colors.white,
+        color: Colors.white,
         borderRadius: BorderRadius.circular(20),
       ),
       child: Container(
@@ -18,23 +19,53 @@ class CardTemperatura extends StatelessWidget {
           //coluna para envolver os textos do título do Card
           crossAxisAlignment: CrossAxisAlignment.start, //alinhando à esquerda
           children: [
-            Text(
-              '26°C:',
-              style: TextStyle(
-                fontFamily: 'OpenSans',
-                fontWeight: FontWeight.bold,
-                fontSize: 21,
-                color: Colors.black,
-              ),
-            ),
-            Text(
-              'Temperatura ambiente',
-              style: TextStyle(
-                fontFamily: 'Inter',
-                fontWeight: FontWeight.normal,
-                fontSize: 12,
-                color: Color.fromRGBO(0, 0, 0, 60),
-              ),
+            Row( //Row da temperatura, descrição e estado (CRÍTICO, NORMAL...)
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '26°C:',
+                        style: TextStyle(
+                          fontFamily: 'OpenSans',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 21,
+                          color: Colors.black,
+                        ),
+                      ),
+                      Text(
+                        'Temperatura ambiente',
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.normal,
+                          fontSize: 12,
+                          color: Color.fromRGBO(0, 0, 0, 60),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Spacer(),
+                Container(
+                    alignment: Alignment.center,
+                    width: 84,
+                    height: 33,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(41),
+                      color: Color.fromRGBO(44, 155, 217, 0.1),
+                    ),
+                    child: Text(
+                      'NORMAL',
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.normal,
+                        fontSize: 12,
+                      ),
+                    )),
+              ],
             ),
             SizedBox(height: 71),
             Column(
@@ -43,21 +74,24 @@ class CardTemperatura extends StatelessWidget {
                 Row(
                   //quantidade de clients
                   children: [
-                    Text(
-                      'Qntd. de clientes hoje:',
-                      style: TextStyle(
-                        fontFamily: 'Inter',
-                        fontSize: 14,
-                        color: Colors.white,
+                    Expanded( //Expanded para que o primeiro Text ocupe todo o espaço diponível
+                      child: Text(
+                        'Mínima:',
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 14,
+                          fontWeight: FontWeight.normal,
+                          color: Colors.black,
+                        ),
                       ),
                     ),
-                    SizedBox(width: 130),
+                    Spacer(), //Spacer para empurrar o segundo text para a borda direita da Row
                     Text(
-                      '22',
+                      '+15°C',
                       style: TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 14,
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
                     ),
                   ],
@@ -65,69 +99,74 @@ class CardTemperatura extends StatelessWidget {
                 Row(
                   //horários de pico
                   children: [
-                    Text(
-                      'Horário de pico:',
-                      style: TextStyle(
-                        fontFamily: 'Inter',
-                        fontSize: 14,
-                        color: Colors.white,
+                    Expanded(
+                      child: Text(
+                        'Máxima:',
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 14,
+                          color: Colors.black,
+                        ),
                       ),
                     ),
-                    SizedBox(width: 154),
+                    Spacer(),
                     Text(
-                      '18:30',
+                      '+30°C',
                       style: TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 14,
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
                     ),
                   ],
                 ),
-                Divider(color: Color.fromRGBO(255, 255, 255, 0.5)),
+                Divider(color: Color.fromRGBO(0, 0, 0, 0.5)),
               ],
             ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.shopping_cart_outlined,
-                  color: Colors.white,
-                  size: 29,
-                ), //ícone do carrinho
-                Padding(
-                  padding: const EdgeInsets.only(left: 12),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Mais informações',
-                        style: TextStyle(
-                          fontFamily: 'OpenSans',
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
+            Expanded(
+              flex: 3,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.water_drop_outlined,
+                    color: Colors.black,
+                    size: 29,
+                  ), //ícone do carrinho
+                  Padding(
+                    padding: const EdgeInsets.only(left: 12),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '47% de Umidade Relativa',
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 14,
+                            fontWeight: FontWeight.normal,
+                            color: Colors.black,
+                          ),
                         ),
-                      ),
-                      Text(
-                        '01/11/2024',
-                        style: TextStyle(
-                          fontFamily: 'OpenSans',
-                          fontSize: 12,
-                          fontWeight: FontWeight.normal,
-                          color: Color.fromRGBO(255, 255, 255, 0.6),
+                        Text(
+                          'Normal',
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 12,
+                            fontWeight: FontWeight.normal,
+                            color: Color.fromRGBO(0, 0, 0, 0.6),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                SizedBox(width: 119),
-                Icon(
-                  Icons.arrow_forward,
-                  color: Colors.white,
-                  size: 29,
-                ), //ícone da seta
-              ],
+                  Spacer(),
+                  Icon(
+                    Icons.arrow_forward,
+                    color: Colors.black,
+                    size: 29,
+                  ), //ícone da seta
+                ],
+              ),
             ),
           ],
         ),

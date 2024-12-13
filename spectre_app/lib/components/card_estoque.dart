@@ -9,7 +9,7 @@ class CardEstoque extends StatelessWidget {
           child: SizedBox(
             height: 173,
             child: CarouselView( //Carrossel de fluxo de clientes
-              itemSnapping: true,
+              itemSnapping: false,
               itemExtent: 175, //tamanho horizontal de cada item
               children: [ //conteúdo do carrossel
                 Container(

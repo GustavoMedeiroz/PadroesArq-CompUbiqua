@@ -51,15 +51,18 @@ class CardFluxo extends StatelessWidget {
                 Row(
                   //quantidade de clients
                   children: [
-                    Text(
-                      'Qntd. de clientes hoje:',
-                      style: TextStyle(
-                        fontFamily: 'Inter',
-                        fontSize: 14,
-                        color: Colors.white,
+                    Expanded(
+                      flex: 2, //proporção do expanded
+                      child: Text(
+                        'Qntd. de clientes hoje:',
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 14,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
-                    SizedBox(width: 130),
+                    Spacer(),
                     Text(
                       '22',
                       style: TextStyle(
@@ -73,15 +76,18 @@ class CardFluxo extends StatelessWidget {
                 Row(
                   //horários de pico
                   children: [
-                    Text(
-                      'Horário de pico:',
-                      style: TextStyle(
-                        fontFamily: 'Inter',
-                        fontSize: 14,
-                        color: Colors.white,
+                    Expanded(
+                      flex: 2,
+                      child: Text(
+                        'Horário de pico:',
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 14,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
-                    SizedBox(width: 154),
+                    Spacer(),
                     Text(
                       '18:30',
                       style: TextStyle(
@@ -95,47 +101,50 @@ class CardFluxo extends StatelessWidget {
                 Divider(color: Color.fromRGBO(255, 255, 255, 0.5)),
               ],
             ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.shopping_cart_outlined,
-                  color: Colors.white,
-                  size: 29,
-                ), //ícone do carrinho
-                Padding(
-                  padding: const EdgeInsets.only(left: 12),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Mais informações',
-                        style: TextStyle(
-                          fontFamily: 'OpenSans',
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
+            Expanded(
+              flex: 3,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.shopping_cart_outlined,
+                    color: Colors.white,
+                    size: 29,
+                  ), //ícone do carrinho
+                  Padding(
+                    padding: const EdgeInsets.only(left: 12),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Mais informações',
+                          style: TextStyle(
+                            fontFamily: 'OpenSans',
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
                         ),
-                      ),
-                      Text(
-                        '01/11/2024',
-                        style: TextStyle(
-                          fontFamily: 'OpenSans',
-                          fontSize: 12,
-                          fontWeight: FontWeight.normal,
-                          color: Color.fromRGBO(255, 255, 255, 0.6),
+                        Text(
+                          '01/11/2024',
+                          style: TextStyle(
+                            fontFamily: 'OpenSans',
+                            fontSize: 12,
+                            fontWeight: FontWeight.normal,
+                            color: Color.fromRGBO(255, 255, 255, 0.6),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                SizedBox(width: 119),
-                Icon(
-                  Icons.arrow_forward,
-                  color: Colors.white,
-                  size: 29,
-                ), //ícone da seta
-              ],
+                  Spacer(),
+                  Icon(
+                    Icons.arrow_forward,
+                    color: Colors.white,
+                    size: 29,
+                  ), //ícone da seta
+                ],
+              ),
             ),
           ],
         ),
