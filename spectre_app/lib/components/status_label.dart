@@ -3,11 +3,21 @@ import 'package:flutter/material.dart';
 class StatusLabel extends StatelessWidget {
   const StatusLabel({super.key});
 
+  String stockSubtitle(double value, double min, double max) {
+    if (value < min) {
+      return 'Falta de estoque!';
+    } else if (value > max) {
+      return 'Excesso de estoque!';
+    } else {
+      return 'Estoque normal';
+    }
+  }
+
   checkStockStatus(double value, double min, double max) {
     if (value < min) {
-      return mostrarLabelNormal();
-    } else if (value > max) {
       return mostrarLabelCritico();
+    } else if (value > max) {
+      return mostrarLabelExcesso();
     } else {
       return mostrarLabelNormal();
     }
