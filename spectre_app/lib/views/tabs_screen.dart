@@ -55,7 +55,7 @@ class _TabsScreenState extends State<TabsScreen> {
               end: Alignment.bottomCenter,
             ),
           ),
-          child: _screens[_selectedScreenIndex]['screen'] as Widget,
+          child: _screens[_selectedScreenIndex]['screen'] as Widget, //seleciona a tela baseada no index da BottomTabBar
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(

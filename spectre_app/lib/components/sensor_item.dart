@@ -146,7 +146,7 @@ class SensorItem extends StatelessWidget {
                                 ),
                               ),
                               Spacer(),
-                              StatusLabel().checkStockStatus(2, 3, 7),
+                              StatusLabel().checkStockStatus(2, 3, 7), //VAI RECEBER O VALOR ATUAL DO SENSOR, VALOR MÍNIMO, VALOR MÁXIMO
                             ],
                           ),
                           SizedBox(height: 71),
