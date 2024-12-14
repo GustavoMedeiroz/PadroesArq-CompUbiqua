@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../components/sensor_item.dart';
+import '../components/card_temperatura.dart';
 
-class SensorsPage extends StatelessWidget {
-  const SensorsPage({super.key});
+class TemperaturePage extends StatelessWidget {
+  const TemperaturePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class SensorsPage extends StatelessWidget {
                 Padding( //TÍTULO DA PÁGINA
                   padding: const EdgeInsets.only(left: 28),
                   child: Text(
-                    'Sensores Ativos',
+                    'Temperatura e Umidade',
                     style: TextStyle(
                       fontSize: 21,
                       fontFamily: 'Inter',
@@ -64,11 +64,18 @@ class SensorsPage extends StatelessWidget {
             ),
           ),
           Container( //CONSTRUINDO A LISTA DE SENSORES DE PESO DO ESTOQUE
-            height: 800, // ainda vou ajustar melhor esse tamanho
+            height: 700, //depois vou definir melhor essa altura
             child: ListView.builder(
-              itemCount: 10,
+              itemCount: 3,
               itemBuilder: (ctx, index) {
-                return SensorItem();
+                return Padding(
+                  padding: const EdgeInsets.only(
+                    left: 28,
+                    right: 28,
+                    bottom: 10,
+                  ),
+                  child: CardTemperatura(cardSize: 260),
+                );
               },
             ),
           ),

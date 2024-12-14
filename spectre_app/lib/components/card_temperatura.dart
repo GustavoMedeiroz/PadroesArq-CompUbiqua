@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 
 class CardTemperatura extends StatelessWidget {
+  const CardTemperatura({super.key, required this.cardSize});
+
+  final double cardSize;
+
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: cardSize, //definindo a altura aqui também pq caso contrário não carrega fora do Carousel
       margin: EdgeInsets.only(right: 10, top: 10),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -18,7 +23,8 @@ class CardTemperatura extends StatelessWidget {
           //coluna para envolver os textos do título do Card
           crossAxisAlignment: CrossAxisAlignment.start, //alinhando à esquerda
           children: [
-            Row( //Row da temperatura, descrição e estado (CRÍTICO, NORMAL...)
+            Row(
+              //Row da temperatura, descrição e estado (CRÍTICO, NORMAL...)
               children: [
                 Expanded(
                   flex: 3,
@@ -73,7 +79,8 @@ class CardTemperatura extends StatelessWidget {
                 Row(
                   //quantidade de clients
                   children: [
-                    Expanded( //Expanded para que o primeiro Text ocupe todo o espaço diponível
+                    Expanded(
+                      //Expanded para que o primeiro Text ocupe todo o espaço diponível
                       child: Text(
                         'Mínima:',
                         style: TextStyle(
@@ -138,7 +145,7 @@ class CardTemperatura extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '47% de Umidade Relativa',
+                          '47% de Umidade Relativa', //Valor Atual de Umidade
                           style: TextStyle(
                             fontFamily: 'Inter',
                             fontSize: 14,
@@ -147,7 +154,7 @@ class CardTemperatura extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'Normal',
+                          'Normal', //Condição atual de umidade referente ao limite
                           style: TextStyle(
                             fontFamily: 'Inter',
                             fontSize: 12,

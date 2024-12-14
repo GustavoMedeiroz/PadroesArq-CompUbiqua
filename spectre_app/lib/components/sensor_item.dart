@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../core/models/sensor_model.dart';
+
 import '../shared/utils/spectre_colors.dart';
 
 class SensorItem extends StatelessWidget {
@@ -20,7 +20,7 @@ class SensorItem extends StatelessWidget {
         horizontal: 30,
       ),
       child: ListTile(
-        leading: Icon(
+        leading: Icon( //ÍCONE DO SENSOR (o usuário vai escolher o ícone?? Como implementar isso??)
           Icons.lunch_dining,
           size: 26,
         ),

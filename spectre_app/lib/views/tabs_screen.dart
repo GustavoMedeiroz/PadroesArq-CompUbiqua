@@ -5,7 +5,7 @@ import 'package:spectre_app/views/financial_report_page.dart';
 import 'package:spectre_app/views/notifications_page.dart';
 import 'package:spectre_app/views/sensors_page.dart';
 import 'package:spectre_app/views/settings_page.dart';
-
+import 'package:spectre_app/views/temperature_page.dart';
 import '../shared/utils/spectre_colors.dart';
 
 class TabsScreen extends StatefulWidget {  @override
@@ -19,9 +19,10 @@ class _TabsScreenState extends State<TabsScreen> {
   //uma tela será definida como uma lista de maps com uma string e objeto como chave (hora será string e hora será widget)
     { 'title': 'dashboard', 'screen': DashboardPage() },
     { 'title': 'sensors', 'screen': SensorsPage() },
-    { 'title': 'financial', 'screen': FinancialReportPage() },
+    { 'title': 'temperature', 'screen': TemperaturePage() },
     { 'title': 'notifications', 'screen': NotificationsPage() },
-    { 'title': 'tela', 'screen': SettingsPage() },
+    { 'title': 'settings', 'screen': SettingsPage() },
+    { 'title': 'financial', 'screen': FinancialReportPage() }, //ainda não existe o ícone (provavelmente não vamos implementar isso)
   ];
 
   _selectScreen(int index) {
