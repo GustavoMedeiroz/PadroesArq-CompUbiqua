@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:spectre_app/views/dashboard_page.dart';
 import 'package:spectre_app/views/financial_report_page.dart';
 import 'package:spectre_app/views/notifications_page.dart';
 import 'package:spectre_app/views/sensors_page.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:spectre_app/views/settings_page.dart';
+
 import '../shared/utils/spectre_colors.dart';
 
 class TabsScreen extends StatefulWidget {  @override
@@ -20,7 +21,7 @@ class _TabsScreenState extends State<TabsScreen> {
     { 'title': 'sensors', 'screen': SensorsPage() },
     { 'title': 'financial', 'screen': FinancialReportPage() },
     { 'title': 'notifications', 'screen': NotificationsPage() },
-    { 'title': 'settings', 'screen': SettingsPage() },
+    { 'title': 'tela', 'screen': SettingsPage() },
   ];
 
   _selectScreen(int index) {
@@ -33,29 +34,47 @@ class _TabsScreenState extends State<TabsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          _screens[_selectedScreenIndex]['title'] as String,
+      //appBar: AppBar(
+      // title: Text(
+      //    _screens[_selectedScreenIndex]['title'] as String,
+      //    ),
+      //),
+      body: Padding(
+        padding: const EdgeInsets.only(top: 20),
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color.fromRGBO(247, 247, 247, 1),
+                Color.fromRGBO(236, 236, 236, 1),
+              ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
           ),
+          child: _screens[_selectedScreenIndex]['screen'] as Widget,
+        ),
       ),
-      body: _screens[_selectedScreenIndex]['screen'] as Widget,
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectScreen,
-        backgroundColor: SpectreColors.spectreWhite,
+        elevation: 10,
         unselectedItemColor: SpectreColors.spectreWhite, //cor do ícone não selecionado
         selectedItemColor: SpectreColors.spectrePurple, //cor do ícone selecionado
         currentIndex: _selectedScreenIndex,
         type: BottomNavigationBarType.shifting, //aumenta o tamanho do ícone selecionado (animação)
         items: [
           BottomNavigationBarItem(
+            backgroundColor: Colors.white,
             icon: SvgPicture.asset('assets/icons/nav_bar_home.svg'),
             label: '',
           ),
           BottomNavigationBarItem(
+            backgroundColor: Colors.white,
             icon: SvgPicture.asset('assets/icons/nav_bar_shield.svg'),
             label: '',
           ),
           BottomNavigationBarItem(
+            backgroundColor: Colors.white,
             icon: SvgPicture.asset('assets/icons/nav_bar_document.svg'),
             label: '',
           ),
@@ -64,6 +83,7 @@ class _TabsScreenState extends State<TabsScreen> {
             label: '',
           ),
           BottomNavigationBarItem(
+            backgroundColor: Colors.white,
             icon: SvgPicture.asset('assets/icons/nav_bar_setting.svg'),
             label: '',
           ),
