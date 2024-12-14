@@ -1,11 +1,12 @@
-import 'package:flutter/material.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/material.dart' hide CarouselController;
 import 'package:spectre_app/components/card_estoque.dart';
 import 'package:spectre_app/components/card_temperatura.dart';
 
 import '../components/card_fluxo.dart';
 
-class Dashboard extends StatelessWidget {
-  const Dashboard({super.key});
+class DashboardPage extends StatelessWidget {
+  const DashboardPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class Dashboard extends StatelessWidget {
             Container(
               alignment: Alignment.topLeft,
               margin: EdgeInsets.only(
-                top: 15,
+                top: 10,
                 bottom: 10,
                 left: 30,
               ),
@@ -41,19 +42,16 @@ class Dashboard extends StatelessWidget {
                   ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 24),
-              child: SizedBox(
+            CarouselSlider( //Carrossel de fluxo de clientes
+              options: CarouselOptions(
+                enableInfiniteScroll: false,
+                disableCenter: true,
                 height: 265,
-                child: CarouselView( //Carrossel de fluxo de clientes
-                  itemSnapping: true, //Manter o layout original do itens do carrossel
-                  itemExtent: MediaQuery.of(context).size.width * 0.9, //tamanho horizontal de cada item
-                  children: [ //conteúdo do carrossel
-                    CardFluxo(), //importando card do card_fluxo.dart
-                    CardFluxo(),
-                  ],
-                ),
               ),
+              items: [ //conteúdo do carrossel
+                CardFluxo(), //importando card do card_fluxo.dart
+                CardFluxo(),
+              ],
             ),
             SizedBox(height: 20),
             Container(
@@ -68,7 +66,23 @@ class Dashboard extends StatelessWidget {
                     ),
               ),
             ),
-            CardEstoque(), //Separar o carousel de dentro desse component
+            Container(
+              margin: EdgeInsets.only(left: 40), //margem do carrossel para a borda (ajustar se necessário)
+              child: CarouselSlider( //Carrossel de fluxo de clientes
+                  options: CarouselOptions(
+                    enableInfiniteScroll: false,
+                    height: 173, //tamanho de cada itiem
+                    viewportFraction: 0.47, //porção da tela que cada item ocupa
+                    padEnds: false, //começa o carrossel na borda esquerda do container
+                  ),
+                  items: [ //conteúdo do carrossel (lista de Widgets)
+                    CardEstoque(),
+                    CardEstoque(),
+                    CardEstoque(),
+                    CardEstoque(),
+                  ],
+                ),
+            ),
             SizedBox(height: 20),
             Container(
               alignment: Alignment.topLeft,
@@ -82,27 +96,19 @@ class Dashboard extends StatelessWidget {
                     ),
               ),
             ),
-            //Container(
-            //  margin: EdgeInsets.only(top: 5, bottom: 20),
-            //  child: CardTemperatura()
-            //),
             Padding(
-              padding: const EdgeInsets.only(left: 24,top: 5, bottom: 20),
-              child: SizedBox(
-                height: 267,
-                child: CarouselView( //Carrossel de fluxo de clientes
-                controller: CarouselController(
-
+              padding: const EdgeInsets.only(bottom: 20),
+              child: CarouselSlider( //Carrossel de fluxo de clientes
+                options: CarouselOptions(
+                  enableInfiniteScroll: false,
+                  disableCenter: true,
+                  height: 276,
                 ),
-                  itemSnapping: true, //Manter o layout original do itens do carrossel
-                  itemExtent: MediaQuery.of(context).size.width * 0.9, //tamanho horizontal de cada item
-                  children: [ //conteúdo do carrossel
-                    //estou passando o tamanho do card como parâmetro pq na tela de temperatura deve ser menor e não vou fazer 2 componentes diferentes
-                    CardTemperatura(cardSize: 276),
-                    CardTemperatura(cardSize: 276),
-                    CardTemperatura(cardSize: 276),
-                  ],
-                ),
+                items: [ //conteúdo do carrossel
+                  CardTemperatura(cardSize: 276),
+                  CardTemperatura(cardSize: 276),
+                  CardTemperatura(cardSize: 276),
+                ],
               ),
             ),
           ],
