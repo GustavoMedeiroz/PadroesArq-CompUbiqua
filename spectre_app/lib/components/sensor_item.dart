@@ -1,8 +1,10 @@
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_popup_card/flutter_popup_card.dart';
-import 'status_label.dart';
+
 import '../shared/utils/spectre_colors.dart';
+import 'status_label.dart';
 
 class SensorItem extends StatelessWidget {
   const SensorItem({super.key});
@@ -79,7 +81,7 @@ class SensorItem extends StatelessWidget {
   }
 
   ///////// POP-UP /////////
-  
+
   void _mostrarPopUp(BuildContext context) {
     showPopupCard(
         //MOSTRANDO O POP-UP DO SENSOR
@@ -116,7 +118,8 @@ class SensorItem extends StatelessWidget {
                             CrossAxisAlignment.start, //alinhando à esquerda
                         children: [
                           Row(
-                            //Row da temperatura, descrição e estado (CRÍTICO, NORMAL...)
+                            //Row da temperatura, descrição e estado
+                            //Estado (CRÍTICO, NORMAL...) é dado pelo status_label.dart
                             children: [
                               Expanded(
                                 flex: 3,
@@ -124,7 +127,7 @@ class SensorItem extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      '26°C:',
+                                      'Frutas:', //Teoricamente tem um ícone aqui tb mas vamos deixar pra implementar só se der tempo
                                       style: TextStyle(
                                         fontFamily: 'OpenSans',
                                         fontWeight: FontWeight.bold,
@@ -133,7 +136,7 @@ class SensorItem extends StatelessWidget {
                                       ),
                                     ),
                                     Text(
-                                      'Temperatura ambiente',
+                                      StatusLabel().stockSubtitle(2, 3, 7), //usar o stockSubtitle do StatusLabel passando os dados dinâmicos
                                       style: TextStyle(
                                         fontFamily: 'Inter',
                                         fontWeight: FontWeight.normal,
@@ -145,10 +148,10 @@ class SensorItem extends StatelessWidget {
                                 ),
                               ),
                               Spacer(),
-                              StatusLabel().checkStockStatus(2, 3, 7),
+                              StatusLabel().checkStockStatus(2, 3, 7), //VAI RECEBER O VALOR ATUAL DO SENSOR, VALOR MÍNIMO, VALOR MÁXIMO
                             ],
                           ),
-                          SizedBox(height: 71),
+                          SizedBox(height: 25),
                           Column(
                             //Coluna da qntd de clientes e horários de pico
                             children: [
@@ -156,9 +159,10 @@ class SensorItem extends StatelessWidget {
                                 //quantidade de clients
                                 children: [
                                   Expanded(
+                                    flex: 4,
                                     //Expanded para que o primeiro Text ocupe todo o espaço diponível
                                     child: Text(
-                                      'Mínima:',
+                                      'Estoque atual:',
                                       style: TextStyle(
                                         fontFamily: 'Inter',
                                         fontSize: 14,
@@ -169,7 +173,7 @@ class SensorItem extends StatelessWidget {
                                   ),
                                   Spacer(), //Spacer para empurrar o segundo text para a borda direita da Row
                                   Text(
-                                    '+15°C',
+                                    '8', //Mostrar dado dinâmico
                                     style: TextStyle(
                                       fontFamily: 'Inter',
                                       fontSize: 14,
@@ -182,8 +186,9 @@ class SensorItem extends StatelessWidget {
                                 //horários de pico
                                 children: [
                                   Expanded(
+                                    flex: 4,
                                     child: Text(
-                                      'Máxima:',
+                                      'Limite mínimo (un.)',
                                       style: TextStyle(
                                         fontFamily: 'Inter',
                                         fontSize: 14,
@@ -193,7 +198,7 @@ class SensorItem extends StatelessWidget {
                                   ),
                                   Spacer(),
                                   Text(
-                                    '+30°C',
+                                    '10', //Mostrar dado dinâmico
                                     style: TextStyle(
                                       fontFamily: 'Inter',
                                       fontSize: 14,
@@ -202,7 +207,62 @@ class SensorItem extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              Divider(color: Color.fromRGBO(0, 0, 0, 0.5)),
+                              Row(
+                                //horários de pico
+                                children: [
+                                  Expanded(
+                                    flex: 4,
+                                    child: Text(
+                                      'Limite máximo (un.)',
+                                      style: TextStyle(
+                                        fontFamily: 'Inter',
+                                        fontSize: 14,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ),
+                                  Spacer(),
+                                  Text(
+                                    '50', //Mostrar dado dinâmico
+                                    style: TextStyle(
+                                      fontFamily: 'Inter',
+                                      fontSize: 14,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                //horários de pico
+                                children: [
+                                  Expanded(
+                                    flex: 4,
+                                    child: Text(
+                                      'Peso médio do produto (kg):',
+                                      style: TextStyle(
+                                        fontFamily: 'Inter',
+                                        fontSize: 14,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ),
+                                  Spacer(),
+                                  Text(
+                                    '1.44', //Mostrar dado dinâmico
+                                    style: TextStyle(
+                                      fontFamily: 'Inter',
+                                      fontSize: 14,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 6,
+                                ),
+                                child: Divider(color: Color.fromRGBO(0, 0, 0, 0.5)),
+                              ),
                             ],
                           ),
                           Expanded(
@@ -211,17 +271,18 @@ class SensorItem extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Icon(
-                                  Icons.water_drop_outlined,
+                                  Icons.sensors,
                                   color: Colors.black,
-                                  size: 29,
+                                  size: 34,
                                 ), //ícone do carrinho
                                 Padding(
                                   padding: const EdgeInsets.only(left: 12),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        '47% de Umidade Relativa', //Valor Atual de Umidade
+                                        'Alterar limites / peso',
                                         style: TextStyle(
                                           fontFamily: 'Inter',
                                           fontSize: 14,
@@ -230,7 +291,7 @@ class SensorItem extends StatelessWidget {
                                         ),
                                       ),
                                       Text(
-                                        'Normal', //Condição atual de umidade referente ao limite
+                                        'Sensor de peso',
                                         style: TextStyle(
                                           fontFamily: 'Inter',
                                           fontSize: 12,
