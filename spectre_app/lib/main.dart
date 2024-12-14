@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:spectre_app/components/stock_details.dart';
 import 'package:spectre_app/views/notifications_page.dart';
 import 'package:spectre_app/views/sensors_page.dart';
 import 'package:spectre_app/views/settings_page.dart';
-import 'package:spectre_app/shared/utils/app_router.dart'
-;
+import 'package:spectre_app/shared/utils/app_router.dart';
 import 'package:spectre_app/views/tabs_screen.dart';
 import 'package:spectre_app/views/temperature_page.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
         AppRoutes.NOTIFICATIONS: (ctx) => NotificationsPage(),
         AppRoutes.SETTINGS: (ctx) => SettingsPage(),
         AppRoutes.TEMPERATURE: (ctx) => TemperaturePage(),
+        AppRoutes.STOCKDETAILS: (ctx) => StockDetails(),
       },
     );
   }

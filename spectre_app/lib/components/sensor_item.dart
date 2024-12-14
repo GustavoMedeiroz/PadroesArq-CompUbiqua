@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_popup_card/flutter_popup_card.dart';
+import 'package:spectre_app/components/stock_details.dart';
 import '../shared/utils/spectre_colors.dart';
+import '../shared/utils/app_router.dart';
 
 class SensorItem extends StatelessWidget {
   const SensorItem({super.key});
 
-  // PARA IMPLEMENTAR COM DADOS DINÂMICOS:
+  // PARA RECEBER OS DADOS DO SENSOR:
   // const SensorItem({super.key, required this.sensor});
   // final SensorModel sensor;
   // + Passar o Sensor como parâmetro ao chamar um SensorItem no sensors_page
+
+  // RASCUNHO: TALVEZ NÃO SERÁ USADO PQ VOU CONSTRUIR O POPUP DENTRO DESSE COMPONENT MESMO, NÃO PRECISA DE ROTA
+  //void _abrirPopUp (BuildContext context) {
+  //  Navigator.of(context).pushNamed(AppRoutes.STOCKDETAILS); //navega para a rota
+  //  arguments: sensor (passar o sensor atual para a rota)
+  //}
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +69,12 @@ class SensorItem extends StatelessWidget {
           Icons.more_horiz,
           size: 30,
         ),
+        onTap: () => showPopupCard(
+          context: context,
+          builder: (context) {
+            return StockDetails();
+          }
+        )
       ),
     );
   }

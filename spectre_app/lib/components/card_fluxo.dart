@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CardFluxo extends StatelessWidget {
+  const CardFluxo({super.key});
+
 
   @override
   Widget build(BuildContext context) {

@@ -8,7 +8,9 @@ import 'package:spectre_app/views/settings_page.dart';
 import 'package:spectre_app/views/temperature_page.dart';
 import '../shared/utils/spectre_colors.dart';
 
-class TabsScreen extends StatefulWidget {  @override
+class TabsScreen extends StatefulWidget {
+  const TabsScreen({super.key});
+  @override
   State<TabsScreen> createState() => _TabsScreenState();
 }
 

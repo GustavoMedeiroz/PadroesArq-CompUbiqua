@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CardEstoque extends StatelessWidget {
+  const CardEstoque({super.key});
+
 
   @override
   Widget build(BuildContext context) {

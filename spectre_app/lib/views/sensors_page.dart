@@ -63,7 +63,7 @@ class SensorsPage extends StatelessWidget {
               ],
             ),
           ),
-          Container( //CONSTRUINDO A LISTA DE SENSORES DE PESO DO ESTOQUE
+          SizedBox( //CONSTRUINDO A LISTA DE SENSORES DE PESO DO ESTOQUE
             height: 800, // ainda vou ajustar melhor esse tamanho
             child: ListView.builder(
               itemCount: 10,

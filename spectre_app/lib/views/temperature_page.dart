@@ -63,7 +63,7 @@ class TemperaturePage extends StatelessWidget {
               ],
             ),
           ),
-          Container( //CONSTRUINDO A LISTA DE SENSORES DE PESO DO ESTOQUE
+          SizedBox( //CONSTRUINDO A LISTA DE SENSORES DE PESO DO ESTOQUE
             height: 700, //depois vou definir melhor essa altura
             child: ListView.builder(
               itemCount: 3,
