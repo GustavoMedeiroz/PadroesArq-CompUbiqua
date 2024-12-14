@@ -5,26 +5,27 @@ class StatusLabel extends StatelessWidget {
 
   checkStockStatus(double value, double min, double max) {
     if (value < min) {
-      return Container(
-          alignment: Alignment.center,
-          width: 84,
-          height: 33,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(41),
-            color: Color.fromRGBO(255, 0, 0, 0.1),
-          ),
-          child: Text(
-            'CRÍTICO',
-            style: TextStyle(
-              color: Colors.red,
-              fontFamily: 'Inter',
-              fontWeight: FontWeight.normal,
-              fontSize: 12,
-            ),
-          ));
+      return mostrarLabelNormal();
     } else if (value > max) {
+      return mostrarLabelCritico();
     } else {
-      return Container(
+      return mostrarLabelNormal();
+    }
+  }
+
+  checkTemperatureStatus(double value, double min, double max) {
+    if (value < min) {
+    } else if (value > max) {
+    } else {}
+  }
+
+  checkHumidityStatus(double value, double min) {
+    if (value < min) {
+    } else {}
+  }
+
+  mostrarLabelNormal () {
+    Container(
           //Status Label
           alignment: Alignment.center,
           width: 84,
@@ -42,18 +43,46 @@ class StatusLabel extends StatelessWidget {
               fontSize: 12,
             ),
           ));
-    }
   }
 
-  checkTemperatureStatus(double value, double min, double max) {
-    if (value < min) {
-    } else if (value > max) {
-    } else {}
+  mostrarLabelCritico () {
+    Container(
+          alignment: Alignment.center,
+          width: 84,
+          height: 33,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(41),
+            color: Color.fromRGBO(255, 0, 0, 0.1),
+          ),
+          child: Text(
+            'CRÍTICO',
+            style: TextStyle(
+              color: Colors.red,
+              fontFamily: 'Inter',
+              fontWeight: FontWeight.normal,
+              fontSize: 12,
+            ),
+          ));
   }
 
-  checkHumidityStatus(double value, double min) {
-    if (value < min) {
-    } else {}
+  mostrarLabelExcesso () {
+        Container(
+          alignment: Alignment.center,
+          width: 84,
+          height: 33,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(41),
+            color: Color.fromRGBO(70, 137, 28, 0.1),
+          ),
+          child: Text(
+            'EXCESSO',
+            style: TextStyle(
+              color: Colors.green,
+              fontFamily: 'Inter',
+              fontWeight: FontWeight.normal,
+              fontSize: 12,
+            ),
+          ));
   }
 
   @override

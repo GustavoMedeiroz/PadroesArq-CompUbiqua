@@ -116,7 +116,8 @@ class SensorItem extends StatelessWidget {
                             CrossAxisAlignment.start, //alinhando à esquerda
                         children: [
                           Row(
-                            //Row da temperatura, descrição e estado (CRÍTICO, NORMAL...)
+                            //Row da temperatura, descrição e estado
+                            //Estado (CRÍTICO, NORMAL...) é dado pelo status_label.dart
                             children: [
                               Expanded(
                                 flex: 3,
