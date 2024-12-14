@@ -6,5 +6,4 @@ class AppRoutes {
   static const FINANCIAL = '/financial';
   static const NOTIFICATIONS = '/notifications';
   static const SETTINGS = '/settings';
-  static const STOCKDETAILS = '/stock-details';
 }

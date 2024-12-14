@@ -35,7 +35,6 @@ class MyApp extends StatelessWidget {
         AppRoutes.NOTIFICATIONS: (ctx) => NotificationsPage(),
         AppRoutes.SETTINGS: (ctx) => SettingsPage(),
         AppRoutes.TEMPERATURE: (ctx) => TemperaturePage(),
-        AppRoutes.STOCKDETAILS: (ctx) => StockDetails(),
       },
     );
   }

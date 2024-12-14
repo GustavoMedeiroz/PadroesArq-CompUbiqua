@@ -53,7 +53,7 @@ class CardTemperatura extends StatelessWidget {
                   ),
                 ),
                 Spacer(),
-                Container(
+                Container( //Status Label
                     alignment: Alignment.center,
                     width: 84,
                     height: 33,
