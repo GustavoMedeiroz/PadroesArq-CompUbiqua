@@ -1,16 +1,22 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_popup_card/flutter_popup_card.dart';
-
 import '../shared/utils/spectre_colors.dart';
 import 'status_label.dart';
+import 'limits_popup.dart';
 
 class SensorItem extends StatelessWidget {
   const SensorItem({super.key});
 
   void _mostrarTelaLimites (BuildContext context) {
     Navigator.pop(context); //Retirando o popup atual da tela para adicionar o popup de limites
+    showDialog(
+      context: context,
+      barrierDismissible: true, // Isso permite que o usuário feche o dialog ao clicar fora dele
+      builder: (context) {
+      return LimitsPopup();
+      }
+    );
   }
 
   // PARA RECEBER OS DADOS DO SENSOR:
