@@ -7,38 +7,39 @@ import '../components/sensor_item.dart';
 class SensorsPage extends StatelessWidget {
   SensorsPage({super.key});
 
-  final List <SensorModel> _sensors = [];
+  final List<SensorModel> _sensors = [];
 
   //_addSensor(String title, double value, DateTime date) { //criando uma transação após o _submitForm no transaction_form
-    //final newSensor = SensorModel(
-    //  id: Random().nextDouble().toString(),
-    //  title: title,
-    //  value: value,
-    //  date: date,
-    //);
- 
-    //setState(() {
-    //  _sensors.add(newSensor);
-    //});
- 
-    //Navigator.of(context).pop();
+  //final newSensor = SensorModel(
+  //  id: Random().nextDouble().toString(),
+  //  title: title,
+  //  value: value,
+  //  date: date,
+  //);
+
+  //setState(() {
+  //  _sensors.add(newSensor);
+  //});
+
+  //Navigator.of(context).pop();
   //}
 
-  void _abrirSensorForm (BuildContext context) {
+  void _abrirSensorForm(BuildContext context) {
     showModalBottomSheet(
       context: context,
       builder: (_) {
-        return Text('ignore isso');//TransactionForm(_addSensor);
+        return Text('ignore isso'); //TransactionForm(_addSensor);
       },
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold( //definindo um Scaffold nessa tela para poder usar o FloatingActionButton
+    return Scaffold(
+      //definindo um Scaffold nessa tela para poder usar o FloatingActionButton
       body: SingleChildScrollView(
         child: Container(
-            decoration: BoxDecoration(
+          decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
                 Color.fromRGBO(247, 247, 247, 1),
@@ -65,7 +66,8 @@ class SensorsPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding( //TÍTULO DA PÁGINA
+                    Padding(
+                      //TÍTULO DA PÁGINA
                       padding: const EdgeInsets.only(left: 28),
                       child: Text(
                         'Sensores Ativos',
@@ -77,7 +79,8 @@ class SensorsPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Padding( //FILTRO DE BUSCA, podemos deixar por último (https://www.youtube.com/watch?v=ZHdg2kfKmjI)
+                    Padding(
+                      //FILTRO DE BUSCA, podemos deixar por último (https://www.youtube.com/watch?v=ZHdg2kfKmjI)
                       padding: const EdgeInsets.symmetric(
                         horizontal: 28,
                         vertical: 20,
@@ -103,7 +106,8 @@ class SensorsPage extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox( //CONSTRUINDO A LISTA DE SENSORES DE PESO DO ESTOQUE
+              SizedBox(
+                //CONSTRUINDO A LISTA DE SENSORES DE PESO DO ESTOQUE
                 height: 800, // ainda vou ajustar melhor esse tamanho
                 child: ListView.builder(
                   itemCount: 10,
@@ -116,25 +120,24 @@ class SensorsPage extends StatelessWidget {
           ),
         ),
       ),
-      floatingActionButton: Container( //Botão para adicionar sensores
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    boxShadow: [
-                      BoxShadow(
-                        color: SpectreColors.spectrePurple,
-                        blurRadius: 20,
-                        spreadRadius: 0.5,
-                      )
-                    ]
-                  ),
-                  child: FloatingActionButton(
-                  elevation: 5,
-                  foregroundColor: Colors.white,
-                  backgroundColor: SpectreColors.spectrePurple,
-                  shape: CircleBorder(),
-                  child: Icon(Icons.add, size: 30),
-                  onPressed: () => _abrirSensorForm(context),
-                ),
+      floatingActionButton: Container(
+        //Botão para adicionar sensores
+        decoration:
+            BoxDecoration(borderRadius: BorderRadius.circular(100), boxShadow: [
+          BoxShadow(
+            color: SpectreColors.spectrePurple,
+            blurRadius: 20,
+            spreadRadius: 0.5,
+          )
+        ]),
+        child: FloatingActionButton(
+          elevation: 5,
+          foregroundColor: Colors.white,
+          backgroundColor: SpectreColors.spectrePurple,
+          shape: CircleBorder(),
+          child: Icon(Icons.add, size: 30),
+          onPressed: () => _abrirSensorForm(context),
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );

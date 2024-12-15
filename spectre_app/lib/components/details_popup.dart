@@ -1,69 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_popup_card/flutter_popup_card.dart';
+import 'package:spectre_app/components/status_label.dart';
+import 'package:spectre_app/components/sensor_item.dart';
 
-import 'status_label.dart';
+class DetailsPopup extends StatelessWidget {
+  const DetailsPopup({super.key});
 
-class LimitsPopup extends StatelessWidget {
-  const LimitsPopup({super.key});
+  //recebe um objeto SensorModel referente ao sensor atual vindo da tela sensor_page ou temperatura_page
 
-  void _confirmarAlteracoes() {
-    //confirmar envio do formulário -> alterar as informações no banco
+  void _verificaTipoSensor() {
+    //VERIFICA TIPO DO SENSOR (PESO OU TEMPERATURA E UMIDADE)
   }
 
-  // Método para criar parte do card
-  inputValue(BuildContext context, placeholder, double value) { //acrescentar nos parâmetros algo para verificar o tipo de valor a ser alterado no banco
-    return Material(
-      color: Colors.white,
-      child: InkWell(
-        child: Row(
-          //quantidade de clients
-          children: [
-            Expanded(
-              flex: 4,
-              //Expanded para que o primeiro Text ocupe todo o espaço diponível
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    placeholder, //passando a String recebida
-                    style: TextStyle(
-                      fontFamily: 'Inter',
-                      fontSize: 14,
-                      fontWeight: FontWeight.normal,
-                      color: Colors.black,
-                    ),
-                  ),
-                  Text(
-                    value.toString(), //convertendo o valor para String
-                    style: TextStyle(
-                      fontFamily: 'Inter',
-                      fontSize: 14,
-                      fontWeight: FontWeight.normal,
-                      color: Color.fromRGBO(0, 0, 0, 0.6),
-                    ),
-                  ),
-                ],
-              ),
+  _criaRowInformacoes(String label, double value) { //cria cada linha de informações sobre o sensor
+    return Row(
+      //quantidade de clients
+      children: [
+        Expanded(
+          flex: 4,
+          //Expanded para que o primeiro Text ocupe todo o espaço diponível
+          child: Text(
+            label,
+            style: TextStyle(
+              fontFamily: 'Inter',
+              fontSize: 14,
+              fontWeight: FontWeight.normal,
+              color: Colors.black,
             ),
-            Spacer(), //Spacer para empurrar o segundo text para a borda direita da Row
-            Icon(
-              Icons.arrow_forward_ios,
-              size: 15,
-            ),
-          ],
+          ),
         ),
-        onTap:() => showDialog(
-          context: context,
-          barrierDismissible: true, //Isso permite que o usuário feche o dialog ao clicar fora dele
-          builder: (context) {
-          return Text('Beleza');
-          }
+        Spacer(), //Spacer para empurrar o segundo text para a borda direita da Row
+        Text(
+          value.toString(), //Mostrar dado dinâmico
+          style: TextStyle(
+            fontFamily: 'Inter',
+            fontSize: 14,
+            color: Colors.black,
+          ),
         ),
-      ),
+      ],
     );
   }
 
-  // Builder //
+
+  // BUILD //
+
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +58,7 @@ class LimitsPopup extends StatelessWidget {
             ),
             elevation: 5,
             child: SizedBox(
-              height: 320,
+              height: 265,
               width: 320,
               child: Padding(
                 padding: const EdgeInsets.symmetric(
@@ -99,7 +80,7 @@ class LimitsPopup extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Frutas', //Teoricamente tem um ícone aqui tb mas vamos deixar pra implementar só se der tempo
+                                'Frutas:', //Teoricamente tem um ícone aqui tb mas vamos deixar pra implementar só se der tempo
                                 style: TextStyle(
                                   fontFamily: 'OpenSans',
                                   fontWeight: FontWeight.bold,
@@ -108,7 +89,8 @@ class LimitsPopup extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                'Valores atuais do sensor',
+                                StatusLabel().stockSubtitle(2, 3,
+                                    7), //usar o stockSubtitle do StatusLabel passando os dados dinâmicos
                                 style: TextStyle(
                                   fontFamily: 'Inter',
                                   fontWeight: FontWeight.normal,
@@ -125,25 +107,11 @@ class LimitsPopup extends StatelessWidget {
                     ),
                     SizedBox(height: 25),
                     Column(
-                      //Coluna da qntd de clientes e horários de pico
                       children: [
-                        inputValue( //chamando a função do campo de alterar valor
-                          context,
-                          'Limite mínimo (un.):',
-                          10, //passar o valor de limite mínimo do sensor
-                        ),
-                        SizedBox(height: 10),
-                        inputValue(
-                          context,
-                          'Limite máximo (un.):',
-                          50, //passar o valor de limite máximo do sensor
-                        ),
-                        SizedBox(height: 10),
-                        inputValue(
-                          context,
-                          'Peso médio do produto (un.):',
-                          1.44, //passar o valor do produto registrado no sensor
-                        ),
+                        _criaRowInformacoes('Estoque atual:', 8),
+                        _criaRowInformacoes('Limite mínimo (un.):', 10),
+                        _criaRowInformacoes('Limite máximo (un.):', 50),
+                        _criaRowInformacoes('Peso médio do produto (kg):', 1.44),
                         Padding(
                           padding: const EdgeInsets.symmetric(
                             vertical: 6,
@@ -157,7 +125,7 @@ class LimitsPopup extends StatelessWidget {
                       child: Material(
                         color: Colors.white,
                         child: InkWell(
-                          onTap: () => _confirmarAlteracoes(),
+                          onTap: () => SensorItem().mostrarTelaLimites(context),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
@@ -168,14 +136,28 @@ class LimitsPopup extends StatelessWidget {
                               ), //ícone do carrinho
                               Padding(
                                 padding: const EdgeInsets.only(left: 12),
-                                child: Text(
-                                  'Confirmar alterações',
-                                  style: TextStyle(
-                                    fontFamily: 'Inter',
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.normal,
-                                    color: Colors.black,
-                                  ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Alterar limites / peso',
+                                      style: TextStyle(
+                                        fontFamily: 'Inter',
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    Text(
+                                      'Sensor de peso',
+                                      style: TextStyle(
+                                        fontFamily: 'Inter',
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.normal,
+                                        color: Color.fromRGBO(0, 0, 0, 0.6),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                               Spacer(),
