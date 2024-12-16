@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spectre_app/core/models/sensor_model.dart';
 import 'package:spectre_app/shared/utils/spectre_colors.dart';
-
 import '../components/sensor_item.dart';
 
 class SensorsPage extends StatelessWidget {

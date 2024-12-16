@@ -75,6 +75,7 @@ class TemperaturePage extends StatelessWidget {
                     bottom: 10,
                   ),
                   child: CardTemperatura(cardSize: 260),
+                  
                 );
               },
             ),

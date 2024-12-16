@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:spectre_app/views/dashboard_page.dart';
 import 'package:spectre_app/views/financial_report_page.dart';
 import 'package:spectre_app/views/notifications_page.dart';
@@ -31,33 +30,25 @@ class _TabsScreenState extends State<TabsScreen> {
   _selectScreen(int index) {
     setState(() {
       _selectedScreenIndex = index;
-    });
+    }); 
   }
 
  //além de ser uma tela, irá possuir as tabs para navegar para outras telas
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //appBar: AppBar(
-      // title: Text(
-      //    _screens[_selectedScreenIndex]['title'] as String,
-      //    ),
-      //),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 20),
-        child: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Color.fromRGBO(247, 247, 247, 1),
-                Color.fromRGBO(236, 236, 236, 1),
-              ],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color.fromRGBO(247, 247, 247, 1),
+              Color.fromRGBO(236, 236, 236, 1),
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
           ),
-          child: _screens[_selectedScreenIndex]['screen'] as Widget, //seleciona a tela baseada no index da BottomTabBar
         ),
+        child: _screens[_selectedScreenIndex]['screen'] as Widget, //seleciona a tela baseada no index da BottomTabBar
       ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectScreen,
