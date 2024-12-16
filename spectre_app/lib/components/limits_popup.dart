@@ -3,15 +3,38 @@ import 'package:flutter_popup_card/flutter_popup_card.dart';
 
 import 'status_label.dart';
 
-class LimitsPopup extends StatelessWidget {
+class LimitsPopup extends StatefulWidget {
   const LimitsPopup({super.key});
 
-  void _confirmarAlteracoes() {
+  @override
+  State<LimitsPopup> createState() => _LimitsPopupState();
+}
+
+  class _LimitsPopupState extends State<LimitsPopup> {
+
+  late TextEditingController controller; //controller para os valores a serem alterados
+  String value = ''; //novo valor passado pelo usuário
+
+  @override
+  void initState() { //inicializando o controller
+    super.initState();
+    controller = TextEditingController();
+  }
+
+  @override
+  void dispose() { //removendo o controller
+    controller.dispose();
+    super.dispose();
+  }
+
+  _confirmarAlteracoes() {
+    return Text('Ignore');
     //confirmar envio do formulário -> alterar as informações no banco
   }
 
   // Método para criar parte do card
-  inputValue(BuildContext context, placeholder, double value) { //acrescentar nos parâmetros algo para verificar o tipo de valor a ser alterado no banco
+  inputValue(BuildContext context, String placeholder, String value) {
+    //acrescentar nos parâmetros algo para verificar o tipo de valor a ser alterado no banco
     return Material(
       color: Colors.white,
       child: InkWell(
@@ -52,18 +75,88 @@ class LimitsPopup extends StatelessWidget {
             ),
           ],
         ),
-        onTap:() => showDialog(
-          context: context,
-          barrierDismissible: true, //Isso permite que o usuário feche o dialog ao clicar fora dele
-          builder: (context) {
-          return Text('Beleza');
-          }
+        onTap: () async { //espera o valor inserido pelo usuário
+          final value = await openDialog(context, placeholder); //passando o contexto e a descrição do valor a ser alterado
+          if (value == null || value.isEmpty) return;
+
+          setState(() {
+            this.value = value;
+            //chamar um método para alterar o valor no banco de dados
+          });
+        }
+      ),
+    );
+  }
+
+  Future<String?> openDialog(BuildContext context, String title) {
+    return showDialog<String?>( //Dialog para alterar o valor de alguma propriedade do sensor
+    context: context,
+    builder: (context) => AlertDialog(
+      title: Text(title),
+      content: TextField(
+        autofocus: true,
+        decoration: InputDecoration(
+          hintText: 'Insira o novo valor'
+        ),
+        controller: controller,
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => submit(context),
+          child: Text('CONCLUIR'),
+        ),
+      ],
+    ),
+  );
+  }
+
+  submit(BuildContext context) {
+    return Navigator.of(context).pop(controller.text); //esconder o Dialog e passando o valor
+  }
+
+  _mostrarBotaoConfirma() {
+    return Expanded(
+      flex: 3,
+      child: Material(
+        color: Colors.white,
+        child: InkWell(
+          onTap: () => _confirmarAlteracoes(),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.sensors,
+                color: Colors.black,
+                size: 34,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 12),
+                child: Text(
+                  'Confirmar alterações',
+                  style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 14,
+                    fontWeight: FontWeight.normal,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              Spacer(),
+              Icon(
+                Icons.arrow_forward,
+                color: Colors.black,
+                size: 29,
+              ), //ícone da seta
+            ],
+          ),
         ),
       ),
     );
   }
 
+
   // Builder //
+
 
   @override
   Widget build(BuildContext context) {
@@ -127,22 +220,23 @@ class LimitsPopup extends StatelessWidget {
                     Column(
                       //Coluna da qntd de clientes e horários de pico
                       children: [
-                        inputValue( //chamando a função do campo de alterar valor
+                        inputValue(
+                          //chamando a função do campo de alterar valor
                           context,
                           'Limite mínimo (un.):',
-                          10, //passar o valor de limite mínimo do sensor
+                          value, //passar o valor de limite mínimo do sensor
                         ),
                         SizedBox(height: 10),
                         inputValue(
                           context,
                           'Limite máximo (un.):',
-                          50, //passar o valor de limite máximo do sensor
+                          value, //passar o valor de limite máximo do sensor
                         ),
                         SizedBox(height: 10),
                         inputValue(
                           context,
                           'Peso médio do produto (un.):',
-                          1.44, //passar o valor do produto registrado no sensor
+                          value, //passar o valor do produto registrado no sensor
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(
@@ -152,43 +246,7 @@ class LimitsPopup extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Expanded(
-                      flex: 3,
-                      child: Material(
-                        color: Colors.white,
-                        child: InkWell(
-                          onTap: () => _confirmarAlteracoes(),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.sensors,
-                                color: Colors.black,
-                                size: 34,
-                              ), //ícone do carrinho
-                              Padding(
-                                padding: const EdgeInsets.only(left: 12),
-                                child: Text(
-                                  'Confirmar alterações',
-                                  style: TextStyle(
-                                    fontFamily: 'Inter',
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.normal,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                              Spacer(),
-                              Icon(
-                                Icons.arrow_forward,
-                                color: Colors.black,
-                                size: 29,
-                              ), //ícone da seta
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+                    _mostrarBotaoConfirma(),
                   ],
                 ),
               ),
