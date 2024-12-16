@@ -13,11 +13,23 @@ class FinancialModel {
     this.updatedAt
   });
 
-  FinancialModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    cashInflow = json['cashInflow'];
-    cashOutflow = json['cashInflow'];
-    createdAt = json['createdAt'];
-    updatedAt = json['updatedAt'];
+  factory FinancialModel.fromJson(Map<String, dynamic> json) {
+    return FinancialModel(
+      id: json['id'],
+      cashInflow: json['cashInflow'],
+      cashOutflow: json['cashOutflow'],
+      createdAt: json['createdAt'],
+      updatedAt: json['updatedAt']
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'cashInflow': cashInflow,
+      'cashOutflow': cashOutflow,
+      'createdAt': createdAt,
+      'updatedAt': updatedAt
+    };
   }
 }

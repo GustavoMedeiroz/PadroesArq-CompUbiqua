@@ -26,4 +26,16 @@ class SensorModel {
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'currentValue': currentValue,
+      'type': type,
+      'status': status,
+      'createdAt': createdAt,
+      'updatedAt': updatedAt
+    };
+  }
 }
