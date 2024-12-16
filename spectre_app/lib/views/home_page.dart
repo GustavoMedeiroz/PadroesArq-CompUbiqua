@@ -49,8 +49,8 @@ class Dashboard extends StatelessWidget {
                   itemSnapping: true, //Manter o layout original do itens do carrossel
                   itemExtent: MediaQuery.of(context).size.width * 0.9, //tamanho horizontal de cada item
                   children: [ //conteúdo do carrossel
-                    CardFluxo(), //importando card do card_fluxo.dart
-                    CardFluxo(),
+                    CardFluxo(colorScheme: 1), //importando card do card_fluxo.dart
+                    CardFluxo(colorScheme: 2),
                   ],
                 ),
               ),

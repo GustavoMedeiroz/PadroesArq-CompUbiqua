@@ -8,14 +8,6 @@ class SensorsPage extends StatelessWidget {
 
   final List<SensorModel> _sensors = [];
 
-  //_addSensor(String title, double value, DateTime date) { //criando uma transação após o _submitForm no transaction_form
-  //final newSensor = SensorModel(
-  //  id: Random().nextDouble().toString(),
-  //  title: title,
-  //  value: value,
-  //  date: date,
-  //);
-
   //setState(() {
   //  _sensors.add(newSensor);
   //});
@@ -69,7 +61,7 @@ class SensorsPage extends StatelessWidget {
                       //TÍTULO DA PÁGINA
                       padding: const EdgeInsets.only(left: 28),
                       child: Text(
-                        'Sensores Ativos',
+                        'Sensores Ativos no Estoque',
                         style: TextStyle(
                           fontSize: 21,
                           fontFamily: 'Inter',
@@ -108,7 +100,7 @@ class SensorsPage extends StatelessWidget {
               SizedBox(
                 //CONSTRUINDO A LISTA DE SENSORES DE PESO DO ESTOQUE
                 height: 800, // ainda vou ajustar melhor esse tamanho
-                child: ListView.builder(
+                child: ListView.builder( //LISTA DOS CARDS
                   itemCount: 10,
                   itemBuilder: (ctx, index) {
                     return SensorItem();

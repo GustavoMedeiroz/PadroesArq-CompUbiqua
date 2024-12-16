@@ -8,10 +8,6 @@ class DetailsPopup extends StatelessWidget {
 
   //recebe um objeto SensorModel referente ao sensor atual vindo da tela sensor_page ou temperatura_page
 
-  void _verificaTipoSensor() {
-    //VERIFICA TIPO DO SENSOR (PESO OU TEMPERATURA E UMIDADE)
-  }
-
   _criaRowInformacoes(String label, double value) { //cria cada linha de informações sobre o sensor
     return Row(
       //quantidade de clients
@@ -89,8 +85,7 @@ class DetailsPopup extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                StatusLabel().stockSubtitle(2, 3,
-                                    7), //usar o stockSubtitle do StatusLabel passando os dados dinâmicos
+                                StatusLabel().stockSubtitle(2, 3, 7), //usar o stockSubtitle do StatusLabel passando os dados dinâmicos
                                 style: TextStyle(
                                   fontFamily: 'Inter',
                                   fontWeight: FontWeight.normal,

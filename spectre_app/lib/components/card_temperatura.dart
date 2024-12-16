@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spectre_app/components/details_popup.dart';
 import 'package:spectre_app/components/details_popup_temp.dart';
 
 class CardTemperatura extends StatelessWidget {

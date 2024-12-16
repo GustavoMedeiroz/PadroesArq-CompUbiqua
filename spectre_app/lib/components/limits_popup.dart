@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_popup_card/flutter_popup_card.dart';
 
-import 'status_label.dart';
-
 class LimitsPopup extends StatefulWidget {
   const LimitsPopup({super.key});
 

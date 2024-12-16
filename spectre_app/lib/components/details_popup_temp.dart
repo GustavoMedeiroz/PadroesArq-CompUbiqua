@@ -8,10 +8,6 @@ class DetailsPopupTemp extends StatelessWidget {
 
   //recebe um objeto SensorModel referente ao sensor atual vindo da tela sensor_page ou temperatura_page
 
-  void _verificaTipoSensor() {
-    //VERIFICA TIPO DO SENSOR (PESO OU TEMPERATURA E UMIDADE)
-  }
-
   _criaRowInformacoes(String label, double value) { //cria cada linha de informações sobre o sensor
     return Row(
       //quantidade de clients

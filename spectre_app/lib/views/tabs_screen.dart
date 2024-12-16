@@ -30,7 +30,7 @@ class _TabsScreenState extends State<TabsScreen> {
   _selectScreen(int index) {
     setState(() {
       _selectedScreenIndex = index;
-    }); 
+    });
   }
 
  //além de ser uma tela, irá possuir as tabs para navegar para outras telas
