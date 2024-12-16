@@ -74,12 +74,12 @@ class _TabsScreenState extends State<TabsScreen> {
           ),
           BottomNavigationBarItem(
             backgroundColor: Colors.white,
-            icon: SvgPicture.asset('assets/icons/nav_bar_shield.svg'),
+            icon: Icon(Icons.pallet, color: Colors.black, size: 27),
             label: '',
           ),
           BottomNavigationBarItem(
             backgroundColor: Colors.white,
-            icon: SvgPicture.asset('assets/icons/nav_bar_document.svg'),
+            icon: Icon(Icons.device_thermostat, color: Colors.black, size: 27),
             label: '',
           ),
           BottomNavigationBarItem(
