@@ -28,4 +28,16 @@ class UserModel {
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'email': email,
+      'password': password,
+      'role': role,
+      'persona': persona,
+      'createdAt': createdAt,
+      'updatedAt': updatedAt
+    };
+  }
 }

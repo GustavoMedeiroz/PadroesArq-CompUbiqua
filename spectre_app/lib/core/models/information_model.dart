@@ -23,4 +23,15 @@ class InformationModel {
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'title': title,
+      'sensorId': sensorId,
+      'type': type,
+      'priority': priority,
+      'createdAt': createdAt,
+      'updatedAt': updatedAt
+    };
+  }
 }
