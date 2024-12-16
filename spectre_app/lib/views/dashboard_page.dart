@@ -71,7 +71,7 @@ class DashboardPage extends StatelessWidget {
               child: CarouselSlider( //Carrossel de fluxo de clientes
                   options: CarouselOptions(
                     enableInfiniteScroll: false,
-                    height: 173, //tamanho de cada itiem
+                    height: 173, //tamanho de cada item
                     viewportFraction: 0.47, //porção da tela que cada item ocupa
                     padEnds: false, //começa o carrossel na borda esquerda do container
                   ),
