@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_popup_card/flutter_popup_card.dart';
 
-class LimitsPopup extends StatefulWidget {
-  const LimitsPopup({super.key});
+class LimitsPopupTemp extends StatefulWidget {
+  const LimitsPopupTemp({super.key});
 
   @override
-  State<LimitsPopup> createState() => _LimitsPopupState();
+  State<LimitsPopupTemp> createState() => _LimitsPopupState();
 }
 
-  class _LimitsPopupState extends State<LimitsPopup> {
+  class _LimitsPopupState extends State<LimitsPopupTemp> {
 
   late TextEditingController controller; //controller para os valores a serem alterados
   String value = ''; //novo valor passado pelo usuário
-  String valueMinimo = ''; //novo valor passado pelo usuário para limite mínimo
-  String valueMaximo = ''; //novo valor passado pelo usuário para limite máximo
-  String valuePeso = ''; //novo valor passado pelo usuário para peso médio
+  String valueMinimoTemp = ''; //novo valor passado pelo usuário para limite mínimo
+  String valueMaximoTemp = ''; //novo valor passado pelo usuário para limite máximo
+  String valueMinimoUmidade = ''; //novo valor passado pelo usuário para peso médio
 
   @override
   void initState() { //inicializando o controller
@@ -42,7 +42,7 @@ class LimitsPopup extends StatefulWidget {
           //quantidade de clients
           children: [
             Expanded(
-              flex: 4,
+              flex: 5,
               //Expanded para que o primeiro Text ocupe todo o espaço diponível
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,13 +82,13 @@ class LimitsPopup extends StatefulWidget {
           setState(() {
             if (id == 'minimo') {
               // Atualiza o valor do limite mínimo
-              valueMinimo = newValue; // Adiciona uma variável para o limite mínimo
+              valueMinimoTemp = newValue; // Adiciona uma variável para o limite mínimo
             } else if (id == 'maximo') {
               // Atualiza o valor do limite máximo
-              valueMaximo = newValue; // Adicione uma variável para o limite máximo
-            } else if (id == 'peso') {
+              valueMaximoTemp = newValue; // Adicione uma variável para o limite máximo
+            } else if (id == 'umidade') {
               // Atualiza o valor do peso médio
-              valuePeso = newValue; // Adicione uma variável para o peso médio
+              valueMinimoUmidade = newValue; // Adicione uma variável para o peso médio
             }
           });
         }
@@ -200,7 +200,7 @@ class LimitsPopup extends StatefulWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Frutas', //Teoricamente tem um ícone aqui tb mas vamos deixar pra implementar só se der tempo
+                                'Ambiente', //NOME DO SENSOR DE TEMP
                                 style: TextStyle(
                                   fontFamily: 'OpenSans',
                                   fontWeight: FontWeight.bold,
@@ -209,7 +209,7 @@ class LimitsPopup extends StatefulWidget {
                                 ),
                               ),
                               Text(
-                                'Valores atuais do sensor',
+                                'Valores atuais dos sensores',
                                 style: TextStyle(
                                   fontFamily: 'Inter',
                                   fontWeight: FontWeight.normal,
@@ -230,23 +230,23 @@ class LimitsPopup extends StatefulWidget {
                         inputValue(
                           //chamando a função do campo de alterar valor
                           context,
-                          'Limite mínimo (un.):',
-                          valueMinimo, //passar o valor de limite mínimo do sensor
+                          'Limite mínimo (°C):',
+                          valueMinimoTemp, //passar o valor de limite mínimo do sensor
                           'minimo', // identificador para limite mínimo
                         ),
                         SizedBox(height: 10),
                         inputValue(
                           context,
-                          'Limite máximo (un.):',
-                          valueMaximo, //passar o valor de limite máximo do sensor
+                          'Limite máximo (°C):',
+                          valueMaximoTemp, //passar o valor de limite máximo do sensor
                           'maximo', // identificador para limite máximo
                         ),
                         SizedBox(height: 10),
                         inputValue(
                           context,
-                          'Peso médio do produto (un.):',
-                          valuePeso, //passar o valor do produto registrado no sensor
-                          'peso', // identificador para peso médio
+                          'Limite mínimo (Umidade do ar):',
+                          valueMinimoUmidade, //passar o valor do produto registrado no sensor
+                          'umidade', // identificador para peso médio
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(

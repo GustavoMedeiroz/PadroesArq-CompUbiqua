@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class CardFluxo extends StatelessWidget {
-  const CardFluxo({super.key});
+  const CardFluxo({super.key, required this.colorScheme});
 
+  final int colorScheme;
 
   @override
   Widget build(BuildContext context) {
@@ -13,9 +14,12 @@ class CardFluxo extends StatelessWidget {
           //gradiente de cores
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [
-            Color.fromRGBO(108, 185, 228, 1), //Color.fromRGBO(127, 93, 249, 1)
-            Color.fromRGBO(45, 151, 211, 1), //Color.fromRGBO(71, 24, 239, 1),
+          colors: colorScheme == 1 ? [
+            Color.fromRGBO(108, 185, 228, 1),
+            Color.fromRGBO(45, 151, 211, 1),
+          ] : [
+            Color.fromRGBO(127, 93, 249, 1),
+            Color.fromRGBO(71, 24, 239, 1),
           ],
         ),
         borderRadius: BorderRadius.circular(20),

@@ -23,18 +23,10 @@ class StatusLabel extends StatelessWidget {
     }
   }
 
-  checkTemperatureStatus(double value, double min, double max) {
-    if (value < min) {
+  checkTemperatureAndHumidityStatus(double tempValue, double tempMin, double tempMax, double humValue, double humMin) {
+    if (tempValue < tempMin || humValue < humMin) {
       return mostrarLabelCritico();
-    } else if (value > max) {
-      return mostrarLabelCritico();
-    } else {
-      return mostrarLabelNormal();
-    }
-  }
-
-  checkHumidityStatus(double value, double min) {
-    if (value < min) {
+    } else if (tempValue > tempMax) {
       return mostrarLabelCritico();
     } else {
       return mostrarLabelNormal();

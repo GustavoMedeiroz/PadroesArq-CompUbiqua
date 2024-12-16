@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:spectre_app/components/details_popup.dart';
+import 'package:spectre_app/components/details_popup_temp.dart';
 
 class CardTemperatura extends StatelessWidget {
   const CardTemperatura({super.key, required this.cardSize});
@@ -21,7 +21,7 @@ class CardTemperatura extends StatelessWidget {
             context: context,
             barrierDismissible: true,
             builder: (context) {
-              return DetailsPopup();
+              return DetailsPopupTemp(); //acho que tem que passar o sensor como objeto no parâmetro depois
             }
           );
         },

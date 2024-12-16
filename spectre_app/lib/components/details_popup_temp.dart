@@ -3,8 +3,8 @@ import 'package:flutter_popup_card/flutter_popup_card.dart';
 import 'package:spectre_app/components/status_label.dart';
 import 'package:spectre_app/components/sensor_item.dart';
 
-class DetailsPopup extends StatelessWidget {
-  const DetailsPopup({super.key});
+class DetailsPopupTemp extends StatelessWidget {
+  const DetailsPopupTemp({super.key});
 
   //recebe um objeto SensorModel referente ao sensor atual vindo da tela sensor_page ou temperatura_page
 
@@ -76,7 +76,7 @@ class DetailsPopup extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Frutas:', //Teoricamente tem um ícone aqui tb mas vamos deixar pra implementar só se der tempo
+                                '26°C', //PASSAR VALOR ATUAL DA TEMPERATURA
                                 style: TextStyle(
                                   fontFamily: 'OpenSans',
                                   fontWeight: FontWeight.bold,
@@ -85,7 +85,7 @@ class DetailsPopup extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                StatusLabel().stockSubtitle(2, 3, 7), //usar o stockSubtitle do StatusLabel passando os dados dinâmicos
+                                'Temperatura Ambiente', //PASSAR O NOME DO SENSOR, PQ PODE SER TEMP AMBIENTE OU DE UM FREEZER, POR EXEMPLO
                                 style: TextStyle(
                                   fontFamily: 'Inter',
                                   fontWeight: FontWeight.normal,
@@ -97,16 +97,16 @@ class DetailsPopup extends StatelessWidget {
                           ),
                         ),
                         Spacer(),
-                        StatusLabel().checkStockStatus(2, 3, 7), //VAI RECEBER O VALOR ATUAL DO SENSOR, VALOR MÍNIMO, VALOR MÁXIMO
+                        StatusLabel().checkTemperatureAndHumidityStatus(26, 18, 30, 47, 30), //VAI RECEBER O VALOR ATUAL DO SENSOR, VALOR MÍNIMO, VALOR MÁXIMO
                       ],
                     ),
                     SizedBox(height: 25),
                     Column(
                       children: [
-                        _criaRowInformacoes('Estoque atual:', 8),
-                        _criaRowInformacoes('Limite mínimo (un.):', 10),
-                        _criaRowInformacoes('Limite máximo (un.):', 50),
-                        _criaRowInformacoes('Peso médio do produto (kg):', 1.44),
+                        _criaRowInformacoes('Limite mínimo (°C):', 18),
+                        _criaRowInformacoes('Limite máximo (°C):', 30),
+                        _criaRowInformacoes('Umidade relativa do ar:', 47),
+                        _criaRowInformacoes('Limite mínimo de Umidade:', 30),
                         Padding(
                           padding: const EdgeInsets.symmetric(
                             vertical: 6,
@@ -135,7 +135,7 @@ class DetailsPopup extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Alterar limites / peso',
+                                      'Alterar limites',
                                       style: TextStyle(
                                         fontFamily: 'Inter',
                                         fontSize: 14,
@@ -144,7 +144,7 @@ class DetailsPopup extends StatelessWidget {
                                       ),
                                     ),
                                     Text(
-                                      'Sensor de peso',
+                                      'Sensores de Temp. e Umidade',
                                       style: TextStyle(
                                         fontFamily: 'Inter',
                                         fontSize: 12,

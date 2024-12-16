@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:spectre_app/views/dashboard_page.dart';
 import 'package:spectre_app/views/financial_report_page.dart';
 import 'package:spectre_app/views/notifications_page.dart';
@@ -38,26 +37,18 @@ class _TabsScreenState extends State<TabsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //appBar: AppBar(
-      // title: Text(
-      //    _screens[_selectedScreenIndex]['title'] as String,
-      //    ),
-      //),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 20),
-        child: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Color.fromRGBO(247, 247, 247, 1),
-                Color.fromRGBO(236, 236, 236, 1),
-              ],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color.fromRGBO(247, 247, 247, 1),
+              Color.fromRGBO(236, 236, 236, 1),
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
           ),
-          child: _screens[_selectedScreenIndex]['screen'] as Widget, //seleciona a tela baseada no index da BottomTabBar
         ),
+        child: _screens[_selectedScreenIndex]['screen'] as Widget, //seleciona a tela baseada no index da BottomTabBar
       ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectScreen,
@@ -69,26 +60,26 @@ class _TabsScreenState extends State<TabsScreen> {
         items: [
           BottomNavigationBarItem(
             backgroundColor: Colors.white,
-            icon: SvgPicture.asset('assets/icons/nav_bar_home.svg'),
+            icon: Icon(Icons.home_rounded, color: _selectedScreenIndex == 0 ? SpectreColors.spectrePurple : Colors.black, size: 27),
             label: '',
           ),
           BottomNavigationBarItem(
             backgroundColor: Colors.white,
-            icon: SvgPicture.asset('assets/icons/nav_bar_shield.svg'),
+            icon: Icon(Icons.pallet, color: _selectedScreenIndex == 1 ? SpectreColors.spectrePurple : Colors.black, size: 27),
             label: '',
           ),
           BottomNavigationBarItem(
             backgroundColor: Colors.white,
-            icon: SvgPicture.asset('assets/icons/nav_bar_document.svg'),
+            icon: Icon(Icons.device_thermostat, color: _selectedScreenIndex == 2 ? SpectreColors.spectrePurple : Colors.black, size: 27),
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset('assets/icons/nav_bar_notification.svg'),
+            icon: Icon(Icons.notifications, color: _selectedScreenIndex == 3 ? SpectreColors.spectrePurple : Colors.black, size: 27),
             label: '',
           ),
           BottomNavigationBarItem(
             backgroundColor: Colors.white,
-            icon: SvgPicture.asset('assets/icons/nav_bar_setting.svg'),
+            icon: Icon(Icons.settings, color: _selectedScreenIndex == 4 ? SpectreColors.spectrePurple : Colors.black, size: 27),
             label: '',
           ),
         ],
