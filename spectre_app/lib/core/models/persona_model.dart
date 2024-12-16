@@ -23,4 +23,15 @@ class PersonaModel {
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'taxId': taxId,
+      'phone': phone,
+      'createdAt': createdAt,
+      'updatedAt': updatedAt
+    };
+  }
 }
