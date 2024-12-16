@@ -17,7 +17,7 @@ class CardTemperatura extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () {
-          showDialog(
+          showDialog( //Abrir popup de detalhes
             context: context,
             barrierDismissible: true,
             builder: (context) {

@@ -14,6 +14,9 @@ class LimitsPopup extends StatefulWidget {
 
   late TextEditingController controller; //controller para os valores a serem alterados
   String value = ''; //novo valor passado pelo usuário
+  String valueMinimo = ''; //novo valor passado pelo usuário para limite mínimo
+  String valueMaximo = ''; //novo valor passado pelo usuário para limite máximo
+  String valuePeso = ''; //novo valor passado pelo usuário para peso médio
 
   @override
   void initState() { //inicializando o controller
@@ -27,13 +30,12 @@ class LimitsPopup extends StatefulWidget {
     super.dispose();
   }
 
-  _confirmarAlteracoes() {
-    return Text('Ignore');
+  void _confirmarAlteracoes() {
     //confirmar envio do formulário -> alterar as informações no banco
   }
 
   // Método para criar parte do card
-  inputValue(BuildContext context, String placeholder, String value) {
+  inputValue(BuildContext context, String placeholder, String value, String id) {
     //acrescentar nos parâmetros algo para verificar o tipo de valor a ser alterado no banco
     return Material(
       color: Colors.white,
@@ -76,12 +78,20 @@ class LimitsPopup extends StatefulWidget {
           ],
         ),
         onTap: () async { //espera o valor inserido pelo usuário
-          final value = await openDialog(context, placeholder); //passando o contexto e a descrição do valor a ser alterado
-          if (value == null || value.isEmpty) return;
+          final newValue = await openDialog(context, placeholder); //passando o contexto e a descrição do valor a ser alterado
+          if (newValue == null || newValue.isEmpty) return;
 
           setState(() {
-            this.value = value;
-            //chamar um método para alterar o valor no banco de dados
+            if (id == 'minimo') {
+              // Atualiza o valor do limite mínimo
+              valueMinimo = newValue; // Adiciona uma variável para o limite mínimo
+            } else if (id == 'maximo') {
+              // Atualiza o valor do limite máximo
+              valueMaximo = newValue; // Adicione uma variável para o limite máximo
+            } else if (id == 'peso') {
+              // Atualiza o valor do peso médio
+              valuePeso = newValue; // Adicione uma variável para o peso médio
+            }
           });
         }
       ),
@@ -224,19 +234,22 @@ class LimitsPopup extends StatefulWidget {
                           //chamando a função do campo de alterar valor
                           context,
                           'Limite mínimo (un.):',
-                          value, //passar o valor de limite mínimo do sensor
+                          valueMinimo, //passar o valor de limite mínimo do sensor
+                          'minimo', // identificador para limite mínimo
                         ),
                         SizedBox(height: 10),
                         inputValue(
                           context,
                           'Limite máximo (un.):',
-                          value, //passar o valor de limite máximo do sensor
+                          valueMaximo, //passar o valor de limite máximo do sensor
+                          'maximo', // identificador para limite máximo
                         ),
                         SizedBox(height: 10),
                         inputValue(
                           context,
                           'Peso médio do produto (un.):',
-                          value, //passar o valor do produto registrado no sensor
+                          valuePeso, //passar o valor do produto registrado no sensor
+                          'peso', // identificador para peso médio
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(
