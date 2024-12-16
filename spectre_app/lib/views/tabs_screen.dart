@@ -69,26 +69,26 @@ class _TabsScreenState extends State<TabsScreen> {
         items: [
           BottomNavigationBarItem(
             backgroundColor: Colors.white,
-            icon: SvgPicture.asset('assets/icons/nav_bar_home.svg'),
+            icon: Icon(Icons.home_rounded, color: _selectedScreenIndex == 0 ? SpectreColors.spectrePurple : Colors.black, size: 27),
             label: '',
           ),
           BottomNavigationBarItem(
             backgroundColor: Colors.white,
-            icon: Icon(Icons.pallet, color: Colors.black, size: 27),
+            icon: Icon(Icons.pallet, color: _selectedScreenIndex == 1 ? SpectreColors.spectrePurple : Colors.black, size: 27),
             label: '',
           ),
           BottomNavigationBarItem(
             backgroundColor: Colors.white,
-            icon: Icon(Icons.device_thermostat, color: Colors.black, size: 27),
+            icon: Icon(Icons.device_thermostat, color: _selectedScreenIndex == 2 ? SpectreColors.spectrePurple : Colors.black, size: 27),
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset('assets/icons/nav_bar_notification.svg'),
+            icon: Icon(Icons.notifications, color: _selectedScreenIndex == 3 ? SpectreColors.spectrePurple : Colors.black, size: 27),
             label: '',
           ),
           BottomNavigationBarItem(
             backgroundColor: Colors.white,
-            icon: SvgPicture.asset('assets/icons/nav_bar_setting.svg'),
+            icon: Icon(Icons.settings, color: _selectedScreenIndex == 4 ? SpectreColors.spectrePurple : Colors.black, size: 27),
             label: '',
           ),
         ],
