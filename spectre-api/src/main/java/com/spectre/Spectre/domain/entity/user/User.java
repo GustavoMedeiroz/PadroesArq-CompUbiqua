@@ -3,13 +3,11 @@ package com.spectre.Spectre.domain.entity.user;
 import com.spectre.Spectre.domain.entity.persona.Persona;
 import com.spectre.Spectre.domain.vo.base.BaseEntity;
 import com.spectre.Spectre.domain.vo.enums.UserRole;
-import com.spectre.Spectre.application.core.dtos.user.UserDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.util.Optional;
 
 @Getter
 @Setter

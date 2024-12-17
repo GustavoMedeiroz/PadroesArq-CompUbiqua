@@ -2,18 +2,16 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-import '../../shared/utils/spectre_url.dart';
-import '../models/financial_model.dart';
-import '../models/page.dart';
+import '../../../shared/utils/spectre_url.dart';
+import '../../models/information_model.dart';
+import '../../models/page.dart';
 
-class FinancialService {
-  static final String financialPath = '${SpectreUrl.baseUrl}/financial';
+class InformationService {
+  static final String informationPath = '${SpectreUrl.baseUrl}/information';
 
-  Future<Page<FinancialModel>> findAll({int page = 1}) async {
-    int size = 10;
-
+  Future<Page<InformationModel>> findAll({int page = 1, int size = 10}) async {
     final url = Uri.http(
-      financialPath,
+      informationPath,
       '/all',
       {'page': '$page', 'size': '$size'},
     );
@@ -23,7 +21,7 @@ class FinancialService {
       final Map<String, dynamic> responseJson = jsonDecode(response.body);
       return Page.fromJson(
         responseJson,
-        (data) => FinancialModel.fromJson(data),
+        (data) => InformationModel.fromJson(data),
       );
     } else {
       final errorResponse = jsonDecode(response.body);
@@ -31,45 +29,45 @@ class FinancialService {
     }
   }
 
-  Future<FinancialModel> findById(int id) async {
-    final url = Uri.http(financialPath, '/$id');
+  Future<InformationModel> findById(int id) async {
+    final url = Uri.http(informationPath, '/$id');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseJson = jsonDecode(response.body);
-      return FinancialModel.fromJson(responseJson);
+      return InformationModel.fromJson(responseJson);
     } else {
       final errorResponse = jsonDecode(response.body);
       throw Exception('Error response: ${errorResponse['message']}');
     }
   }
 
-  Future<FinancialModel> create(FinancialModel financialModel) async {
-    final url = Uri.http(financialPath);
+  Future<InformationModel> create(InformationModel informationModel) async {
+    final url = Uri.http(informationPath);
     final response = await http.post(
       url,
-      body: jsonEncode(financialModel.toJson()),
+      body: jsonEncode(informationModel.toJson()),
     );
 
     if (response.statusCode == 201) {
       final Map<String, dynamic> responseJson = jsonDecode(response.body);
-      return FinancialModel.fromJson(responseJson);
+      return InformationModel.fromJson(responseJson);
     } else {
       final errorResponse = jsonDecode(response.body);
       throw Exception('Error response: ${errorResponse['message']}');
     }
   }
 
-  Future<FinancialModel> update(FinancialModel financialModel) async {
-    final url = Uri.http(financialPath);
+  Future<InformationModel> update(InformationModel informationModel) async {
+    final url = Uri.http(informationPath);
     final response = await http.put(
       url,
-      body: jsonEncode(financialModel.toJson()),
+      body: jsonEncode(informationModel.toJson()),
     );
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseJson = jsonDecode(response.body);
-      return FinancialModel.fromJson(responseJson);
+      return InformationModel.fromJson(responseJson);
     } else {
       final errorResponse = jsonDecode(response.body);
       throw Exception('Error response: ${errorResponse['message']}');
@@ -77,7 +75,7 @@ class FinancialService {
   }
 
   Future<void> delete(int id) async {
-    final url = Uri.http(financialPath, '/$id');
+    final url = Uri.http(informationPath, '/$id');
     final response = await http.delete(url);
 
     if (response.statusCode != 204) {

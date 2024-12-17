@@ -3,7 +3,6 @@ package com.spectre.Spectre.domain.entity.sensor;
 import com.spectre.Spectre.domain.vo.base.BaseEntity;
 import com.spectre.Spectre.domain.vo.enums.SensorStatus;
 import com.spectre.Spectre.domain.vo.enums.SensorType;
-import com.spectre.Spectre.application.core.dtos.sensor.SensorDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,8 +18,11 @@ public class Sensor extends BaseEntity implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "current_value")
-    private String currentValue;
+    @Column(name = "min_value")
+    private Double minValue;
+
+    @Column(name = "max_value")
+    private Double maxValue;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type")

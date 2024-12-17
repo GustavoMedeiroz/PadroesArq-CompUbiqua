@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:spectre_app/core/models/sensor_model.dart';
-import 'package:spectre_app/shared/utils/spectre_colors.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../components/sensor_item.dart';
+import '../components/sensors_filter.dart';
+import '../core/logic/cubit/sensor/sensor_cubit.dart';
 
-class SensorsPage extends StatelessWidget {
-  SensorsPage({super.key});
+class SensorsPage extends StatefulWidget {
+  const SensorsPage({super.key});
 
-  final List<SensorModel> _sensors = [];
+  @override
+  State<SensorsPage> createState() => _SensorsPageState();
+}
+
+class _SensorsPageState extends State<SensorsPage> {
+  final cubit = SensorCubit();
 
   //setState(() {
   //  _sensors.add(newSensor);
@@ -14,7 +21,6 @@ class SensorsPage extends StatelessWidget {
 
   //Navigator.of(context).pop();
   //}
-
   void _abrirSensorForm(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -25,24 +31,21 @@ class SensorsPage extends StatelessWidget {
   }
 
   @override
+  void initState() {
+    super.initState();
+    cubit.findAll();
+  }
+
+  // TODO: implement Infinite Scroll
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      //definindo um Scaffold nessa tela para poder usar o FloatingActionButton
-      body: SingleChildScrollView(
-        child: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Color.fromRGBO(247, 247, 247, 1),
-                Color.fromRGBO(236, 236, 236, 1),
-              ],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
-          ),
-          child: Column(
-            children: [
-              Container(
+    return SafeArea(
+      child: Scaffold(
+        //definindo um Scaffold nessa tela para poder usar o FloatingActionButton
+        body: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
@@ -53,7 +56,7 @@ class SensorsPage extends StatelessWidget {
                     end: Alignment.topCenter,
                   ),
                 ),
-                height: 126,
+                // height: 126,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -70,67 +73,53 @@ class SensorsPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Padding(
-                      //FILTRO DE BUSCA, podemos deixar por último (https://www.youtube.com/watch?v=ZHdg2kfKmjI)
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 28,
-                        vertical: 20,
-                      ),
-                      child: TextField(
-                        decoration: InputDecoration(
-                            suffixIcon: const Icon(Icons.tune),
-                            hintText: 'Buscar',
-                            hintStyle: TextStyle(
-                              color: Color.fromRGBO(96, 96, 96, 0.5),
-                              fontFamily: 'OpenSans',
-                              fontWeight: FontWeight.normal,
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(100),
-                              borderSide: BorderSide(
-                                style: BorderStyle.solid,
-                                color: Color.fromRGBO(96, 96, 96, 5),
-                              ),
-                            )),
-                      ),
-                    )
+                    SensorsFilter()
                   ],
                 ),
               ),
-              SizedBox(
-                //CONSTRUINDO A LISTA DE SENSORES DE PESO DO ESTOQUE
-                height: 800, // ainda vou ajustar melhor esse tamanho
-                child: ListView.builder( //LISTA DOS CARDS
-                  itemCount: 10,
-                  itemBuilder: (ctx, index) {
-                    return SensorItem();
-                  },
-                ),
-              ),
-            ],
-          ),
+            ),
+            BlocBuilder<SensorCubit, SensorStates>(
+              bloc: cubit,
+              builder: (context, state) {
+                if (state is SensorInitial) {
+                  return SliverFillRemaining(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (state is SensorSuccess) {
+                  return SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        return SensorItem(
+                          sensor: state.data[index],
+                        );
+                      },
+                      childCount: state.data.length,
+                    ),
+                  );
+                } else if (state is SensorError) {
+                  return SliverFillRemaining(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Icons.not_interested,
+                          size: 30.0,
+                        ),
+                        const SizedBox(
+                          height: 16.00,
+                        ),
+                        Text(state.message),
+                      ],
+                    ),
+                  );
+                } else {
+                  return SliverToBoxAdapter(child: Container());
+                }
+              },
+            )
+          ],
         ),
       ),
-      floatingActionButton: Container(
-        //Botão para adicionar sensores
-        decoration:
-            BoxDecoration(borderRadius: BorderRadius.circular(100), boxShadow: [
-          BoxShadow(
-            color: SpectreColors.spectrePurple,
-            blurRadius: 20,
-            spreadRadius: 0.5,
-          )
-        ]),
-        child: FloatingActionButton(
-          elevation: 5,
-          foregroundColor: Colors.white,
-          backgroundColor: SpectreColors.spectrePurple,
-          shape: CircleBorder(),
-          child: Icon(Icons.add, size: 30),
-          onPressed: () => _abrirSensorForm(context),
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

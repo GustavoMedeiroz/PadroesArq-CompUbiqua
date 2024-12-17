@@ -4,7 +4,8 @@ import 'package:spectre_app/components/limits_popup.dart';
 import '../shared/utils/spectre_colors.dart';
 
 class SensorItem extends StatelessWidget {
-  const SensorItem({super.key});
+  final SensorModel sensor;
+  const SensorItem({super.key, required this.sensor});
 
   void mostrarTelaLimites (BuildContext context) {
     Navigator.pop(context); //Retirando o popup atual da tela para adicionar o popup de limites
@@ -47,7 +48,7 @@ class SensorItem extends StatelessWidget {
           size: 26,
         ),
         title: Text(
-          'Carnes', //Nome do sensor
+          sensor.name!, //Nome do sensor
           style: TextStyle(
             fontSize: 16,
             fontFamily: 'OpenSans',

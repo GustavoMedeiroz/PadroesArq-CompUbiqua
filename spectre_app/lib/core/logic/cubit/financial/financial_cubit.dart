@@ -3,7 +3,8 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 
 import '../../../models/financial_model.dart';
-import '../../../services/financial_service.dart';
+import '../../../models/page.dart';
+import '../../../services/http/financial_service.dart';
 
 part 'financial_states.dart';
 
@@ -12,7 +13,7 @@ class FinancialCubit extends Cubit<FinancialStates> {
 
   final FinancialService _financialService = FinancialService();
   final List<FinancialModel> _financials = [];
-  int _page = 1;
+  int _page = 0;
   bool _isFetching = false;
   bool _isLastPage = false;
 
@@ -20,7 +21,7 @@ class FinancialCubit extends Cubit<FinancialStates> {
     emit(FinancialLoading());
 
     try {
-      final financial = await _financialService.findAll(page: _page);
+      final Page<FinancialModel> financial = await _financialService.findAll(page: _page);
 
       _financials.addAll(financial.content);
 

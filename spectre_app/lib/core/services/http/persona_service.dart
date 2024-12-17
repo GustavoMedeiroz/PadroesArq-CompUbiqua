@@ -2,18 +2,18 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-import '../../shared/utils/spectre_url.dart';
-import '../models/page.dart';
-import '../models/user_model.dart';
+import '../../../shared/utils/spectre_url.dart';
+import '../../models/page.dart';
+import '../../models/persona_model.dart';
 
-class UserService {
-  static final String userPath = '${SpectreUrl.baseUrl}/user';
+class PersonaService {
+  static final String personaPath = '${SpectreUrl.baseUrl}/persona';
 
-  Future<Page<UserModel>> findAll({int page = 1, int size = 10}) async {
+  Future<Page<PersonaModel>> findAll({int page = 1, int size = 10}) async {
     final url = Uri.http(
-      userPath,
+      personaPath,
       '/all',
-      { 'page': '$page', 'size': '$size' },
+      {'page': '$page', 'size': '$size'},
     );
     final response = await http.get(url);
 
@@ -21,7 +21,7 @@ class UserService {
       final Map<String, dynamic> responseJson = jsonDecode(response.body);
       return Page.fromJson(
         responseJson,
-        (data) => UserModel.fromJson(data),
+        (data) => PersonaModel.fromJson(data),
       );
     } else {
       final errorResponse = jsonDecode(response.body);
@@ -29,45 +29,45 @@ class UserService {
     }
   }
 
-  Future<UserModel> findById(int id) async {
-    final url = Uri.http(userPath, '/$id');
+  Future<PersonaModel> findById(int id) async {
+    final url = Uri.http(personaPath, '/$id');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseJson = jsonDecode(response.body);
-      return UserModel.fromJson(responseJson);
+      return PersonaModel.fromJson(responseJson);
     } else {
       final errorResponse = jsonDecode(response.body);
       throw Exception('Error response: ${errorResponse['message']}');
     }
   }
 
-  Future<UserModel> create(UserModel userModel) async {
-    final url = Uri.http(userPath);
+  Future<PersonaModel> create(PersonaModel personaModel) async {
+    final url = Uri.http(personaPath);
     final response = await http.post(
       url,
-      body: jsonEncode(userModel.toJson()),
+      body: jsonEncode(personaModel.toJson()),
     );
 
     if (response.statusCode == 201) {
       final Map<String, dynamic> responseJson = jsonDecode(response.body);
-      return UserModel.fromJson(responseJson);
+      return PersonaModel.fromJson(responseJson);
     } else {
       final errorResponse = jsonDecode(response.body);
       throw Exception('Error response: ${errorResponse['message']}');
     }
   }
 
-  Future<UserModel> update(UserModel userModel) async {
-    final url = Uri.http(userPath);
+  Future<PersonaModel> update(PersonaModel personaModel) async {
+    final url = Uri.http(personaPath);
     final response = await http.put(
       url,
-      body: jsonEncode(userModel.toJson()),
+      body: jsonEncode(personaModel.toJson()),
     );
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseJson = jsonDecode(response.body);
-      return UserModel.fromJson(responseJson);
+      return PersonaModel.fromJson(responseJson);
     } else {
       final errorResponse = jsonDecode(response.body);
       throw Exception('Error response: ${errorResponse['message']}');
@@ -75,7 +75,7 @@ class UserService {
   }
 
   Future<void> delete(int id) async {
-    final url = Uri.http(userPath, '/$id');
+    final url = Uri.http(personaPath, '/$id');
     final response = await http.delete(url);
 
     if (response.statusCode != 204) {

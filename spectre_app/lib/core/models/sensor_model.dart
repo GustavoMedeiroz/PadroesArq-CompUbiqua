@@ -1,7 +1,8 @@
 class SensorModel {
   int? id;
   String? name;
-  String? currentValue;
+  double? minValue;
+  double? maxValue;
   String? type;
   String? status;
   DateTime? createdAt;
@@ -10,7 +11,8 @@ class SensorModel {
   SensorModel({
     this.id,
     this.name,
-    this.currentValue,
+    this.minValue,
+    this.maxValue,
     this.type,
     this.status,
     this.createdAt,
@@ -20,18 +22,20 @@ class SensorModel {
   SensorModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
-    currentValue = json['currentValue'];
+    minValue = json['minValue'];
+    maxValue = json['maxValue'];
     type = json['type'];
     status = json['status'];
-    createdAt = json['createdAt'];
-    updatedAt = json['updatedAt'];
+    createdAt = json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null;
+    updatedAt = json['updatedAt'] != null ? DateTime.parse(json['updatedAt']) : null;
   }
 
   Map<String, dynamic> toJson() {
     return {
       'id': id,
       'name': name,
-      'currentValue': currentValue,
+      'minValue': minValue,
+      'maxValue': maxValue,
       'type': type,
       'status': status,
       'createdAt': createdAt,

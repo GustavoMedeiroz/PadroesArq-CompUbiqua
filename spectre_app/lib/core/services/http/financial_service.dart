@@ -2,16 +2,18 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-import '../../shared/utils/spectre_url.dart';
-import '../models/page.dart';
-import '../models/persona_model.dart';
+import '../../../shared/utils/spectre_url.dart';
+import '../../models/financial_model.dart';
+import '../../models/page.dart';
 
-class PersonaService {
-  static final String personaPath = '${SpectreUrl.baseUrl}/persona';
+class FinancialService {
+  static final String financialPath = '${SpectreUrl.baseUrl}/financial';
 
-  Future<Page<PersonaModel>> findAll({int page = 1, int size = 10}) async {
+  Future<Page<FinancialModel>> findAll({int page = 1}) async {
+    int size = 10;
+
     final url = Uri.http(
-      personaPath,
+      financialPath,
       '/all',
       {'page': '$page', 'size': '$size'},
     );
@@ -21,7 +23,7 @@ class PersonaService {
       final Map<String, dynamic> responseJson = jsonDecode(response.body);
       return Page.fromJson(
         responseJson,
-        (data) => PersonaModel.fromJson(data),
+        (data) => FinancialModel.fromJson(data),
       );
     } else {
       final errorResponse = jsonDecode(response.body);
@@ -29,45 +31,45 @@ class PersonaService {
     }
   }
 
-  Future<PersonaModel> findById(int id) async {
-    final url = Uri.http(personaPath, '/$id');
+  Future<FinancialModel> findById(int id) async {
+    final url = Uri.http(financialPath, '/$id');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseJson = jsonDecode(response.body);
-      return PersonaModel.fromJson(responseJson);
+      return FinancialModel.fromJson(responseJson);
     } else {
       final errorResponse = jsonDecode(response.body);
       throw Exception('Error response: ${errorResponse['message']}');
     }
   }
 
-  Future<PersonaModel> create(PersonaModel personaModel) async {
-    final url = Uri.http(personaPath);
+  Future<FinancialModel> create(FinancialModel financialModel) async {
+    final url = Uri.http(financialPath);
     final response = await http.post(
       url,
-      body: jsonEncode(personaModel.toJson()),
+      body: jsonEncode(financialModel.toJson()),
     );
 
     if (response.statusCode == 201) {
       final Map<String, dynamic> responseJson = jsonDecode(response.body);
-      return PersonaModel.fromJson(responseJson);
+      return FinancialModel.fromJson(responseJson);
     } else {
       final errorResponse = jsonDecode(response.body);
       throw Exception('Error response: ${errorResponse['message']}');
     }
   }
 
-  Future<PersonaModel> update(PersonaModel personaModel) async {
-    final url = Uri.http(personaPath);
+  Future<FinancialModel> update(FinancialModel financialModel) async {
+    final url = Uri.http(financialPath);
     final response = await http.put(
       url,
-      body: jsonEncode(personaModel.toJson()),
+      body: jsonEncode(financialModel.toJson()),
     );
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseJson = jsonDecode(response.body);
-      return PersonaModel.fromJson(responseJson);
+      return FinancialModel.fromJson(responseJson);
     } else {
       final errorResponse = jsonDecode(response.body);
       throw Exception('Error response: ${errorResponse['message']}');
@@ -75,7 +77,7 @@ class PersonaService {
   }
 
   Future<void> delete(int id) async {
-    final url = Uri.http(personaPath, '/$id');
+    final url = Uri.http(financialPath, '/$id');
     final response = await http.delete(url);
 
     if (response.statusCode != 204) {
