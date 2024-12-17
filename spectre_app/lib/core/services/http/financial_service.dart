@@ -2,18 +2,20 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-import '../../shared/utils/spectre_url.dart';
-import '../models/page.dart';
-import '../models/sensor_model.dart';
+import '../../../shared/utils/spectre_url.dart';
+import '../../models/financial_model.dart';
+import '../../models/page.dart';
 
-class SensorService {
-  static final String sensorPath = '${SpectreUrl.baseUrl}/sensor';
+class FinancialService {
+  static final String financialPath = '${SpectreUrl.baseUrl}/financial';
 
-  Future<Page<SensorModel>> findAll({int page = 1, int size = 10}) async {
+  Future<Page<FinancialModel>> findAll({int page = 1}) async {
+    int size = 10;
+
     final url = Uri.http(
-      sensorPath,
+      financialPath,
       '/all',
-      { 'page': '$page', 'size': '$size' },
+      {'page': '$page', 'size': '$size'},
     );
     final response = await http.get(url);
 
@@ -21,7 +23,7 @@ class SensorService {
       final Map<String, dynamic> responseJson = jsonDecode(response.body);
       return Page.fromJson(
         responseJson,
-        (data) => SensorModel.fromJson(data),
+        (data) => FinancialModel.fromJson(data),
       );
     } else {
       final errorResponse = jsonDecode(response.body);
@@ -29,45 +31,45 @@ class SensorService {
     }
   }
 
-  Future<SensorModel> findById(int id) async {
-    final url = Uri.http(sensorPath, '/$id');
+  Future<FinancialModel> findById(int id) async {
+    final url = Uri.http(financialPath, '/$id');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseJson = jsonDecode(response.body);
-      return SensorModel.fromJson(responseJson);
+      return FinancialModel.fromJson(responseJson);
     } else {
       final errorResponse = jsonDecode(response.body);
       throw Exception('Error response: ${errorResponse['message']}');
     }
   }
 
-  Future<SensorModel> create(SensorModel sensorModel) async {
-    final url = Uri.http(sensorPath);
+  Future<FinancialModel> create(FinancialModel financialModel) async {
+    final url = Uri.http(financialPath);
     final response = await http.post(
       url,
-      body: jsonEncode(sensorModel.toJson()),
+      body: jsonEncode(financialModel.toJson()),
     );
 
     if (response.statusCode == 201) {
       final Map<String, dynamic> responseJson = jsonDecode(response.body);
-      return SensorModel.fromJson(responseJson);
+      return FinancialModel.fromJson(responseJson);
     } else {
       final errorResponse = jsonDecode(response.body);
       throw Exception('Error response: ${errorResponse['message']}');
     }
   }
 
-  Future<SensorModel> update(SensorModel sensorModel) async {
-    final url = Uri.http(sensorPath);
+  Future<FinancialModel> update(FinancialModel financialModel) async {
+    final url = Uri.http(financialPath);
     final response = await http.put(
       url,
-      body: jsonEncode(sensorModel.toJson()),
+      body: jsonEncode(financialModel.toJson()),
     );
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseJson = jsonDecode(response.body);
-      return SensorModel.fromJson(responseJson);
+      return FinancialModel.fromJson(responseJson);
     } else {
       final errorResponse = jsonDecode(response.body);
       throw Exception('Error response: ${errorResponse['message']}');
@@ -75,7 +77,7 @@ class SensorService {
   }
 
   Future<void> delete(int id) async {
-    final url = Uri.http(sensorPath, '/$id');
+    final url = Uri.http(financialPath, '/$id');
     final response = await http.delete(url);
 
     if (response.statusCode != 204) {

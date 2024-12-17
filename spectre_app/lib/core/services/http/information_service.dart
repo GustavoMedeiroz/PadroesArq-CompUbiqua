@@ -2,16 +2,16 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-import '../../shared/utils/spectre_url.dart';
-import '../models/page.dart';
-import '../models/persona_model.dart';
+import '../../../shared/utils/spectre_url.dart';
+import '../../models/information_model.dart';
+import '../../models/page.dart';
 
-class PersonaService {
-  static final String personaPath = '${SpectreUrl.baseUrl}/persona';
+class InformationService {
+  static final String informationPath = '${SpectreUrl.baseUrl}/information';
 
-  Future<Page<PersonaModel>> findAll({int page = 1, int size = 10}) async {
+  Future<Page<InformationModel>> findAll({int page = 1, int size = 10}) async {
     final url = Uri.http(
-      personaPath,
+      informationPath,
       '/all',
       {'page': '$page', 'size': '$size'},
     );
@@ -21,7 +21,7 @@ class PersonaService {
       final Map<String, dynamic> responseJson = jsonDecode(response.body);
       return Page.fromJson(
         responseJson,
-        (data) => PersonaModel.fromJson(data),
+        (data) => InformationModel.fromJson(data),
       );
     } else {
       final errorResponse = jsonDecode(response.body);
@@ -29,45 +29,45 @@ class PersonaService {
     }
   }
 
-  Future<PersonaModel> findById(int id) async {
-    final url = Uri.http(personaPath, '/$id');
+  Future<InformationModel> findById(int id) async {
+    final url = Uri.http(informationPath, '/$id');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseJson = jsonDecode(response.body);
-      return PersonaModel.fromJson(responseJson);
+      return InformationModel.fromJson(responseJson);
     } else {
       final errorResponse = jsonDecode(response.body);
       throw Exception('Error response: ${errorResponse['message']}');
     }
   }
 
-  Future<PersonaModel> create(PersonaModel personaModel) async {
-    final url = Uri.http(personaPath);
+  Future<InformationModel> create(InformationModel informationModel) async {
+    final url = Uri.http(informationPath);
     final response = await http.post(
       url,
-      body: jsonEncode(personaModel.toJson()),
+      body: jsonEncode(informationModel.toJson()),
     );
 
     if (response.statusCode == 201) {
       final Map<String, dynamic> responseJson = jsonDecode(response.body);
-      return PersonaModel.fromJson(responseJson);
+      return InformationModel.fromJson(responseJson);
     } else {
       final errorResponse = jsonDecode(response.body);
       throw Exception('Error response: ${errorResponse['message']}');
     }
   }
 
-  Future<PersonaModel> update(PersonaModel personaModel) async {
-    final url = Uri.http(personaPath);
+  Future<InformationModel> update(InformationModel informationModel) async {
+    final url = Uri.http(informationPath);
     final response = await http.put(
       url,
-      body: jsonEncode(personaModel.toJson()),
+      body: jsonEncode(informationModel.toJson()),
     );
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseJson = jsonDecode(response.body);
-      return PersonaModel.fromJson(responseJson);
+      return InformationModel.fromJson(responseJson);
     } else {
       final errorResponse = jsonDecode(response.body);
       throw Exception('Error response: ${errorResponse['message']}');
@@ -75,7 +75,7 @@ class PersonaService {
   }
 
   Future<void> delete(int id) async {
-    final url = Uri.http(personaPath, '/$id');
+    final url = Uri.http(informationPath, '/$id');
     final response = await http.delete(url);
 
     if (response.statusCode != 204) {
