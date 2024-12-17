@@ -1,10 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:spectre_app/components/details_popup_temp.dart';
+import 'package:spectre_app/components/limits_popup_temp.dart';
 
 class CardTemperatura extends StatelessWidget {
   const CardTemperatura({super.key, required this.cardSize});
 
   final double cardSize;
+
+    void mostrarTelaLimites (BuildContext context) {
+    Navigator.pop(context); //Retirando o popup atual da tela para adicionar o popup de limites
+    showDialog(
+      context: context,
+      barrierDismissible: true, // Isso permite que o usuário feche o dialog ao clicar fora dele
+      builder: (context) {
+      return LimitsPopupTemp(); //chamando a tela para definir os limites de temp. e umidade
+      }
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
