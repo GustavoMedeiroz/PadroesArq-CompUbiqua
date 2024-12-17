@@ -4,13 +4,11 @@ import com.spectre.Spectre.domain.entity.sensor.Sensor;
 import com.spectre.Spectre.domain.vo.base.BaseEntity;
 import com.spectre.Spectre.domain.vo.enums.InformationType;
 import com.spectre.Spectre.domain.vo.enums.NotificationPriority;
-import com.spectre.Spectre.application.core.dtos.information.InformationDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.util.Optional;
 
 @Getter
 @Setter

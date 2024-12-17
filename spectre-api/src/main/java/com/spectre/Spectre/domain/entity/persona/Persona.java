@@ -1,8 +1,9 @@
 package com.spectre.Spectre.domain.entity.persona;
 
 import com.spectre.Spectre.domain.vo.base.BaseEntity;
-import com.spectre.Spectre.application.core.dtos.persona.PersonaDto;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.br.CPF;

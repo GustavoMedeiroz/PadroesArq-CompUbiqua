@@ -1,7 +1,6 @@
 package com.spectre.Spectre.domain.entity.financial;
 
 import com.spectre.Spectre.domain.vo.base.BaseEntity;
-import com.spectre.Spectre.application.core.dtos.financial.FinancialDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
