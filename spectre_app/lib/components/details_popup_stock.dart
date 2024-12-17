@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_popup_card/flutter_popup_card.dart';
 import 'package:spectre_app/components/status_label.dart';
-import 'package:spectre_app/components/sensor_item.dart';
 
 class DetailsPopup extends StatelessWidget {
   const DetailsPopup({super.key});
