@@ -120,7 +120,8 @@ class DetailsPopupTemp extends StatelessWidget {
                       child: Material(
                         color: Colors.white,
                         child: InkWell(
-                          onTap: () => SensorItem().mostrarTelaLimites(context),
+                          onTap: () {},
+                          // onTap: () => SensorItem().mostrarTelaLimites(context),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
