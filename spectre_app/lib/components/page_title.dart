@@ -4,8 +4,12 @@ import 'sensors_filter.dart';
 
 class PageTitle extends StatelessWidget {
   final String title;
+  final bool hasFilter;
+
   const PageTitle({
-    super.key, required this.title,
+    super.key,
+    required this.title,
+    required this.hasFilter,
   });
 
   @override
@@ -36,7 +40,7 @@ class PageTitle extends StatelessWidget {
               ),
             ),
             SizedBox(height: 10),
-            SensorsFilter()
+            hasFilter ? SensorsFilter() : Container(),
           ],
         ),
       ),

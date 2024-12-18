@@ -62,7 +62,10 @@ class _SensorsPageState extends State<SensorsPage> {
                       children: [
                         Wrap(
                           children: [
-                            PageTitle(title: 'Sensores Ativos no Estoque'),
+                            PageTitle(
+                              title: 'Sensores Ativos no Estoque',
+                              hasFilter: true,
+                            ),
                             ListView.builder(
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
@@ -97,7 +100,8 @@ class _SensorsPageState extends State<SensorsPage> {
     return BlocBuilder<SensorCubit, SensorState>(
       bloc: cubit,
       builder: (context, state) {
-        if (state is! SensorLoadingMore && !(cubit.currentPage + 1 == cubit.totalPages)) {
+        if (state is! SensorLoadingMore &&
+            !(cubit.currentPage + 1 == cubit.totalPages)) {
           return Center(
             child: ElevatedButton(
               onPressed: () => _cubit.fetchNextPage(),

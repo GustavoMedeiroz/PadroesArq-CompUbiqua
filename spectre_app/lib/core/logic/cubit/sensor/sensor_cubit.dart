@@ -42,8 +42,6 @@ class SensorCubit extends Cubit<SensorState> {
   }
 
   Future<void> fetchNextPage() async {
-    print('current page: $currentPage');
-    print('Total pages: $totalPages');
     if (isLastPage) return;
     emit(SensorLoadingMore(_sensors));
     try {
