@@ -49,8 +49,8 @@ class DashboardPage extends StatelessWidget {
                 height: 265,
               ),
               items: [ //conteúdo do carrossel
-                CardFluxo(colorScheme: 1), //importando card do card_fluxo.dart
-                CardFluxo(colorScheme: 2),
+                CardFluxo(colorScheme: 1, data:'HOJE'), //importando card do card_fluxo.dart
+                CardFluxo(colorScheme: 2, data: 'SEMANA'),
               ],
             ),
             SizedBox(height: 20),

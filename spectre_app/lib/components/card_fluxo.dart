@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:spectre_app/components/details_popup_fluxo.dart';
 
 class CardFluxo extends StatelessWidget {
-  const CardFluxo({super.key, required this.colorScheme});
+  const CardFluxo({super.key, required this.colorScheme, required this.data});
 
   final int colorScheme;
+  final String data; //HOJE OU SEMANA
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,7 @@ class CardFluxo extends StatelessWidget {
             context: context,
             barrierDismissible: true,
             builder: (context) {
-              return Text('ok');
+              return DetailsPopupFluxo(data: data);
             }
           );
         },
@@ -53,7 +55,7 @@ class CardFluxo extends StatelessWidget {
                 ),
               ),
               Text(
-                'POUCO MOVIMENTADO:',
+                data,
                 style: TextStyle(
                   fontFamily: 'Inter',
                   fontWeight: FontWeight.normal,

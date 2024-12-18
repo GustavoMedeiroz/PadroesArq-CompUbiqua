@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spectre_app/core/services/settings/locator/service_locator.dart';
 import 'package:spectre_app/views/notifications_page.dart';
 import 'package:spectre_app/views/sensors_page.dart';
 import 'package:spectre_app/views/settings_page.dart';

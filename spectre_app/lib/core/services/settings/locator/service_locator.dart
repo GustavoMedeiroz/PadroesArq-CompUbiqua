@@ -1,8 +1,5 @@
 import 'package:get_it/get_it.dart';
 
-import '../../../logic/cubit/sensor/sensor_cubit.dart';
-import '../../http/sensor_service.dart';
-
 class ServiceLocator {
   ServiceLocator._();
 
