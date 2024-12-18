@@ -14,6 +14,7 @@ public class SensorDto extends BaseEntityDto<Sensor> {
     private String name;
     private Double minValue;
     private Double maxValue;
+    private Double currentValue;
     private SensorType type;
     private SensorStatus status;
 
@@ -23,6 +24,7 @@ public class SensorDto extends BaseEntityDto<Sensor> {
 
         sensor.setId(this.getId());
         sensor.setName(this.getName());
+        sensor.setCurrentValue(this.getCurrentValue());
         sensor.setMinValue(this.getMinValue());
         sensor.setMaxValue(this.getMaxValue());
         sensor.setType(this.getType());

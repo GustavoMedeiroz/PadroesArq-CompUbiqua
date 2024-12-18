@@ -70,6 +70,7 @@ public class SensorService implements SensorContext {
 
     private void mapSensorToUpdate(SensorDto sensor, Sensor sensorToUpdate) {
         sensorToUpdate.setName(sensor.getName());
+        sensorToUpdate.setCurrentValue(sensor.getCurrentValue());
         sensorToUpdate.setMinValue(sensor.getMinValue());
         sensorToUpdate.setMaxValue(sensor.getMaxValue());
         sensorToUpdate.setType(sensor.getType());
