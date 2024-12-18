@@ -10,37 +10,29 @@ class SensorService {
   final http.Client httpClient = http.Client();
   static final String sensorPath = '/sensor';
 
-  Future<Page<SensorModel>> findAll({int page = 1}) async {
+  Future<Page<SensorModel>> findAll(int page) async {
     int size = 10;
+    final url = Uri.http(
+      SpectreUrl.baseUrl,
+      '$sensorPath/all',
+      {'page': '$page', 'size': '$size'},
+    );
 
     try {
-      print('Construindo URL...');
-      final url = Uri.http(
-        SpectreUrl.baseUrl,
-        '$sensorPath/all',
-        { 'page': '$page', 'size': '$size' },
-      );
-      print('URL construída: $url');
-
-      print('Inicio da requisição...');
       final response = await httpClient.get(url);
-      print('Requisição recebida: ${response.statusCode}');
 
       if (response.statusCode == 200) {
-        print('Decodificando JSON...');
         final Map<String, dynamic> responseJson = jsonDecode(response.body);
-        print(responseJson.keys);
         return Page.fromJson(
           responseJson,
-              (data) => SensorModel.fromJson(data),
+          (data) => SensorModel.fromJson(data),
         );
       } else {
         final errorResponse = jsonDecode(response.body);
         throw Exception('Error response: ${errorResponse['message']}');
       }
     } catch (e) {
-      print(e);
-      rethrow;
+      throw Exception('Error response: $e');
     }
   }
 
