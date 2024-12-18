@@ -1,19 +1,28 @@
 part of 'sensor_cubit.dart';
 
-abstract class SensorStates {}
+abstract class SensorState extends Equatable {
+  const SensorState();
 
-class SensorInitial extends SensorStates {}
-
-class SensorLoading extends SensorStates {}
-
-class SensorSuccess<T> extends SensorStates {
-  final T data;
-
-  SensorSuccess(this.data);
+  @override
+  List<Object> get props => [];
 }
 
-class SensorError extends SensorStates {
+class SensorInitial extends SensorState {}
+
+class SensorLoading extends SensorState {}
+
+class SensorSuccess<T> extends SensorState {
+  final T data;
+
+  const SensorSuccess(this.data);
+}
+
+class SensorLoadingMore extends SensorSuccess {
+  const SensorLoadingMore(super.data);
+}
+
+class SensorError extends SensorState {
   final String message;
 
-  SensorError(this.message);
+  const SensorError(this.message);
 }

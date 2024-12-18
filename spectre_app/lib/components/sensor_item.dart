@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import '../core/models/sensor_model.dart';
+import '../shared/utils/spectre_colors.dart';
+import 'details_popup.dart';
+import 'limits_popup.dart';
 import 'package:spectre_app/components/details_popup_stock.dart';
 import 'package:spectre_app/components/limits_popup_stock.dart';
-import '../shared/utils/spectre_colors.dart';
-import '../core/models/sensor_model.dart';
+
 
 class SensorItem extends StatelessWidget {
   final SensorModel sensor;
@@ -49,7 +52,7 @@ class SensorItem extends StatelessWidget {
           size: 26,
         ),
         title: Text(
-          sensor.name!, //Nome do sensor
+          sensor.name, //Nome do sensor
           style: TextStyle(
             fontSize: 16,
             fontFamily: 'OpenSans',

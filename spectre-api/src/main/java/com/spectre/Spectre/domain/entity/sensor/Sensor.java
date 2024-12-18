@@ -18,6 +18,9 @@ public class Sensor extends BaseEntity implements Serializable {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "current_value")
+    private Double currentValue;
+
     @Column(name = "min_value")
     private Double minValue;
 

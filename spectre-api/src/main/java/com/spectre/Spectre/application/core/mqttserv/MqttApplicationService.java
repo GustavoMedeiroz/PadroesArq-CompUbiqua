@@ -1,13 +1,13 @@
 package com.spectre.Spectre.application.core.mqttserv;
 
 import com.spectre.Spectre.infrastructure.mqtt.MqttClientService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
+@Service
+@RequiredArgsConstructor
 public class MqttApplicationService {
     private final MqttClientService mqttClientService;
-
-    public MqttApplicationService() {
-        this.mqttClientService = new MqttClientService();
-    }
 
     public void sendMessage(String topic, String message) {
         mqttClientService.publishMessage(topic, message);

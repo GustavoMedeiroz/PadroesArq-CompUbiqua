@@ -1,9 +1,11 @@
 package com.spectre.Spectre.infrastructure.mqtt;
 
 import org.eclipse.paho.client.mqttv3.*;
+import org.springframework.stereotype.Component;
 
+@Component
 public class MqttClientService {
-    private static final String BROKER_URL = "tcp://ec2-18-206-38-101.compute-1.amazonaws.com:1883";
+    private static final String BROKER_URL = "tcp://ec2-44-211-44-199.compute-1.amazonaws.com:1883";
     private static final String CLIENT_ID = "spectre";
 
     private MqttClient mqttClient;
@@ -31,9 +33,7 @@ public class MqttClientService {
 
     public void subscribeToTopic(String topic) {
         try {
-            mqttClient.subscribe(topic, (t, msg) -> {
-                System.out.println("Message received: " + new String(msg.getPayload()));
-            });
+            mqttClient.subscribe(topic, (t, msg) -> System.out.println("Message received: " + new String(msg.getPayload())));
         } catch (MqttException e) {
             e.printStackTrace();
         }
@@ -47,3 +47,15 @@ public class MqttClientService {
         }
     }
 }
+
+/*
+*
+* Receber informações dos sensores
+* Ficar mapeando os sensores
+* SE E SOMENTE SE o currentValue for diferente do lastValue, enviar uma notificação
+* Usar findById para pegar o sensor
+* Atualizar o sensor
+* Adaptar o aplicativo para sempre ficar ouvindo a api?
+* Usar async talvez?
+* Fazer a API enviar uma notificação apenas quando os valores forem alterados?
+* */

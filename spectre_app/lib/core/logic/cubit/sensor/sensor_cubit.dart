@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 
 import '../../../models/page.dart';
 import '../../../models/sensor_model.dart';
@@ -8,24 +9,24 @@ import '../../../services/http/sensor_service.dart';
 
 part 'sensor_states.dart';
 
-class SensorCubit extends Cubit<SensorStates> {
-  SensorCubit() : super(SensorInitial());
-  final SensorService _sensorService = SensorService();
+class SensorCubit extends Cubit<SensorState> {
+  final SensorService sensorService;
+
+  SensorCubit({required this.sensorService}) : super(SensorInitial());
 
   final List<SensorModel> _sensors = [];
-  int _page = 0;
-  bool _isFetching = false;
+  int _currentPage = 0;
   bool _isLastPage = false;
 
   Future<void> findAll() async {
     emit(SensorLoading());
     try {
       final Page<SensorModel> sensor =
-          await _sensorService.findAll(page: _page);
-      print('SensorCubit.findAll: $_page');
+          await sensorService.findAll(_currentPage);
 
+      _sensors.clear();
       _sensors.addAll(sensor.content);
-      print('SensorCubit.findAll: ${_sensors.length}');
+      _isLastPage = sensor.last;
       emit(SensorSuccess<List<SensorModel>>(_sensors));
     } catch (e) {
       if (e is SocketException) {
@@ -39,24 +40,20 @@ class SensorCubit extends Cubit<SensorStates> {
   }
 
   Future<void> fetchNextPage() async {
-    if (_isFetching || _isLastPage) return;
-
-    _isFetching = true;
+    if (_isLastPage) return;
 
     try {
-      final sensor = await _sensorService.findAll(page: _page);
+      final sensor = await sensorService.findAll(++_currentPage);
 
       if (sensor.content.isNotEmpty) {
         _sensors.addAll(sensor.content);
-        emit(SensorSuccess(_sensors));
+      } else {
+        _isLastPage = sensor.last;
+        --_currentPage;
       }
-
-      _isLastPage = sensor.last;
-      _page++;
+      emit(SensorSuccess(List.from(_sensors)));
     } catch (e) {
       emit(SensorError(e.toString()));
-    } finally {
-      _isFetching = false;
     }
   }
 
@@ -64,7 +61,7 @@ class SensorCubit extends Cubit<SensorStates> {
     emit(SensorLoading());
 
     try {
-      final SensorModel sensor = await _sensorService.findById(id);
+      final SensorModel sensor = await sensorService.findById(id);
       emit(SensorSuccess<SensorModel>(sensor));
     } catch (e) {
       if (e is SocketException) {
@@ -81,7 +78,7 @@ class SensorCubit extends Cubit<SensorStates> {
     emit(SensorLoading());
 
     try {
-      final SensorModel sensor = await _sensorService.create(sensorModel);
+      final SensorModel sensor = await sensorService.create(sensorModel);
       emit(SensorSuccess<SensorModel>(sensor));
     } catch (e) {
       if (e is SocketException) {
@@ -98,7 +95,7 @@ class SensorCubit extends Cubit<SensorStates> {
     emit(SensorLoading());
 
     try {
-      final SensorModel sensor = await _sensorService.update(sensorModel);
+      final SensorModel sensor = await sensorService.update(sensorModel);
       emit(SensorSuccess<SensorModel>(sensor));
     } catch (e) {
       if (e is SocketException) {
@@ -115,7 +112,7 @@ class SensorCubit extends Cubit<SensorStates> {
     emit(SensorLoading());
 
     try {
-      await _sensorService.delete(id);
+      await sensorService.delete(id);
       emit(SensorSuccess<void>(null));
     } catch (e) {
       if (e is SocketException) {
