@@ -12,10 +12,10 @@ public class MqttTest {
 
         // Tópico para teste
         List<String> topics = Arrays.asList(
-                "sensors/temp",
-                "sensors/humidity",
-                "sensors/weight",
-                "sensors/motion"
+                "sensors/temp1",
+                "sensors/humidity1",
+                "sensors/weight1",
+                "sensors/motion1"
         );
 
         // Assinar o tópico para receber mensagens

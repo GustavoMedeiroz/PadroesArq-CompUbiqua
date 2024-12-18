@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class MqttClientService {
-    private static final String BROKER_URL = "tcp://ec2-44-211-44-199.compute-1.amazonaws.com:1883";
+    private static final String BROKER_URL = "tcp://ec2-54-209-134-20.compute-1.amazonaws.com:1883";
     private static final String CLIENT_ID = "spectre";
 
     private MqttClient mqttClient;
