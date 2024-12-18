@@ -7,7 +7,6 @@ import '../../models/page.dart';
 import '../../models/sensor_model.dart';
 
 class SensorService {
-  final http.Client httpClient = http.Client();
   static final String sensorPath = '/sensor';
 
   Future<Page<SensorModel>> findAll(int page) async {
@@ -18,21 +17,17 @@ class SensorService {
       {'page': '$page', 'size': '$size'},
     );
 
-    try {
-      final response = await httpClient.get(url);
+    final response = await http.get(url);
 
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> responseJson = jsonDecode(response.body);
-        return Page.fromJson(
-          responseJson,
-          (data) => SensorModel.fromJson(data),
-        );
-      } else {
-        final errorResponse = jsonDecode(response.body);
-        throw Exception('Error response: ${errorResponse['message']}');
-      }
-    } catch (e) {
-      throw Exception('Error response: $e');
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> responseJson = jsonDecode(response.body);
+      return Page.fromJson(
+        responseJson,
+        (data) => SensorModel.fromJson(data),
+      );
+    } else {
+      final errorResponse = jsonDecode(response.body);
+      throw Exception('Error response: ${errorResponse['message']}');
     }
   }
 

@@ -8,12 +8,9 @@ class SensorsFilter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      //FILTRO DE BUSCA, podemos deixar por último (https://www.youtube.com/watch?v=ZHdg2kfKmjI)
-      padding: const EdgeInsets.symmetric(
-        horizontal: 28,
-        vertical: 20,
-      ),
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * 0.9,
+      height: 45,
       child: TextField(
         decoration: InputDecoration(
           suffixIcon: const Icon(Icons.tune),

@@ -15,18 +15,20 @@ class SensorCubit extends Cubit<SensorState> {
   SensorCubit({required this.sensorService}) : super(SensorInitial());
 
   final List<SensorModel> _sensors = [];
-  int _currentPage = 0;
-  bool _isLastPage = false;
+  bool isLastPage = false;
+  int totalPages = 0;
+  int currentPage = 0;
 
   Future<void> findAll() async {
     emit(SensorLoading());
     try {
       final Page<SensorModel> sensor =
-          await sensorService.findAll(_currentPage);
+          await sensorService.findAll(currentPage);
 
       _sensors.clear();
       _sensors.addAll(sensor.content);
-      _isLastPage = sensor.last;
+      totalPages = sensor.totalPages;
+      isLastPage = sensor.last;
       emit(SensorSuccess<List<SensorModel>>(_sensors));
     } catch (e) {
       if (e is SocketException) {
@@ -40,16 +42,18 @@ class SensorCubit extends Cubit<SensorState> {
   }
 
   Future<void> fetchNextPage() async {
-    if (_isLastPage) return;
-
+    print('current page: $currentPage');
+    print('Total pages: $totalPages');
+    if (isLastPage) return;
+    emit(SensorLoadingMore(_sensors));
     try {
-      final sensor = await sensorService.findAll(++_currentPage);
+      final sensor = await sensorService.findAll(++currentPage);
 
       if (sensor.content.isNotEmpty) {
         _sensors.addAll(sensor.content);
       } else {
-        _isLastPage = sensor.last;
-        --_currentPage;
+        isLastPage = sensor.last;
+        --currentPage;
       }
       emit(SensorSuccess(List.from(_sensors)));
     } catch (e) {
