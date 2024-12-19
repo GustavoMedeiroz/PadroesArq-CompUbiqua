@@ -9,12 +9,21 @@ import '../../models/sensor_model.dart';
 class SensorService {
   static final String sensorPath = '/sensor';
 
-  Future<Page<SensorModel>> findAll(int page) async {
-    int size = 10;
+  Future<Page<SensorModel>> findAll(int page, List<String> types) async {
+    print(types);
+
+    final queryParameters = {
+      'page': '$page',
+      'size': '10',
+      'types': types.join(','),
+    };
+
+    print(queryParameters);
+
     final url = Uri.http(
       SpectreUrl.baseUrl,
-      '$sensorPath/all',
-      {'page': '$page', 'size': '$size'},
+      sensorPath,
+      queryParameters,
     );
 
     final response = await http.get(url);

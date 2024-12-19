@@ -19,11 +19,11 @@ class SensorCubit extends Cubit<SensorState> {
   int totalPages = 0;
   int currentPage = 0;
 
-  Future<void> findAll() async {
+  Future<void> findAll(List<String> types) async {
     emit(SensorLoading());
     try {
       final Page<SensorModel> sensor =
-          await sensorService.findAll(currentPage);
+          await sensorService.findAll(currentPage, types);
 
       _sensors.clear();
       _sensors.addAll(sensor.content);
@@ -41,11 +41,11 @@ class SensorCubit extends Cubit<SensorState> {
     }
   }
 
-  Future<void> fetchNextPage() async {
+  Future<void> fetchNextPage(List<String> types) async {
     if (isLastPage) return;
     emit(SensorLoadingMore(_sensors));
     try {
-      final sensor = await sensorService.findAll(++currentPage);
+      final sensor = await sensorService.findAll(++currentPage, types);
 
       if (sensor.content.isNotEmpty) {
         _sensors.addAll(sensor.content);

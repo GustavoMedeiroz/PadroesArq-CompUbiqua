@@ -28,7 +28,7 @@ class _SensorsPageState extends State<SensorsPage> {
   @override
   void initState() {
     super.initState();
-    _cubit.findAll();
+    _cubit.findAll(List.empty());
   }
 
   @override
@@ -104,7 +104,7 @@ class _SensorsPageState extends State<SensorsPage> {
             !(cubit.currentPage + 1 == cubit.totalPages)) {
           return Center(
             child: ElevatedButton(
-              onPressed: () => _cubit.fetchNextPage(),
+              onPressed: () => _cubit.fetchNextPage(List.empty()),
               child: Text('Carregar mais'),
             ),
           );
