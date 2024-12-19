@@ -1,16 +1,21 @@
 package com.spectre.Spectre.infrastructure.mqtt;
 
+import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 import org.eclipse.paho.client.mqttv3.*;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
+@RequiredArgsConstructor
 public class MqttClientService {
-    private static final String BROKER_URL = "tcp://ec2-54-209-134-20.compute-1.amazonaws.com:1883";
+    private static final String BROKER_URL = "tcp://ec2-54-89-235-178.compute-1.amazonaws.com:1883";
     private static final String CLIENT_ID = "spectre";
 
     private MqttClient mqttClient;
 
-    public MqttClientService() {
+    @PostConstruct
+    public void init() {
         try {
             mqttClient = new MqttClient(BROKER_URL, CLIENT_ID);
             MqttConnectOptions options = new MqttConnectOptions();
@@ -20,6 +25,17 @@ public class MqttClientService {
             e.printStackTrace();
         }
     }
+
+//    public MqttClientService() {
+//        try {
+//            mqttClient = new MqttClient(BROKER_URL, CLIENT_ID);
+//            MqttConnectOptions options = new MqttConnectOptions();
+//            options.setCleanSession(true);
+//            mqttClient.connect(options);
+//        } catch (MqttException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     public void publishMessage(String topic, String message) {
         try {
@@ -33,7 +49,7 @@ public class MqttClientService {
 
     public void subscribeToTopic(String topic) {
         try {
-            mqttClient.subscribe(topic, (t, msg) -> System.out.println("Message received: " + new String(msg.getPayload())));
+            mqttClient.subscribe(topic, (t, msg) -> System.out.println(new String(msg.getPayload())));
         } catch (MqttException e) {
             e.printStackTrace();
         }
