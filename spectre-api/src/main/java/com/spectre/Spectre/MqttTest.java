@@ -1,14 +1,17 @@
 package com.spectre.Spectre;
 
+import com.spectre.Spectre.domain.service.sensor.SensorContext;
 import com.spectre.Spectre.infrastructure.mqtt.MqttClientService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class MqttTest {
     public static void main(String[] args) {
+        SensorContext sensorService = null;
         // Instanciar o serviço MQTT
-        MqttClientService mqttService = new MqttClientService();
+        MqttClientService mqttService;
 
         // Tópico para teste
         List<String> topics = Arrays.asList(
@@ -19,11 +22,11 @@ public class MqttTest {
         );
 
         // Assinar o tópico para receber mensagens
-        topics.forEach(mqttService::subscribeToTopic);
+//        topics.forEach(mqttService::subscribeToTopic);
 
         // Publicar uma mensagem no tópico
         String testMessage = "Teste de mensagem MQTT";
-        topics.forEach(topic -> mqttService.publishMessage(topic, testMessage));
+//        topics.forEach(topic -> mqttService.publishMessage(topic, testMessage));
 
         // Esperar para verificar a mensagem recebida
         try {
@@ -33,6 +36,6 @@ public class MqttTest {
         }
 
         // Desconectar após o teste
-        mqttService.disconnect();
+//        mqttService.disconnect();
     }
 }

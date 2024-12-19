@@ -3,6 +3,7 @@ package com.spectre.Spectre.application.core.sensor;
 import com.spectre.Spectre.application.core.dtos.sensor.SensorDto;
 import com.spectre.Spectre.domain.entity.sensor.Sensor;
 import com.spectre.Spectre.domain.service.sensor.SensorContext;
+import com.spectre.Spectre.domain.vo.enums.SensorType;
 import com.spectre.Spectre.domain.vo.exception.NotFoundException;
 import com.spectre.Spectre.domain.vo.utils.Functions;
 import com.spectre.Spectre.infrastructure.repository.sensor.SensorRepository;
@@ -11,6 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 import static com.spectre.Spectre.domain.vo.utils.Functions.notNullAndNotEmptyValue;
 
@@ -23,8 +26,8 @@ public class SensorService implements SensorContext {
     private final SensorRepository sensorRepository;
 
     @Override
-    public Page<Sensor> findAll(Pageable pageable) {
-        return this.sensorRepository.findAll(pageable);
+    public Page<Sensor> findAllByType(Pageable pageable, List<SensorType> types) {
+        return this.sensorRepository.findAllByType(types, pageable);
     }
 
     @Override
