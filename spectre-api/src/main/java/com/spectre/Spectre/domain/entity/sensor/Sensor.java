@@ -1,5 +1,6 @@
 package com.spectre.Spectre.domain.entity.sensor;
 
+import com.spectre.Spectre.application.core.dtos.sensor.SensorDto;
 import com.spectre.Spectre.domain.vo.base.BaseEntity;
 import com.spectre.Spectre.domain.vo.enums.SensorStatus;
 import com.spectre.Spectre.domain.vo.enums.SensorType;
@@ -34,5 +35,19 @@ public class Sensor extends BaseEntity implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private SensorStatus status;
+
+    public SensorDto mapDtoToEntity() {
+        SensorDto sensorDto = new SensorDto();
+        sensorDto.setId(this.getId());
+        sensorDto.setName(this.getName());
+        sensorDto.setCurrentValue(this.getCurrentValue());
+        sensorDto.setMinValue(this.getMinValue());
+        sensorDto.setMaxValue(this.getMaxValue());
+        sensorDto.setType(this.getType());
+        sensorDto.setStatus(this.getStatus());
+        sensorDto.setCreatedAt(this.getCreatedAt());
+        sensorDto.setUpdatedAt(this.getUpdatedAt());
+        return sensorDto;
+    }
 
 }

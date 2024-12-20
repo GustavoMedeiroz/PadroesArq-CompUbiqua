@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import '../core/models/sensor_model.dart';
 import '../shared/utils/spectre_colors.dart';
-import 'details_popup.dart';
-import 'limits_popup.dart';
-import 'package:spectre_app/components/details_popup_stock.dart';
-import 'package:spectre_app/components/limits_popup_stock.dart';
+import 'details_popup_stock.dart';
+import 'limits_popup_stock.dart';
 
 
 class SensorItem extends StatelessWidget {

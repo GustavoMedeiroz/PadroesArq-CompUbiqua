@@ -7,32 +7,36 @@ import '../../models/page.dart';
 import '../../models/sensor_model.dart';
 
 class SensorService {
-  final http.Client httpClient = http.Client();
   static final String sensorPath = '/sensor';
 
-  Future<Page<SensorModel>> findAll(int page) async {
-    int size = 10;
+  Future<Page<SensorModel>> findAll(int page, List<String> types) async {
+    print(types);
+
+    final queryParameters = {
+      'page': '$page',
+      'size': '10',
+      'types': types.join(','),
+    };
+
+    print(queryParameters);
+
     final url = Uri.http(
       SpectreUrl.baseUrl,
-      '$sensorPath/all',
-      {'page': '$page', 'size': '$size'},
+      sensorPath,
+      queryParameters,
     );
 
-    try {
-      final response = await httpClient.get(url);
+    final response = await http.get(url);
 
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> responseJson = jsonDecode(response.body);
-        return Page.fromJson(
-          responseJson,
-          (data) => SensorModel.fromJson(data),
-        );
-      } else {
-        final errorResponse = jsonDecode(response.body);
-        throw Exception('Error response: ${errorResponse['message']}');
-      }
-    } catch (e) {
-      throw Exception('Error response: $e');
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> responseJson = jsonDecode(response.body);
+      return Page.fromJson(
+        responseJson,
+        (data) => SensorModel.fromJson(data),
+      );
+    } else {
+      final errorResponse = jsonDecode(response.body);
+      throw Exception('Error response: ${errorResponse['message']}');
     }
   }
 
