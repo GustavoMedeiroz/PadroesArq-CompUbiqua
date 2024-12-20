@@ -1,4 +1,5 @@
-package com.spectre.Spectre.application.core.Mqtt;
+package com.spectre.Spectre.infrastructure.configuration;
+
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
@@ -7,8 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class MqttConfig {
-
-    private static final String BROKER_URL = "tcp://ec2-54-82-250-188.compute-1.amazonaws.com:1883"; // URL do broker
+    private static final String BROKER_URL = "tcp://ec2-44-208-36-236.compute-1.amazonaws.com:1883"; // URL do broker
     private static final String CLIENT_ID = "spring-boot-mqtt-client";
 
     @Bean

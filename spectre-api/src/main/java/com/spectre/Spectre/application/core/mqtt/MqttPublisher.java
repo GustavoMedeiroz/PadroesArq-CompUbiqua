@@ -1,16 +1,14 @@
-package com.spectre.Spectre.application.core.Mqtt;
+package com.spectre.Spectre.application.core.mqtt;
+import lombok.RequiredArgsConstructor;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class MqttPublisher {
 
     private final MqttClient mqttClient;
-
-    public MqttPublisher(MqttClient mqttClient) {
-        this.mqttClient = mqttClient;
-    }
 
     public void publish(String topic, String payload) {
         try {

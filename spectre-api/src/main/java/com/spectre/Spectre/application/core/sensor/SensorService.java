@@ -44,7 +44,7 @@ public class SensorService implements SensorContext {
 
     @Override
     @Transactional
-    public void update(SensorDto sensor) {
+    public Sensor update(SensorDto sensor) {
         Functions.acceptFalseThrows(
                 notNullAndNotEmptyValue(sensor.getId()) && this.existsById(sensor.getId()),
                 () -> new NotFoundException(SENSOR_NOT_FOUND)
@@ -54,7 +54,7 @@ public class SensorService implements SensorContext {
 
         this.mapSensorToUpdate(sensor, sensorToUpdate);
 
-        this.sensorRepository.save(sensorToUpdate);
+        return this.sensorRepository.save(sensorToUpdate);
     }
 
     @Override

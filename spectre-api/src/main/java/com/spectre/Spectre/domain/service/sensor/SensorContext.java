@@ -16,7 +16,7 @@ public interface SensorContext {
 
     Sensor create(SensorDto sensorDto);
 
-    void update(SensorDto sensorDto);
+    Sensor update(SensorDto sensorDto);
 
     void delete(Long id);
 

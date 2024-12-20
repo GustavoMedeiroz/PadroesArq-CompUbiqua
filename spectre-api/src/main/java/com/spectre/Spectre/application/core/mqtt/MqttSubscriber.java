@@ -1,4 +1,5 @@
-package com.spectre.Spectre.application.core.Mqtt;
+package com.spectre.Spectre.application.core.mqtt;
+import lombok.RequiredArgsConstructor;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
@@ -8,13 +9,10 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 
 @Service
+@RequiredArgsConstructor
 public class MqttSubscriber implements MqttCallback {
 
     private final MqttClient mqttClient;
-
-    public MqttSubscriber(MqttClient mqttClient) {
-        this.mqttClient = mqttClient;
-    }
 
     @PostConstruct
     public void init() {

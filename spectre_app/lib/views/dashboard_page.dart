@@ -17,7 +17,7 @@ class DashboardPage extends StatelessWidget {
           physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
-              PageTitle(title: 'Bom dia, Gustavo!', hasFilter: false),
+              PageTitle(title: 'Boa noite, Gustavo!', hasFilter: false),
               Container(
                 alignment: Alignment.topLeft,
                 margin: EdgeInsets.symmetric(horizontal: 30),

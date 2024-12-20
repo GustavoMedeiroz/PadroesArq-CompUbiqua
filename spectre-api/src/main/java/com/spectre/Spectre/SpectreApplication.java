@@ -1,17 +1,10 @@
 package com.spectre.Spectre;
 
-import com.spectre.Spectre.application.core.Mqtt.MqttClientService;
-import com.spectre.Spectre.application.core.Mqtt.MqttConfig;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.spectre.Spectre.application.core.mqtt.MqttClientService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-import org.springframework.context.annotation.Bean;
-import org.springframework.core.task.TaskExecutor;
-
-import java.util.Arrays;
-import java.util.List;
 
 @SpringBootApplication
 public class SpectreApplication extends SpringBootServletInitializer implements CommandLineRunner{
@@ -29,12 +22,15 @@ public class SpectreApplication extends SpringBootServletInitializer implements 
 
     @Override
     public void run(String... args) throws Exception {
-        // Assinar tópico para receber mensagens
+//         Assinar tópico para receber mensagens
         String topic = "sensors/temp1";
         mqttClientService.subscribe(topic);
         System.out.println(topic);
         String topic1 = "sensors/humidity1";
         mqttClientService.subscribe(topic1);
         System.out.println(topic1);
+        String topic2 = "sensors/weight1";
+        mqttClientService.subscribe(topic2);
+        System.out.println(topic2);
     }
 }

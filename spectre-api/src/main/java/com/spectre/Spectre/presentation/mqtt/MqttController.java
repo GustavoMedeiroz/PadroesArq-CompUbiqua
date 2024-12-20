@@ -1,15 +1,14 @@
-package com.spectre.Spectre.application.core.Mqtt;
+package com.spectre.Spectre.presentation.mqtt;
+import com.spectre.Spectre.application.core.mqtt.MqttPublisher;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/mqtt")
+@RequiredArgsConstructor
 public class MqttController {
 
     private final MqttPublisher publisher;
-
-    public MqttController(MqttPublisher publisher) {
-        this.publisher = publisher;
-    }
 
     @PostMapping("/publish")
     public String publishMessage(@RequestParam String topic, @RequestParam String message) {
