@@ -23,14 +23,15 @@ public class SpectreApplication extends SpringBootServletInitializer implements 
     @Override
     public void run(String... args) throws Exception {
 //         Assinar tópico para receber mensagens
-//        String topic = "sensors/temp1";
-//        mqttClientService.subscribe(topic);
-//        System.out.println(topic);
-//        String topic1 = "sensors/humidity1";
-//        mqttClientService.subscribe(topic1);
-//        System.out.println(topic1);
-//        String topic2 = "sensors/weight1";
-//        mqttClientService.subscribe(topic2);
-//        System.out.println(topic2);
+        // String topic = "sensors/temp1";
+        // mqttClientService.subscribe(topic);
+        // System.out.println(topic);
+        // String topic1 = "sensors/humidity1";
+        // mqttClientService.subscribe(topic1);
+        // System.out.println(topic1);
+        // String topic2 = "sensors/weight1";
+        // mqttClientService.subscribe(topic2);
+        // System.out.println(topic2);
+
     }
 }

@@ -14,11 +14,12 @@ public class MqttConfig {
     @Bean
     public MqttClient mqttClient() throws Exception {
         MqttClient mqttClient = new MqttClient(BROKER_URL, CLIENT_ID, new MemoryPersistence());
-//        MqttConnectOptions options = new MqttConnectOptions();
-//        options.setCleanSession(true);
-//        options.setAutomaticReconnect(true);
-//        mqttClient.connect(options);
-//        System.out.println("Conectado");
+        // MqttConnectOptions options = new MqttConnectOptions();
+        // options.setCleanSession(true);
+        // options.setAutomaticReconnect(true);
+        // mqttClient.connect(options);
+        // System.out.println("Conectado");
+
         return mqttClient;
     }
 }
