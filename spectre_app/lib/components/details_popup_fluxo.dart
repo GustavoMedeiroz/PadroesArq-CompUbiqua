@@ -12,7 +12,7 @@ class DetailsPopupFluxo extends StatelessWidget {
       //quantidade de clients
       children: [
         Expanded(
-          flex: 4,
+          flex: 7,
           //Expanded para que o primeiro Text ocupe todo o espaço diponível
           child: Text(
             label,

@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+
 import '../core/models/sensor_model.dart';
 import '../shared/utils/spectre_colors.dart';
 import 'details_popup_stock.dart';
 import 'limits_popup_stock.dart';
+import 'status_label.dart';
 
 
 class SensorItem extends StatelessWidget {
   final SensorModel sensor;
   const SensorItem({super.key, required this.sensor});
+  
 
   void mostrarTelaLimites (BuildContext context) {
     Navigator.pop(context); //Retirando o popup atual da tela para adicionar o popup de limites
@@ -15,7 +18,7 @@ class SensorItem extends StatelessWidget {
       context: context,
       barrierDismissible: true, // Isso permite que o usuário feche o dialog ao clicar fora dele
       builder: (context) {
-      return LimitsPopup(); //chamando a tela para definir os limites de temp. e umidade
+      return LimitsPopup(sensor: sensor); // Passando o sensor atual para o LimitsPopup
       }
     );
   }
@@ -46,7 +49,7 @@ class SensorItem extends StatelessWidget {
       child: ListTile(
         leading: Icon(
           //ÍCONE DO SENSOR (o usuário vai escolher o ícone?? Como implementar isso??)
-          Icons.lunch_dining,
+          Icons.sensors,
           size: 26,
         ),
         title: Text(
@@ -68,14 +71,16 @@ class SensorItem extends StatelessWidget {
                 ),
                 SizedBox(width: 3),
                 Text(
-                  'Estoque normal',
-                  //Condição do estoque baseado nos limites do sensor e valor atual (talvez seja necessário fazer uma função pra isso?)
-                  //Caso o valor atual seja menor que o limite, aparece 'Estoque crítico' em vermelho, por exemplo
+                  StatusLabel().stockSubtitle(sensor.currentValue, sensor.minValue, sensor.maxValue),
                   style: TextStyle(
                     fontSize: 13,
                     fontFamily: 'OpenSans',
-                    fontWeight: FontWeight.normal,
-                    color: Color.fromRGBO(0, 0, 0, 0.6),
+                    fontWeight: FontWeight.bold,
+                    color: sensor.currentValue < sensor.minValue
+                        ? Colors.red // Falta de estoque
+                        : sensor.currentValue > sensor.maxValue
+                            ? Colors.green // Excesso de estoque
+                            : Color.fromRGBO(0, 0, 0, 0.6), // Estoque normal
                   ),
                 ),
               ],
@@ -100,7 +105,7 @@ class SensorItem extends StatelessWidget {
       context: context,
       barrierDismissible: true, // Isso permite que o usuário feche o dialog ao clicar fora dele
       builder: (context) {
-        return DetailsPopup();
+        return DetailsPopup(sensor: sensor);
       },
     );
   }

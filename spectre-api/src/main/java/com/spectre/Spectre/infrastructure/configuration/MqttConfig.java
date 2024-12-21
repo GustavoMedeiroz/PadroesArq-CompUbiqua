@@ -19,6 +19,7 @@ public class MqttConfig {
         // options.setAutomaticReconnect(true);
         // mqttClient.connect(options);
         // System.out.println("Conectado");
+
         return mqttClient;
     }
 }

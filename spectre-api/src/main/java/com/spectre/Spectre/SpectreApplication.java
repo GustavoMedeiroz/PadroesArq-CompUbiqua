@@ -32,5 +32,6 @@ public class SpectreApplication extends SpringBootServletInitializer implements 
         // String topic2 = "sensors/weight1";
         // mqttClientService.subscribe(topic2);
         // System.out.println(topic2);
+
     }
 }
