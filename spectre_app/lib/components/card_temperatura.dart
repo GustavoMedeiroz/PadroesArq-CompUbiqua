@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:spectre_app/components/details_popup_temp.dart';
 import 'package:spectre_app/components/limits_popup_temp.dart';
 
+import '../core/models/sensor_model.dart';
+
 class CardTemperatura extends StatelessWidget {
-  const CardTemperatura({super.key, required this.cardSize});
+  const CardTemperatura({super.key, required this.cardSize, required this.sensor});
 
   final double cardSize;
+  final SensorModel sensor;
 
     void mostrarTelaLimites (BuildContext context) {
     Navigator.pop(context); //Retirando o popup atual da tela para adicionar o popup de limites
@@ -33,7 +36,7 @@ class CardTemperatura extends StatelessWidget {
             context: context,
             barrierDismissible: true,
             builder: (context) {
-              return DetailsPopupTemp(); //acho que tem que passar o sensor como objeto no parâmetro depois
+              return DetailsPopupTemp(sensor: sensor,); //acho que tem que passar o sensor como objeto no parâmetro depois
             }
           );
         },
@@ -56,7 +59,7 @@ class CardTemperatura extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '26°C:',
+                          '${sensor.currentValue}°C', //Valor Atual de Temperatura
                           style: TextStyle(
                             fontFamily: 'OpenSans',
                             fontWeight: FontWeight.bold,
@@ -117,7 +120,7 @@ class CardTemperatura extends StatelessWidget {
                       ),
                       Spacer(), //Spacer para empurrar o segundo text para a borda direita da Row
                       Text(
-                        '+15°C',
+                        '${sensor.minValue}°C',
                         style: TextStyle(
                           fontFamily: 'Inter',
                           fontSize: 14,
@@ -141,7 +144,7 @@ class CardTemperatura extends StatelessWidget {
                       ),
                       Spacer(),
                       Text(
-                        '+30°C',
+                        '${sensor.maxValue}°C',
                         style: TextStyle(
                           fontFamily: 'Inter',
                           fontSize: 14,

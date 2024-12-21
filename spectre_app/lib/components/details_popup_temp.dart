@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_popup_card/flutter_popup_card.dart';
 import 'package:spectre_app/components/card_temperatura.dart';
 import 'package:spectre_app/components/status_label.dart';
+import 'package:spectre_app/core/models/sensor_model.dart';
 
 class DetailsPopupTemp extends StatelessWidget {
-  const DetailsPopupTemp({super.key});
+  const DetailsPopupTemp({super.key, required this.sensor});
+
+  final SensorModel sensor;
 
   //recebe um objeto SensorModel referente ao sensor atual vindo da tela sensor_page ou temperatura_page
 
@@ -120,7 +123,7 @@ class DetailsPopupTemp extends StatelessWidget {
                       child: Material(
                         color: Colors.white,
                         child: InkWell(
-                          onTap: () => CardTemperatura(cardSize: 276).mostrarTelaLimites(context), //MOSTRAR POPUP DE LIMITES
+                          onTap: () => CardTemperatura(cardSize: 276, sensor: sensor,).mostrarTelaLimites(context), //MOSTRAR POPUP DE LIMITES
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [

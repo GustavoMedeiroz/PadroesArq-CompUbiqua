@@ -37,11 +37,6 @@ class _SensorsPageState extends State<SensorsPage> {
   }
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(

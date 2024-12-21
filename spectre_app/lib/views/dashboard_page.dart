@@ -1,27 +1,43 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart' hide CarouselController;
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spectre_app/components/card_estoque.dart';
 import 'package:spectre_app/components/card_temperatura.dart';
 import 'package:spectre_app/core/models/sensor_model.dart';
 import 'package:spectre_app/core/services/http/sensor_service.dart';
 import '../components/card_fluxo.dart';
 import '../components/page_title.dart';
+import '../core/logic/cubit/sensor/sensor_cubit.dart';
 
 class DashboardPage extends StatelessWidget {
-  const DashboardPage({super.key});
+  DashboardPage({super.key});
 
-   Future<SensorModel> _fetchSensorById(int id) async {
+  Future<SensorModel> _fetchSensorById(int id) async {
     return await SensorService().findById(id);
   }
 
+  final SensorModel sensor = SensorModel(
+    id: 1,
+    name: 'name',
+    currentValue: 6,
+    minValue: 2,
+    maxValue: 2,
+    type: 'type',
+    status: 'status',
+  );
+
   @override
   Widget build(BuildContext context) {
+
     return SafeArea(
       child: Scaffold(
         body: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [Color.fromRGBO(255, 255, 255, 1), Color.fromRGBO(241, 241, 241, 1)],
+              colors: [
+                Color.fromRGBO(255, 255, 255, 1),
+                Color.fromRGBO(241, 241, 241, 1)
+              ],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
             ),
@@ -77,27 +93,30 @@ class DashboardPage extends StatelessWidget {
                     //Carrossel de fluxo de clientes
                     options: CarouselOptions(
                       enableInfiniteScroll: false,
-                      height: 173, //tamanho de cada item
-                      viewportFraction: 0.47, //porção da tela que cada item ocupa
+                      height: 173,
+                      //tamanho de cada item
+                      viewportFraction: 0.47,
+                      //porção da tela que cada item ocupa
                       padEnds:
                           false, //começa o carrossel na borda esquerda do container
                     ),
                     items: [
                       //conteúdo do carrossel (lista de Widgets)
                       FutureBuilder<SensorModel>(
-                      future: _fetchSensorById(1), // Sensor específico
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
-                          return CircularProgressIndicator();
-                        } else if (snapshot.hasError) {
-                          return Text('Erro ao carregar sensor');
-                        } else if (snapshot.hasData) {
-                          return CardEstoque(sensor: snapshot.data!);
-                        } else {
-                          return Container();
-                        }
-                      },
-                    ),
+                        future: _fetchSensorById(1), // Sensor específico
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return CircularProgressIndicator();
+                          } else if (snapshot.hasError) {
+                            return Text('Erro ao carregar sensor');
+                          } else if (snapshot.hasData) {
+                            return CardEstoque(sensor: snapshot.data!);
+                          } else {
+                            return Container();
+                          }
+                        },
+                      ),
                     ],
                   ),
                 ),
@@ -125,9 +144,9 @@ class DashboardPage extends StatelessWidget {
                     ),
                     items: [
                       //conteúdo do carrossel
-                      CardTemperatura(cardSize: 276),
-                      CardTemperatura(cardSize: 276),
-                      CardTemperatura(cardSize: 276),
+                      CardTemperatura(cardSize: 276, sensor: sensor),
+                      CardTemperatura(cardSize: 276, sensor: sensor),
+                      CardTemperatura(cardSize: 276, sensor: sensor,),
                     ],
                   ),
                 ),
