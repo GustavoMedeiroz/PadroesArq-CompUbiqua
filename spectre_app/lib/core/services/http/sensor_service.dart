@@ -26,7 +26,11 @@ class SensorService {
       queryParameters,
     );
 
+    print(url);
+
     final response = await http.get(url);
+
+
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseJson = jsonDecode(response.body);
