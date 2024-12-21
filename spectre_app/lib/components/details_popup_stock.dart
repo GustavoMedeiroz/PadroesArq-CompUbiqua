@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_popup_card/flutter_popup_card.dart';
+import 'package:spectre_app/components/sensor_item.dart';
 import 'package:spectre_app/components/status_label.dart';
+import 'package:spectre_app/core/models/sensor_model.dart';
 
 class DetailsPopup extends StatelessWidget {
-  const DetailsPopup({super.key});
+  final SensorModel sensor;
 
-  //recebe um objeto SensorModel referente ao sensor atual vindo da tela sensor_page ou temperatura_page
+  const DetailsPopup({super.key, required this.sensor});
 
-  _criaRowInformacoes(String label, double value) { //cria cada linha de informações sobre o sensor
+  _criaRowInformacoes(String label, double value) {
     return Row(
       //quantidade de clients
       children: [
@@ -24,7 +26,7 @@ class DetailsPopup extends StatelessWidget {
             ),
           ),
         ),
-        Spacer(), //Spacer para empurrar o segundo text para a borda direita da Row
+        Spacer(),
         Text(
           value.toString(), //Mostrar dado dinâmico
           style: TextStyle(
@@ -36,10 +38,6 @@ class DetailsPopup extends StatelessWidget {
       ],
     );
   }
-
-
-  // BUILD //
-
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +51,7 @@ class DetailsPopup extends StatelessWidget {
             ),
             elevation: 5,
             child: SizedBox(
-              height: 265,
+              height: 245,
               width: 320,
               child: Padding(
                 padding: const EdgeInsets.symmetric(
@@ -75,7 +73,7 @@ class DetailsPopup extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Frutas:', //Teoricamente tem um ícone aqui tb mas vamos deixar pra implementar só se der tempo
+                                sensor.name,
                                 style: TextStyle(
                                   fontFamily: 'OpenSans',
                                   fontWeight: FontWeight.bold,
@@ -84,7 +82,7 @@ class DetailsPopup extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                StatusLabel().stockSubtitle(2, 3, 7), //usar o stockSubtitle do StatusLabel passando os dados dinâmicos
+                                StatusLabel().stockSubtitle(sensor.currentValue, sensor.minValue, sensor.maxValue),
                                 style: TextStyle(
                                   fontFamily: 'Inter',
                                   fontWeight: FontWeight.normal,
@@ -96,16 +94,15 @@ class DetailsPopup extends StatelessWidget {
                           ),
                         ),
                         Spacer(),
-                        StatusLabel().checkStockStatus(2, 3, 7), //VAI RECEBER O VALOR ATUAL DO SENSOR, VALOR MÍNIMO, VALOR MÁXIMO
+                        StatusLabel().checkStockStatus(sensor.currentValue, sensor.minValue, sensor.maxValue),
                       ],
                     ),
                     SizedBox(height: 25),
                     Column(
                       children: [
-                        _criaRowInformacoes('Estoque atual:', 8),
-                        _criaRowInformacoes('Limite mínimo (un.):', 10),
-                        _criaRowInformacoes('Limite máximo (un.):', 50),
-                        _criaRowInformacoes('Peso médio do produto (kg):', 1.44),
+                        _criaRowInformacoes('Estoque atual:', sensor.currentValue),
+                        _criaRowInformacoes('Limite mínimo (un.):', sensor.minValue),
+                        _criaRowInformacoes('Limite máximo (un.):', sensor.maxValue),
                         Padding(
                           padding: const EdgeInsets.symmetric(
                             vertical: 6,
@@ -119,8 +116,7 @@ class DetailsPopup extends StatelessWidget {
                       child: Material(
                         color: Colors.white,
                         child: InkWell(
-                          onTap: () {},
-                          // onTap: ()  {}=> SensorItem().mostrarTelaLimites(context),
+                          onTap: () => SensorItem(sensor: sensor).mostrarTelaLimites(context),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [

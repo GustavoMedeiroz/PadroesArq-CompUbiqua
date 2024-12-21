@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../core/models/sensor_model.dart';
 import '../shared/utils/spectre_colors.dart';
 import 'details_popup_stock.dart';
@@ -15,7 +16,7 @@ class SensorItem extends StatelessWidget {
       context: context,
       barrierDismissible: true, // Isso permite que o usuário feche o dialog ao clicar fora dele
       builder: (context) {
-      return LimitsPopup(); //chamando a tela para definir os limites de temp. e umidade
+      return LimitsPopup(sensor: sensor); // Passando o sensor atual para o LimitsPopup
       }
     );
   }
@@ -100,7 +101,7 @@ class SensorItem extends StatelessWidget {
       context: context,
       barrierDismissible: true, // Isso permite que o usuário feche o dialog ao clicar fora dele
       builder: (context) {
-        return DetailsPopup();
+        return DetailsPopup(sensor: sensor);
       },
     );
   }
