@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_popup_card/flutter_popup_card.dart';
+import 'package:spectre_app/components/sensor_item.dart';
 import 'package:spectre_app/core/models/sensor_model.dart';
-import 'package:spectre_app/core/services/http/sensor_service.dart'; // Importando o SensorService
+import 'package:spectre_app/core/services/http/sensor_service.dart';
+import 'package:spectre_app/views/sensors_page.dart';
+import 'package:spectre_app/views/tabs_screen.dart';
 
 class LimitsPopup extends StatefulWidget {
   final SensorModel sensor;

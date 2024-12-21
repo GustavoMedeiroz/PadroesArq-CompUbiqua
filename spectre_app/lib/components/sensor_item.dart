@@ -10,6 +10,7 @@ import 'status_label.dart';
 class SensorItem extends StatelessWidget {
   final SensorModel sensor;
   const SensorItem({super.key, required this.sensor});
+  
 
   void mostrarTelaLimites (BuildContext context) {
     Navigator.pop(context); //Retirando o popup atual da tela para adicionar o popup de limites

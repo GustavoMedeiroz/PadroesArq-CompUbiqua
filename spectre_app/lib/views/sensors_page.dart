@@ -25,6 +25,11 @@ class _SensorsPageState extends State<SensorsPage> {
   //   );
   // }
 
+  // Novo método para atualizar a página
+  void atualizarPagina() {
+    setState(() {});
+  }
+
   @override
   void initState() {
     super.initState();

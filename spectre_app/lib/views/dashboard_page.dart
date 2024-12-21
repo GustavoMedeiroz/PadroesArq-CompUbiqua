@@ -2,12 +2,17 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart' hide CarouselController;
 import 'package:spectre_app/components/card_estoque.dart';
 import 'package:spectre_app/components/card_temperatura.dart';
-
+import 'package:spectre_app/core/models/sensor_model.dart';
+import 'package:spectre_app/core/services/http/sensor_service.dart';
 import '../components/card_fluxo.dart';
 import '../components/page_title.dart';
 
 class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key});
+
+   Future<SensorModel> _fetchSensorById(int id) async {
+    return await SensorService().findById(id);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,10 +84,20 @@ class DashboardPage extends StatelessWidget {
                     ),
                     items: [
                       //conteúdo do carrossel (lista de Widgets)
-                      CardEstoque(),
-                      CardEstoque(),
-                      CardEstoque(),
-                      CardEstoque(),
+                      FutureBuilder<SensorModel>(
+                      future: _fetchSensorById(1), // Sensor específico
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return CircularProgressIndicator();
+                        } else if (snapshot.hasError) {
+                          return Text('Erro ao carregar sensor');
+                        } else if (snapshot.hasData) {
+                          return CardEstoque(sensor: snapshot.data!);
+                        } else {
+                          return Container();
+                        }
+                      },
+                    ),
                     ],
                   ),
                 ),

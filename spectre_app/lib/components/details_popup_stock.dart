@@ -68,7 +68,7 @@ class DetailsPopup extends StatelessWidget {
                       //Estado (CRÍTICO, NORMAL...) é dado pelo status_label.dart
                       children: [
                         Expanded(
-                          flex: 3,
+                          flex: 5,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
