@@ -1,25 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_popup_card/flutter_popup_card.dart';
+import 'package:spectre_app/core/models/sensor_model.dart';
+import 'package:spectre_app/core/services/http/sensor_service.dart';
 
 class LimitsPopup extends StatefulWidget {
-  const LimitsPopup({super.key});
+  final SensorModel sensor;
+
+  const LimitsPopup({super.key, required this.sensor});
 
   @override
   State<LimitsPopup> createState() => _LimitsPopupState();
 }
 
-  class _LimitsPopupState extends State<LimitsPopup> {
-
+class _LimitsPopupState extends State<LimitsPopup> {
   late TextEditingController controller; //controller para os valores a serem alterados
-  String value = ''; //novo valor passado pelo usuário
-  String valueMinimo = ''; //novo valor passado pelo usuário para limite mínimo
-  String valueMaximo = ''; //novo valor passado pelo usuário para limite máximo
-  String valuePeso = ''; //novo valor passado pelo usuário para peso médio
+  late String value; // Novo valor passado pelo usuário
+  late String valueMinimo; // Novo valor passado pelo usuário para limite mínimo
+  late String valueMaximo; // Novo valor passado pelo usuário para limite máximo
 
   @override
   void initState() { //inicializando o controller
     super.initState();
     controller = TextEditingController();
+    value = widget.sensor.currentValue.toString(); // Inicializando com o valor atual
+    valueMinimo = widget.sensor.minValue.toString(); // Inicializando com o limite mínimo
+    valueMaximo = widget.sensor.maxValue.toString(); // Inicializando com o limite máximo
   }
 
   @override
@@ -28,8 +33,28 @@ class LimitsPopup extends StatefulWidget {
     super.dispose();
   }
 
-  void _confirmarAlteracoes() {
-    //confirmar envio do formulário -> alterar as informações no banco
+  void _confirmarAlteracoes() async {
+    // Criando uma instância do SensorService
+    final sensorService = SensorService();
+
+    // Atualizando os valores do sensor
+    final updatedSensor = SensorModel(
+      id: widget.sensor.id,
+      name: widget.sensor.name,
+      currentValue: double.parse(value),
+      minValue: double.parse(valueMinimo),
+      maxValue: double.parse(valueMaximo),
+      type: widget.sensor.type,
+      status: widget.sensor.status,
+    );
+
+    try {
+      await sensorService.update(updatedSensor); // Chamando o método de atualização
+      Navigator.of(context).pop(); // Fechando o popup após a atualização
+    } catch (e) {
+      // Tratar erro, exibir mensagem ao usuário
+      print('Erro ao atualizar sensor: $e');
+    }
   }
 
   // Método para criar parte do card
@@ -86,9 +111,6 @@ class LimitsPopup extends StatefulWidget {
             } else if (id == 'maximo') {
               // Atualiza o valor do limite máximo
               valueMaximo = newValue; // Adicione uma variável para o limite máximo
-            } else if (id == 'peso') {
-              // Atualiza o valor do peso médio
-              valuePeso = newValue; // Adicione uma variável para o peso médio
             }
           });
         }
@@ -100,6 +122,7 @@ class LimitsPopup extends StatefulWidget {
     return showDialog<String?>( //Dialog para alterar o valor de alguma propriedade do sensor
     context: context,
     builder: (context) => AlertDialog(
+      backgroundColor: Colors.white,
       title: Text(title),
       content: TextField(
         autofocus: true,
@@ -178,7 +201,7 @@ class LimitsPopup extends StatefulWidget {
             ),
             elevation: 5,
             child: SizedBox(
-              height: 320,
+              height: 285,
               width: 320,
               child: Padding(
                 padding: const EdgeInsets.symmetric(
@@ -200,7 +223,7 @@ class LimitsPopup extends StatefulWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Frutas', //Teoricamente tem um ícone aqui tb mas vamos deixar pra implementar só se der tempo
+                                widget.sensor.name, //Teoricamente tem um ícone aqui tb mas vamos deixar pra implementar só se der tempo
                                 style: TextStyle(
                                   fontFamily: 'OpenSans',
                                   fontWeight: FontWeight.bold,
@@ -242,12 +265,6 @@ class LimitsPopup extends StatefulWidget {
                           'maximo', // identificador para limite máximo
                         ),
                         SizedBox(height: 10),
-                        inputValue(
-                          context,
-                          'Peso médio do produto (un.):',
-                          valuePeso, //passar o valor do produto registrado no sensor
-                          'peso', // identificador para peso médio
-                        ),
                         Padding(
                           padding: const EdgeInsets.symmetric(
                             vertical: 6,

@@ -8,8 +8,8 @@ class SensorModel extends Equatable {
   final double maxValue;
   final String type;
   final String status;
-  final DateTime createdAt;
-  final DateTime updatedAt;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   const SensorModel({
     required this.id,
@@ -19,8 +19,8 @@ class SensorModel extends Equatable {
     required this.maxValue,
     required this.type,
     required this.status,
-    required this.createdAt,
-    required this.updatedAt,
+    this.createdAt,
+    this.updatedAt,
   });
 
   factory SensorModel.fromJson(Map<String, dynamic> json) {
@@ -34,10 +34,10 @@ class SensorModel extends Equatable {
       status: json['status'],
       createdAt: json['createdAt'] != null
           ? DateTime.parse(json['createdAt'])
-          : DateTime.now(),
+          : null,
       updatedAt: json['updatedAt'] != null
           ? DateTime.parse(json['updatedAt'])
-          : DateTime.now(),
+          : null,
     );
   }
 
@@ -50,8 +50,8 @@ class SensorModel extends Equatable {
       'maxValue': maxValue,
       'type': type,
       'status': status,
-      'createdAt': createdAt,
-      'updatedAt': updatedAt
+      'createdAt': createdAt?.toIso8601String(),
+      'updatedAt': updatedAt?.toIso8601String()
     };
   }
 

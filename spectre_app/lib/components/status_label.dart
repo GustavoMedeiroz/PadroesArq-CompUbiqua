@@ -33,6 +33,16 @@ class StatusLabel extends StatelessWidget {
     }
   }
 
+  checkTemperatureStatus(double tempValue, double tempMin, double tempMax) {
+    if (tempValue < tempMin) {
+      return mostrarLabelCritico();
+    } else if (tempValue > tempMax) {
+      return mostrarLabelCritico();
+    } else {
+      return mostrarLabelNormal();
+    }
+  }
+
   mostrarLabelNormal () {
     return Container(
       alignment: Alignment.center,

@@ -26,7 +26,11 @@ class SensorService {
       queryParameters,
     );
 
+    print(url);
+
     final response = await http.get(url);
+
+
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseJson = jsonDecode(response.body);
@@ -73,15 +77,26 @@ class SensorService {
     final url = Uri.http(SpectreUrl.baseUrl, sensorPath);
     final response = await http.put(
       url,
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: jsonEncode(sensorModel.toJson()),
     );
 
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+
     if (response.statusCode == 200) {
-      final Map<String, dynamic> responseJson = jsonDecode(response.body);
-      return SensorModel.fromJson(responseJson);
+      return sensorModel;
     } else {
-      final errorResponse = jsonDecode(response.body);
-      throw Exception('Error response: ${errorResponse['message']}');
+      String errorMessage;
+      try {
+        final errorResponse = jsonDecode(response.body);
+        errorMessage = errorResponse['message'];
+      } catch (e) {
+        errorMessage = 'Erro desconhecido: ${response.body}';
+      }
+      throw Exception('Error response: $errorMessage');
     }
   }
 

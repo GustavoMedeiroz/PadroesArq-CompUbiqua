@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_popup_card/flutter_popup_card.dart';
 import 'package:spectre_app/components/card_temperatura.dart';
 import 'package:spectre_app/components/status_label.dart';
+import 'package:spectre_app/core/models/sensor_model.dart';
 
 class DetailsPopupTemp extends StatelessWidget {
-  const DetailsPopupTemp({super.key});
+  const DetailsPopupTemp({super.key, required this.sensor});
 
-  //recebe um objeto SensorModel referente ao sensor atual vindo da tela sensor_page ou temperatura_page
+  final SensorModel sensor;
 
   _criaRowInformacoes(String label, double value) { //cria cada linha de informações sobre o sensor
     return Row(
@@ -54,7 +55,7 @@ class DetailsPopupTemp extends StatelessWidget {
             ),
             elevation: 5,
             child: SizedBox(
-              height: 265,
+              height: 245,
               width: 320,
               child: Padding(
                 padding: const EdgeInsets.symmetric(
@@ -71,12 +72,12 @@ class DetailsPopupTemp extends StatelessWidget {
                       //Estado (CRÍTICO, NORMAL...) é dado pelo status_label.dart
                       children: [
                         Expanded(
-                          flex: 3,
+                          flex: 6,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                '26°C', //PASSAR VALOR ATUAL DA TEMPERATURA
+                                sensor.name,
                                 style: TextStyle(
                                   fontFamily: 'OpenSans',
                                   fontWeight: FontWeight.bold,
@@ -97,16 +98,15 @@ class DetailsPopupTemp extends StatelessWidget {
                           ),
                         ),
                         Spacer(),
-                        StatusLabel().checkTemperatureAndHumidityStatus(26, 18, 30, 47, 30), //VAI RECEBER O VALOR ATUAL DO SENSOR, VALOR MÍNIMO, VALOR MÁXIMO
+                        StatusLabel().checkTemperatureStatus(sensor.currentValue, sensor.minValue, sensor.maxValue), //VAI RECEBER O VALOR ATUAL DO SENSOR, VALOR MÍNIMO, VALOR MÁXIMO
                       ],
                     ),
                     SizedBox(height: 25),
                     Column(
                       children: [
-                        _criaRowInformacoes('Limite mínimo (°C):', 18),
-                        _criaRowInformacoes('Limite máximo (°C):', 30),
-                        _criaRowInformacoes('Umidade relativa do ar:', 47),
-                        _criaRowInformacoes('Limite mínimo de Umidade:', 30),
+                        _criaRowInformacoes('Valor atual (°C):', sensor.currentValue),
+                        _criaRowInformacoes('Limite mínimo (°C):', sensor.minValue),
+                        _criaRowInformacoes('Limite máximo (°C):',  sensor.maxValue),
                         Padding(
                           padding: const EdgeInsets.symmetric(
                             vertical: 6,
@@ -120,7 +120,7 @@ class DetailsPopupTemp extends StatelessWidget {
                       child: Material(
                         color: Colors.white,
                         child: InkWell(
-                          onTap: () => CardTemperatura(cardSize: 276).mostrarTelaLimites(context), //MOSTRAR POPUP DE LIMITES
+                          onTap: () => CardTemperatura(cardSize: 276, sensor: sensor,).mostrarTelaLimites(context), //MOSTRAR POPUP DE LIMITES
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
