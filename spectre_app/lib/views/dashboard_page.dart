@@ -1,13 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart' hide CarouselController;
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spectre_app/components/card_estoque.dart';
 import 'package:spectre_app/components/card_temperatura.dart';
 import 'package:spectre_app/core/models/sensor_model.dart';
 import 'package:spectre_app/core/services/http/sensor_service.dart';
 import '../components/card_fluxo.dart';
 import '../components/page_title.dart';
-import '../core/logic/cubit/sensor/sensor_cubit.dart';
 
 class DashboardPage extends StatelessWidget {
   DashboardPage({super.key});
@@ -71,6 +69,7 @@ class DashboardPage extends StatelessWidget {
                     CardFluxo(colorScheme: 1, data: 'HOJE'),
                     //importando card do card_fluxo.dart
                     CardFluxo(colorScheme: 2, data: 'SEMANA'),
+                    CardFluxo(colorScheme: 3, data: 'MÊS'),
                   ],
                 ),
                 SizedBox(height: 20),
@@ -117,6 +116,81 @@ class DashboardPage extends StatelessWidget {
                           }
                         },
                       ),
+                      FutureBuilder<SensorModel>(
+                        future: _fetchSensorById(3), // Sensor específico
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return CircularProgressIndicator();
+                          } else if (snapshot.hasError) {
+                            return Text('Erro ao carregar sensor');
+                          } else if (snapshot.hasData) {
+                            return CardEstoque(sensor: snapshot.data!);
+                          } else {
+                            return Container();
+                          }
+                        },
+                      ),
+                      FutureBuilder<SensorModel>(
+                        future: _fetchSensorById(6), // Sensor específico
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return CircularProgressIndicator();
+                          } else if (snapshot.hasError) {
+                            return Text('Erro ao carregar sensor');
+                          } else if (snapshot.hasData) {
+                            return CardEstoque(sensor: snapshot.data!);
+                          } else {
+                            return Container();
+                          }
+                        },
+                      ),
+                      FutureBuilder<SensorModel>(
+                        future: _fetchSensorById(7), // Sensor específico
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return CircularProgressIndicator();
+                          } else if (snapshot.hasError) {
+                            return Text('Erro ao carregar sensor');
+                          } else if (snapshot.hasData) {
+                            return CardEstoque(sensor: snapshot.data!);
+                          } else {
+                            return Container();
+                          }
+                        },
+                      ),
+                      FutureBuilder<SensorModel>(
+                        future: _fetchSensorById(12), // Sensor específico
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return CircularProgressIndicator();
+                          } else if (snapshot.hasError) {
+                            return Text('Erro ao carregar sensor');
+                          } else if (snapshot.hasData) {
+                            return CardEstoque(sensor: snapshot.data!);
+                          } else {
+                            return Container();
+                          }
+                        },
+                      ),
+                      FutureBuilder<SensorModel>(
+                        future: _fetchSensorById(13), // Sensor específico
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return CircularProgressIndicator();
+                          } else if (snapshot.hasError) {
+                            return Text('Erro ao carregar sensor');
+                          } else if (snapshot.hasData) {
+                            return CardEstoque(sensor: snapshot.data!);
+                          } else {
+                            return Container();
+                          }
+                        },
+                      ),
                     ],
                   ),
                 ),
@@ -144,9 +218,96 @@ class DashboardPage extends StatelessWidget {
                     ),
                     items: [
                       //conteúdo do carrossel
-                      CardTemperatura(cardSize: 276, sensor: sensor),
-                      CardTemperatura(cardSize: 276, sensor: sensor),
-                      CardTemperatura(cardSize: 276, sensor: sensor,),
+                      FutureBuilder<SensorModel>(
+                        future: _fetchSensorById(2), // Sensor específico
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return CircularProgressIndicator();
+                          } else if (snapshot.hasError) {
+                            return Text('Erro ao carregar sensor');
+                          } else if (snapshot.hasData) {
+                            return CardTemperatura(sensor: snapshot.data!, cardSize: 286,);
+                          } else {
+                            return Container();
+                          }
+                        },
+                      ),
+                      FutureBuilder<SensorModel>(
+                        future: _fetchSensorById(4), // Sensor específico
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return CircularProgressIndicator();
+                          } else if (snapshot.hasError) {
+                            return Text('Erro ao carregar sensor');
+                          } else if (snapshot.hasData) {
+                            return CardTemperatura(sensor: snapshot.data!, cardSize: 286,);
+                          } else {
+                            return Container();
+                          }
+                        },
+                      ),
+                      FutureBuilder<SensorModel>(
+                        future: _fetchSensorById(8), // Sensor específico
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return CircularProgressIndicator();
+                          } else if (snapshot.hasError) {
+                            return Text('Erro ao carregar sensor');
+                          } else if (snapshot.hasData) {
+                            return CardTemperatura(sensor: snapshot.data!, cardSize: 286,);
+                          } else {
+                            return Container();
+                          }
+                        },
+                      ),
+                      FutureBuilder<SensorModel>(
+                        future: _fetchSensorById(9), // Sensor específico
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return CircularProgressIndicator();
+                          } else if (snapshot.hasError) {
+                            return Text('Erro ao carregar sensor');
+                          } else if (snapshot.hasData) {
+                            return CardTemperatura(sensor: snapshot.data!, cardSize: 286,);
+                          } else {
+                            return Container();
+                          }
+                        },
+                      ),
+                      FutureBuilder<SensorModel>(
+                        future: _fetchSensorById(11), // Sensor específico
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return CircularProgressIndicator();
+                          } else if (snapshot.hasError) {
+                            return Text('Erro ao carregar sensor');
+                          } else if (snapshot.hasData) {
+                            return CardTemperatura(sensor: snapshot.data!, cardSize: 286,);
+                          } else {
+                            return Container();
+                          }
+                        },
+                      ),
+                      FutureBuilder<SensorModel>(
+                        future: _fetchSensorById(14), // Sensor específico
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return CircularProgressIndicator();
+                          } else if (snapshot.hasError) {
+                            return Text('Erro ao carregar sensor');
+                          } else if (snapshot.hasData) {
+                            return CardTemperatura(sensor: snapshot.data!, cardSize: 286,);
+                          } else {
+                            return Container();
+                          }
+                        },
+                      ),
                     ],
                   ),
                 ),

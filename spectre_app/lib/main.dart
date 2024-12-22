@@ -7,8 +7,6 @@ import 'package:spectre_app/views/tabs_screen.dart';
 import 'package:spectre_app/views/temperature_page.dart';
 
 void main() {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // await ServiceLocator.initServiceLocator();
   runApp(const MyApp());
 }
 

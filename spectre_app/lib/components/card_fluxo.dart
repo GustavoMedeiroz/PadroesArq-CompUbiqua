@@ -19,9 +19,12 @@ class CardFluxo extends StatelessWidget {
           colors: colorScheme == 1 ? [
             Color.fromRGBO(108, 185, 228, 1),
             Color.fromRGBO(45, 151, 211, 1),
-          ] : [
+          ] : colorScheme == 2 ? [
             Color.fromRGBO(127, 93, 249, 1),
             Color.fromRGBO(71, 24, 239, 1),
+          ] : [
+            Color.fromRGBO(255, 193, 7, 1),
+            Color.fromRGBO(255, 152, 0, 1),
           ],
         ),
         borderRadius: BorderRadius.circular(20),
@@ -73,7 +76,7 @@ class CardFluxo extends StatelessWidget {
                       Expanded(
                         flex: 2, //proporção do expanded
                         child: Text(
-                          'Qntd. de clientes hoje:',
+                          'Qntd. de clientes:',
                           style: TextStyle(
                             fontFamily: 'Inter',
                             fontSize: 14,
@@ -145,7 +148,7 @@ class CardFluxo extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            '01/11/2024',
+                            'Sensor de Movimento',
                             style: TextStyle(
                               fontFamily: 'OpenSans',
                               fontSize: 12,

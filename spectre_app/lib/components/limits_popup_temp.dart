@@ -1,35 +1,62 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_popup_card/flutter_popup_card.dart';
+import 'package:spectre_app/core/services/http/sensor_service.dart';
+
+import '../core/models/sensor_model.dart';
 
 class LimitsPopupTemp extends StatefulWidget {
-  const LimitsPopupTemp({super.key});
+  final SensorModel sensor;
+
+  const LimitsPopupTemp({super.key, required this.sensor});
 
   @override
   State<LimitsPopupTemp> createState() => _LimitsPopupState();
 }
 
-  class _LimitsPopupState extends State<LimitsPopupTemp> {
-
-  late TextEditingController controller; //controller para os valores a serem alterados
-  String value = ''; //novo valor passado pelo usuário
-  String valueMinimoTemp = ''; //novo valor passado pelo usuário para limite mínimo
-  String valueMaximoTemp = ''; //novo valor passado pelo usuário para limite máximo
-  String valueMinimoUmidade = ''; //novo valor passado pelo usuário para peso médio
+class _LimitsPopupState extends State<LimitsPopupTemp> {
+  
+  late TextEditingController controller;
+  late String value; // Novo valor passado pelo usuário
+  late String valueMinimo; // Novo valor passado pelo usuário para limite mínimo
+  late String valueMaximo; // Novo valor passado pelo usuário para limite máximo
 
   @override
-  void initState() { //inicializando o controller
+  void initState() {
     super.initState();
     controller = TextEditingController();
+    value = widget.sensor.currentValue.toString(); // Inicializando com o valor atual
+    valueMinimo = widget.sensor.minValue.toString(); // Inicializando com o limite mínimo
+    valueMaximo = widget.sensor.maxValue.toString(); // Inicializando com o limite máximo
   }
 
   @override
-  void dispose() { //removendo o controller
+  void dispose() {
     controller.dispose();
     super.dispose();
   }
 
-  void _confirmarAlteracoes() {
-    //confirmar envio do formulário -> alterar as informações no banco
+  Future<void> _confirmarAlteracoes() async {
+    // Criando uma instância do SensorService
+    final sensorService = SensorService();
+
+    // Atualizando os valores do sensor
+    final updatedSensor = SensorModel(
+      id: widget.sensor.id,
+      name: widget.sensor.name,
+      currentValue: double.parse(value),
+      minValue: double.parse(valueMinimo),
+      maxValue: double.parse(valueMaximo),
+      type: widget.sensor.type,
+      status: widget.sensor.status,
+    );
+
+    try {
+      await sensorService.update(updatedSensor); // Chamando o método de atualização
+      Navigator.of(context).pop(); // Fechando o popup após a atualização
+    } catch (e) {
+      // Tratar erro, exibir mensagem ao usuário
+      print('Erro ao atualizar sensor: $e');
+    }
   }
 
   // Método para criar parte do card
@@ -48,7 +75,7 @@ class LimitsPopupTemp extends StatefulWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    placeholder, //passando a String recebida
+                    placeholder,
                     style: TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 14,
@@ -57,7 +84,7 @@ class LimitsPopupTemp extends StatefulWidget {
                     ),
                   ),
                   Text(
-                    value.toString(), //convertendo o valor para String
+                    value.toString(),
                     style: TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 14,
@@ -68,7 +95,7 @@ class LimitsPopupTemp extends StatefulWidget {
                 ],
               ),
             ),
-            Spacer(), //Spacer para empurrar o segundo text para a borda direita da Row
+            Spacer(),
             Icon(
               Icons.arrow_forward_ios,
               size: 15,
@@ -82,13 +109,10 @@ class LimitsPopupTemp extends StatefulWidget {
           setState(() {
             if (id == 'minimo') {
               // Atualiza o valor do limite mínimo
-              valueMinimoTemp = newValue; // Adiciona uma variável para o limite mínimo
+              valueMinimo = newValue; // Adiciona uma variável para o limite mínimo
             } else if (id == 'maximo') {
               // Atualiza o valor do limite máximo
-              valueMaximoTemp = newValue; // Adicione uma variável para o limite máximo
-            } else if (id == 'umidade') {
-              // Atualiza o valor do peso médio
-              valueMinimoUmidade = newValue; // Adicione uma variável para o peso médio
+              valueMaximo = newValue; // Adicione uma variável para o limite máximo
             }
           });
         }
@@ -174,11 +198,11 @@ class LimitsPopupTemp extends StatefulWidget {
           child: PopupCard(
             color: Colors.white,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20), //border de cada Card
+              borderRadius: BorderRadius.circular(20),
             ),
             elevation: 5,
             child: SizedBox(
-              height: 320,
+              height: 270,
               width: 320,
               child: Padding(
                 padding: const EdgeInsets.symmetric(
@@ -200,7 +224,7 @@ class LimitsPopupTemp extends StatefulWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Ambiente', //NOME DO SENSOR DE TEMP
+                                widget.sensor.name, //NOME DO SENSOR DE TEMP
                                 style: TextStyle(
                                   fontFamily: 'OpenSans',
                                   fontWeight: FontWeight.bold,
@@ -231,22 +255,15 @@ class LimitsPopupTemp extends StatefulWidget {
                           //chamando a função do campo de alterar valor
                           context,
                           'Limite mínimo (°C):',
-                          valueMinimoTemp, //passar o valor de limite mínimo do sensor
-                          'minimo', // identificador para limite mínimo
+                          valueMinimo,
+                          'minimo',
                         ),
                         SizedBox(height: 10),
                         inputValue(
                           context,
                           'Limite máximo (°C):',
-                          valueMaximoTemp, //passar o valor de limite máximo do sensor
-                          'maximo', // identificador para limite máximo
-                        ),
-                        SizedBox(height: 10),
-                        inputValue(
-                          context,
-                          'Limite mínimo (Umidade do ar):',
-                          valueMinimoUmidade, //passar o valor do produto registrado no sensor
-                          'umidade', // identificador para peso médio
+                          valueMaximo,
+                          'maximo',
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(

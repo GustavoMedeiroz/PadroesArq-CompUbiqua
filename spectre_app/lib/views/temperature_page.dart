@@ -19,7 +19,11 @@ class _TemperaturePageState extends State<TemperaturePage> {
   @override
   void initState() {
     super.initState();
-    _cubit.findAll(List.from(['TEMPERATURE']));
+    _refreshTemperatures();
+  }
+
+  Future<void> _refreshTemperatures() async {
+    await _cubit.findAll(List.from(['TEMPERATURE']));
   }
 
   @override
@@ -52,39 +56,43 @@ class _TemperaturePageState extends State<TemperaturePage> {
                     behavior: ScrollConfiguration.of(context).copyWith(
                       scrollbars: false,
                     ),
-                    child: SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(),
-                      padding: const EdgeInsets.only(bottom: 15),
-                      child: Column(
-                        children: [
-                          Wrap(
-                            children: [
-                              PageTitle(
-                                  title: 'Temperatura e Umidade',
-                                  hasFilter: true,),
-                              ListView.builder(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: state.data.length,
-                                itemBuilder: (ctx, index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.only(
-                                      left: 28,
-                                      right: 28,
-                                      bottom: 10,
-                                    ),
-                                    child: CardTemperatura(
-                                      cardSize: 260,
-                                      sensor: state.data[index],
-                                    ),
-                                  );
-                                },
-                              ),
-                              SizedBox(height: 100),
-                              loadingIndicatorWidget(_cubit),
-                            ],
-                          )
-                        ],
+                    child: RefreshIndicator(
+                      onRefresh: _refreshTemperatures,
+                      child: SingleChildScrollView(
+                        physics: const BouncingScrollPhysics(),
+                        padding: const EdgeInsets.only(bottom: 15),
+                        child: Column(
+                          children: [
+                            Wrap(
+                              children: [
+                                PageTitle(
+                                  title: 'Sensores ativos de Temperatura',
+                                  hasFilter: true,
+                                ),
+                                ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: state.data.length,
+                                  itemBuilder: (ctx, index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.only(
+                                        left: 28,
+                                        right: 28,
+                                        bottom: 10,
+                                      ),
+                                      child: CardTemperatura(
+                                        cardSize: 266,
+                                        sensor: state.data[index],
+                                      ),
+                                    );
+                                  },
+                                ),
+                                SizedBox(height: 100),
+                                loadingIndicatorWidget(_cubit),
+                              ],
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),
