@@ -1,30 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:spectre_app/components/details_popup_temp.dart';
 import 'package:spectre_app/components/limits_popup_temp.dart';
+import 'package:spectre_app/components/status_label.dart';
 
 import '../core/models/sensor_model.dart';
 
 class CardTemperatura extends StatelessWidget {
-  const CardTemperatura({super.key, required this.cardSize, required this.sensor});
+  const CardTemperatura(
+      {super.key, required this.cardSize, required this.sensor});
 
   final double cardSize;
   final SensorModel sensor;
 
-    void mostrarTelaLimites (BuildContext context) {
-    Navigator.pop(context); //Retirando o popup atual da tela para adicionar o popup de limites
+  void mostrarTelaLimites(BuildContext context) {
+    Navigator.pop(
+        context); //Retirando o popup atual da tela para adicionar o popup de limites
     showDialog(
-      context: context,
-      barrierDismissible: true, // Isso permite que o usuário feche o dialog ao clicar fora dele
-      builder: (context) {
-      return LimitsPopupTemp(); //chamando a tela para definir os limites de temp. e umidade
-      }
-    );
+        context: context,
+        barrierDismissible:
+            true, // Isso permite que o usuário feche o dialog ao clicar fora dele
+        builder: (context) {
+          return LimitsPopupTemp(sensor: sensor); // Passando o sensor para o LimitsPopupTemp
+        });
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: cardSize, //definindo a altura aqui também pq caso contrário não carrega fora do Carousel
+      height:
+          cardSize, //definindo a altura aqui também pq caso contrário não carrega fora do Carousel
       margin: EdgeInsets.only(right: 10, top: 10),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -32,13 +36,15 @@ class CardTemperatura extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () {
-          showDialog( //Abrir popup de detalhes
-            context: context,
-            barrierDismissible: true,
-            builder: (context) {
-              return DetailsPopupTemp(sensor: sensor,); //acho que tem que passar o sensor como objeto no parâmetro depois
-            }
-          );
+          showDialog(
+              //Abrir popup de detalhes
+              context: context,
+              barrierDismissible: true,
+              builder: (context) {
+                return DetailsPopupTemp(
+                  sensor: sensor,
+                ); //acho que tem que passar o sensor como objeto no parâmetro depois
+              });
         },
         splashColor: Colors.blue,
         child: Container(
@@ -54,12 +60,12 @@ class CardTemperatura extends StatelessWidget {
                 //Row da temperatura, descrição e estado (CRÍTICO, NORMAL...)
                 children: [
                   Expanded(
-                    flex: 3,
+                    flex: 8,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '${sensor.currentValue}°C', //Valor Atual de Temperatura
+                          sensor.name, //Nome do sensor
                           style: TextStyle(
                             fontFamily: 'OpenSans',
                             fontWeight: FontWeight.bold,
@@ -80,26 +86,11 @@ class CardTemperatura extends StatelessWidget {
                     ),
                   ),
                   Spacer(),
-                  Container( //Status Label
-                      alignment: Alignment.center,
-                      width: 84,
-                      height: 33,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(41),
-                        color: Color.fromRGBO(44, 155, 217, 0.1),
-                      ),
-                      child: Text(
-                        'NORMAL',
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.normal,
-                          fontSize: 12,
-                        ),
-                      )),
+                  StatusLabel().checkTemperatureStatus(
+                      sensor.currentValue, sensor.minValue, sensor.maxValue),
                 ],
               ),
-              SizedBox(height: 71),
+              SizedBox(height: 58),
               Column(
                 //Coluna da qntd de clientes e horários de pico
                 children: [
@@ -107,9 +98,37 @@ class CardTemperatura extends StatelessWidget {
                     //quantidade de clients
                     children: [
                       Expanded(
+                        flex: 5,
                         //Expanded para que o primeiro Text ocupe todo o espaço diponível
                         child: Text(
-                          'Mínima:',
+                          'Temperatura Atual:',
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 14,
+                            fontWeight: FontWeight.normal,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      Spacer(), //Spacer para empurrar o segundo text para a borda direita da Row
+                      Text(
+                        '${sensor.currentValue}°C',
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 14,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    //quantidade de clients
+                    children: [
+                      Expanded(
+                        flex: 5,
+                        //Expanded para que o primeiro Text ocupe todo o espaço diponível
+                        child: Text(
+                          'Temperatura Mínima:',
                           style: TextStyle(
                             fontFamily: 'Inter',
                             fontSize: 14,
@@ -133,8 +152,9 @@ class CardTemperatura extends StatelessWidget {
                     //horários de pico
                     children: [
                       Expanded(
+                        flex: 5,
                         child: Text(
-                          'Máxima:',
+                          'Temperatura Máxima:',
                           style: TextStyle(
                             fontFamily: 'Inter',
                             fontSize: 14,
@@ -172,7 +192,7 @@ class CardTemperatura extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            '47% de Umidade Relativa', //Valor Atual de Umidade
+                            'Visualizar mais informações', //Valor Atual de Umidade
                             style: TextStyle(
                               fontFamily: 'Inter',
                               fontSize: 14,
@@ -181,7 +201,7 @@ class CardTemperatura extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            'Normal', //Condição atual de umidade referente ao limite
+                            'Sensor de temperatura', //Condição atual de umidade referente ao limite
                             style: TextStyle(
                               fontFamily: 'Inter',
                               fontSize: 12,

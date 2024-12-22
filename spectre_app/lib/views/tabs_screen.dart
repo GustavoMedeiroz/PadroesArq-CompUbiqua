@@ -16,7 +16,7 @@ class TabsScreen extends StatefulWidget {
 }
 
 class _TabsScreenState extends State<TabsScreen> {
-  int _selectedScreenIndex = 0;
+  int selectedScreenIndex = 0;
   final List<Widget> _screens = [
     //uma tela será definida como uma lista de maps com uma string e objeto como chave (hora será string e hora será widget)
     DashboardPage(),
@@ -30,7 +30,7 @@ class _TabsScreenState extends State<TabsScreen> {
 
   _selectScreen(int index) {
     setState(() {
-      _selectedScreenIndex = index;
+      selectedScreenIndex = index;
     });
   }
 
@@ -50,7 +50,7 @@ class _TabsScreenState extends State<TabsScreen> {
             ),
           ),
           child: _screens[
-              _selectedScreenIndex] //seleciona a tela baseada no index da BottomTabBar
+              selectedScreenIndex] //seleciona a tela baseada no index da BottomTabBar
           ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectScreen,
@@ -59,7 +59,7 @@ class _TabsScreenState extends State<TabsScreen> {
         //cor do ícone não selecionado
         selectedItemColor: SpectreColors.spectrePurple,
         //cor do ícone selecionado
-        currentIndex: _selectedScreenIndex,
+        currentIndex: selectedScreenIndex,
         type: BottomNavigationBarType.shifting,
         //aumenta o tamanho do ícone selecionado (animação)
         items: [
@@ -67,7 +67,7 @@ class _TabsScreenState extends State<TabsScreen> {
             backgroundColor: Colors.white,
             icon: Icon(
               Icons.home_rounded,
-              color: _selectedScreenIndex == 0
+              color: selectedScreenIndex == 0
                   ? SpectreColors.spectrePurple
                   : Colors.black,
               size: 27,
@@ -78,7 +78,7 @@ class _TabsScreenState extends State<TabsScreen> {
             backgroundColor: Colors.white,
             icon: Icon(
               Icons.pallet,
-              color: _selectedScreenIndex == 1
+              color: selectedScreenIndex == 1
                   ? SpectreColors.spectrePurple
                   : Colors.black,
               size: 27,
@@ -89,7 +89,7 @@ class _TabsScreenState extends State<TabsScreen> {
             backgroundColor: Colors.white,
             icon: Icon(
               Icons.device_thermostat,
-              color: _selectedScreenIndex == 2
+              color: selectedScreenIndex == 2
                   ? SpectreColors.spectrePurple
                   : Colors.black,
               size: 27,
@@ -99,7 +99,7 @@ class _TabsScreenState extends State<TabsScreen> {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.notifications,
-              color: _selectedScreenIndex == 3
+              color: selectedScreenIndex == 3
                   ? SpectreColors.spectrePurple
                   : Colors.black,
               size: 27,
@@ -110,7 +110,7 @@ class _TabsScreenState extends State<TabsScreen> {
             backgroundColor: Colors.white,
             icon: Icon(
               Icons.settings,
-              color: _selectedScreenIndex == 4
+              color: selectedScreenIndex == 4
                   ? SpectreColors.spectrePurple
                   : Colors.black,
               size: 27,

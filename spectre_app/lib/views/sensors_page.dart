@@ -16,15 +16,6 @@ class SensorsPage extends StatefulWidget {
 class _SensorsPageState extends State<SensorsPage> {
   final _cubit = SensorCubit(sensorService: SensorService());
 
-  // void _abrirSensorForm(BuildContext context) {
-  //   showModalBottomSheet(
-  //     context: context,
-  //     builder: (_) {
-  //       return Text('ignore isso'); //TransactionForm(_addSensor);
-  //     },
-  //   );
-  // }
-
   // Novo método para atualizar a página
   void atualizarPagina() {
     setState(() {});
@@ -33,7 +24,11 @@ class _SensorsPageState extends State<SensorsPage> {
   @override
   void initState() {
     super.initState();
-    _cubit.findAll(List.empty());
+    _refreshSensors();
+  }
+
+  Future<void> _refreshSensors() async {
+    await _cubit.findAll(List.empty());
   }
 
   @override
@@ -63,30 +58,33 @@ class _SensorsPageState extends State<SensorsPage> {
                     behavior: ScrollConfiguration.of(context).copyWith(
                       scrollbars: false,
                     ),
-                    child: SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(),
-                      padding: const EdgeInsets.only(bottom: 15),
-                      child: Column(
-                        children: [
-                          Wrap(
-                            children: [
-                              PageTitle(
-                                title: 'Sensores Ativos no Estoque',
-                                hasFilter: true,
-                              ),
-                              ListView.builder(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: state.data.length,
-                                itemBuilder: (context, index) => SensorItem(
-                                  sensor: state.data[index],
+                    child: RefreshIndicator(
+                      onRefresh: _refreshSensors,
+                      child: SingleChildScrollView(
+                        physics: const BouncingScrollPhysics(),
+                        padding: const EdgeInsets.only(bottom: 15),
+                        child: Column(
+                          children: [
+                            Wrap(
+                              children: [
+                                PageTitle(
+                                  title: 'Sensores ativos no Estoque',
+                                  hasFilter: true,
                                 ),
-                              ),
-                              SizedBox(height: 100),
-                              loadingIndicatorWidget(_cubit),
-                            ],
-                          )
-                        ],
+                                ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: state.data.length,
+                                  itemBuilder: (context, index) => SensorItem(
+                                    sensor: state.data[index],
+                                  ),
+                                ),
+                                SizedBox(height: 100),
+                                loadingIndicatorWidget(_cubit),
+                              ],
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),

@@ -30,7 +30,7 @@ class CardEstoque extends StatelessWidget {
                       ),
                       child: Icon(
                         size: 26,
-                        Icons.lunch_dining,
+                        Icons.sensors,
                       ),
                     ),
                     Container(
@@ -57,7 +57,7 @@ class CardEstoque extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'Acabará em breve!',
+                      StatusLabel().stockSubtitle(sensor.currentValue, sensor.minValue, sensor.maxValue),
                       style: TextStyle(
                         fontFamily: 'OpenSans',
                         fontWeight: FontWeight.normal,
